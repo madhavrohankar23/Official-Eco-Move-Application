@@ -1,0 +1,49 @@
+{
+  "mode": "implement",
+  "objective": "Improve the existing app's motion, outside-tap collapse, loading stability and contrast; add authorized Google satellite without changing domain behavior",
+  "allowed_write_scope": [
+    "Eco-Move App/"
+  ],
+  "policy": {
+    "planning": "compact",
+    "context_depth": "dependency",
+    "verification_depth": "impact",
+    "delegation": "none",
+    "reason_codes": [
+      "native-motion",
+      "map-presentation-adapter",
+      "async-lifecycle"
+    ]
+  },
+  "baseline": {
+    "tests": 13,
+    "failures": 0,
+    "source": "141 original files and protected copies unchanged",
+    "exports": "iOS/Android/web pass"
+  },
+  "acceptance_criteria": [
+    "Sheet transforms run without per-frame layout animation and retain interruption-safe dismissal",
+    "Outside taps collapse panels without losing selections or intercepting map drags",
+    "Shared press feedback and haptics respect reduced motion and unavailable platforms",
+    "Remove UI Theme Contrast; retain system accessibility, predefined material presets, and appearance persistence",
+    "Google satellite uses authorized API sessions, current attribution and cancellation-safe layer changes",
+    "Existing functionality and original files remain; typecheck, tests, exports and runtime checks provide evidence"
+  ],
+  "decision": {
+    "action": "Refine shared presentation lifecycle and add a satellite adapter around the preserved MapView",
+    "evidence": [
+      "Sheet animates height with useNativeDriver false",
+      "ContrastSlider calls measure on every pan move",
+      "RuntimeMap lacks memoization",
+      "Existing Google key returned a valid Map Tiles API satellite session"
+    ],
+    "allowed_by_contract": true,
+    "risk": "Interrupted animation, attribution layout, asynchronous layer switching"
+  },
+  "non_goals": [
+    "Change protected domain code",
+    "Claim 120–144 Hz without supported hardware",
+    "Change billing or API restrictions"
+  ],
+  "user_amendment": "Latest instruction removes UI Theme Contrast from Profile and Preferences; retire its visual override without deleting legacy preferences. Increase Liquid Glass transparency and reflections within tested readability limits. Preserve system accessibility."
+}

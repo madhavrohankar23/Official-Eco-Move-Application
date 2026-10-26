@@ -1,0 +1,9 @@
+{
+  "mode": "debug",
+  "objective": "Repair the existing touchless camera zoom on web and React Native without modifying original or protected business logic",
+  "allowed_write_scope": ["Eco-Move App/"],
+  "policy": {"planning":"compact","context_depth":"dependency","verification_depth":"impact","delegation":"none","reason_codes":["browser-api-in-native","camera-lifecycle","fractional-zoom-snapping"]},
+  "decision": {"action":"Run the existing hand tracker in an isolated browser camera surface and bridge validated zoom events to the existing map","evidence":["AppContext instantiates getUserMedia controller directly in Hermes","Android manifest lacks CAMERA","Leaflet default zoomSnap rounds away sub-half-step gesture deltas","stop during camera permission does not invalidate pending start"],"risk":"Camera permission and platform WebView compatibility","allowed_by_contract":true},
+  "acceptance_criteria": ["Native bundle contains no MediaPipe browser runtime","Camera lifecycle cancels stale permission/model work and releases tracks","Real detection assets resolve and GPU failure has CPU fallback","Pinch/spread events change map zoom without modifying route logic","Status, retry and stop controls work without per-frame app renders","Typecheck, gesture regression tests and platform exports pass"],
+  "limitations": ["Physical hand recognition and iPhone permissions require hardware; report separately from simulated tests","Do not revert concurrent Expo 58 upgrade or other user changes"]
+}

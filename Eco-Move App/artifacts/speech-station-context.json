@@ -1,0 +1,23 @@
+{
+  "testedAt": "2026-10-25T18:12:37.046Z",
+  "coverage": [
+    {
+      "language": "en-IN",
+      "hints": 100,
+      "knownStationNames": 1856,
+      "metroStations": 37
+    },
+    {
+      "language": "hi-IN",
+      "hints": 100,
+      "knownStationNames": 1856,
+      "metroStations": 37
+    },
+    {
+      "language": "mr-IN",
+      "hints": 100,
+      "knownStationNames": 1856,
+      "metroStations": 37
+    }
+  ]
+}

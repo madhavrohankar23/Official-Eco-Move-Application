@@ -1,0 +1,52 @@
+[
+  {
+    "action": "CHATBOT_QUERY",
+    "requestKeys": [
+      "action",
+      "query",
+      "timestamp"
+    ],
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "durationMs": 8686,
+    "responseType": "object",
+    "responseKeys": [
+      "status",
+      "intent",
+      "replyMessage",
+      "explanation",
+      "generatedAt"
+    ],
+    "responsePreview": "{\"status\":\"success\",\"intent\":\"GENERAL_ANSWER\",\"replyMessage\":\"To travel by metro in Nagpur, follow these steps:\\n\\n- 🚇 **Operating Hours**: 06:00 AM to 10:00 PM daily.\\n- ⏱️ **Frequency**: Peak times (8-10 mins) and non-peak (12-15 mins).\\n- 📍 **Lines**:\\n  - **Orange Line**: Automotive Square ➔ Sitabuldi Interchange ➔ Airport ➔ Khapri.\\n  - **Aqua Line**: Prajapati Nagar ➔ Nagpur Railway Station ➔ Sitabuldi Interchange ➔ Lokmanya Nagar.\\n- 💰 **Fares**:  \\n  - ₹10 (1-3 stations)  \\n  - ₹15 (4-6 stations)  \\n  - ₹20 (7-9 stations)  \\n  - ₹25 (10-12 stations)  \\n  - ₹30 (13-15 stations)  \\n  - ₹35 (16-19 stations)  \\n  - ₹40 (20+ stations end-to-end).\\n- 📱 **MahaCard Smart Card**: Get a 10% discount on every trip. Senior citizens (60+) enjoy a 33% concession.\\n- ♿ **Accessibility**: All "
+  },
+  {
+    "action": "PARSE_NATURAL_LANGUAGE_COMMAND",
+    "requestKeys": [
+      "action",
+      "query",
+      "userLocation",
+      "fallbackIntent"
+    ],
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "durationMs": 2192,
+    "responseType": "object",
+    "responseKeys": [
+      "status",
+      "intent",
+      "origin",
+      "destination",
+      "preference",
+      "departureTime",
+      "busNumber",
+      "stopName",
+      "nearbyLocation",
+      "nearbyRadiusM",
+      "nearbyMode",
+      "replyMessage",
+      "explanation",
+      "generatedAt"
+    ],
+    "responsePreview": "{\"status\":\"success\",\"intent\":\"PLAN_ROUTE\",\"origin\":\"Sitabuldi\",\"destination\":\"Airport\",\"preference\":null,\"departureTime\":\"now\",\"busNumber\":null,\"stopName\":null,\"nearbyLocation\":null,\"nearbyRadiusM\":null,\"nearbyMode\":null,\"replyMessage\":\"Planning the route from Sitabuldi to Airport right now.\",\"explanation\":\"Planning the route from Sitabuldi to Airport right now.\",\"generatedAt\":\"2026-10-24T10:12:32.143+05:30\"}"
+  }
+]

@@ -1,0 +1,8 @@
+{
+  "objective": "Recognize Hindi, English, Marathi and mixed commands and apply their Source/Destination through existing routing handlers",
+  "allowed_write_scope": ["Eco-Move App/"],
+  "policy": {"planning":"compact","context_depth":"dependency","verification_depth":"impact","delegation":"none","reason_codes":["two-speech-entry-points","multilingual-input","async-cancellation"]},
+  "confirmed_causes": ["Chat and Search hardcode en-IN", "Search final recognition only sets query", "Protected local search matches Latin names and protected heuristic does not parse Devanagari route grammar"],
+  "plan": ["Use a shared language preference and supported recognizer options", "Normalize multilingual command input without changing datasets or routing", "Reuse guarded voice session and applyVoiceIntent in Search and Chat", "Run production-code language tests and live n8n-to-place-resolution probes", "Export all platforms and rebuild Android with required compile SDK 37"],
+  "limits": ["Physical microphone recognition and OS language-model availability must be reported separately from transcript tests"]
+}

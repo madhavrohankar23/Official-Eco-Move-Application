@@ -1,0 +1,8 @@
+{
+  "startedUtc": "2026-10-24T16:41:15.9785157Z",
+  "export": "passed",
+  "apk": "failed",
+  "error": "Android compilation failed",
+  "exportReused": true,
+  "finishedUtc": "2026-10-24T16:43:05.5332036Z"
+}

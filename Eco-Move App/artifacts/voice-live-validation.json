@@ -1,0 +1,23 @@
+{
+  "testedAt": "2026-10-24T05:00:56.441Z",
+  "results": [
+    {
+      "passed": true,
+      "query": "Plan a route from Sitabuldi to Airport",
+      "intent": "PLAN_ROUTE",
+      "origin": "Sitabuldi",
+      "destination": "Airport",
+      "responseCharacters": 55,
+      "durationMs": 3926
+    },
+    {
+      "passed": true,
+      "query": "How do I travel by metro in Nagpur?",
+      "intent": "GENERAL_ANSWER",
+      "origin": "Sitabuldi",
+      "destination": "how do i travel by metro in nagpur?",
+      "responseCharacters": 170,
+      "durationMs": 3385
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+ "mode":"implement",
+ "objective":"Move deliberate shake to voice control, add supported back-tap shortcut and source-location fallback, connect voice to env-configured n8n",
+ "allowed_write_scope":["Eco-Move App/"],
+ "policy":{"planning":"compact","context_depth":"dependency","verification_depth":"impact","delegation":"none","reason_codes":["sensor-lifecycle","speech-permissions","external-workflow-contract"]},
+ "acceptance_criteria":["Strong repeated motion with cooldown toggles voice instead of GPS","Motion resources and speech sessions clean up safely","Back-tap uses OS shortcut support, never an accelerometer imitation","Location action sets Source and preserves destination, with permission/reverse-geocode failure handling","n8n endpoint comes from environment, actual contract probed without private data","Original/protected files remain unchanged; strict checks and regression tests pass"],
+ "decision":{"action":"Extend the existing sensor/speech adapters and map RPC, with an OS deep-link location shortcut","evidence":["Existing shake triggers on one accelerometer spike and sets GPS","Speech adapter already handles unavailable native module in Expo Go","n8n service offers customWebhookUrl and structured command/chat payloads","iOS Back Tap can invoke an installed shortcut but is not exposed as a browser event"],"allowed_by_contract":true,"risk":"Permission prompts, duplicate gestures, stale voice/GPS results"}
+}

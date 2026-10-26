@@ -1,0 +1,22 @@
+{
+  "mode": "implement",
+  "objective": "Refine existing mobile materials and motion, add a flowing search perimeter, and repair confirmed bundle/Expo Go and mobile lifecycle errors",
+  "allowed_write_scope": ["Eco-Move App/"],
+  "policy": {"planning":"compact","context_depth":"dependency","verification_depth":"impact","delegation":"none","reason_codes":["shared-presentation","native-animation","existing-map-blur-regression"]},
+  "acceptance_criteria": [
+    "Search outline follows the rounded border continuously and respects reduced motion/background state",
+    "Shared press feedback and panel transitions preserve actions, hit targets and scroll behavior",
+    "Material levels remain readable and avoid redundant nested backdrop sampling",
+    "Original 141 files and protected copies remain unchanged",
+    "SDK dependencies align and iOS/Android JavaScript exports complete",
+    "Missing optional speech module cannot crash Expo Go; browser speech support remains available",
+    "Runtime startup failures and rejected UI requests are handled visibly without unhandled rejections"
+  ],
+  "decision": {
+    "action": "Refine presentation; align two Expo patch dependencies and repair optional-module and request lifecycle handling",
+    "evidence": ["Press controls use instantaneous scale switches", "Sheet height changes directly", "AppSurface resets opacity to 0.7 after panel commit", "Existing Android blur workaround documents clipping"],
+    "risk": "Layout and platform blur regressions require runtime checks",
+    "allowed_by_contract": true
+  },
+  "non_goals": ["Change business logic or services", "Claim universal frame-rate or iOS device validation without evidence"]
+}

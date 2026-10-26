@@ -1,0 +1,19 @@
+{
+  "status": "implemented_with_validation_limits",
+  "scope": "Eco-Move App/ only",
+  "evidence": {
+    "tests": "10 passed, 0 failed: artifacts/tests-compatibility.log",
+    "typecheck": "PASS: artifacts/typecheck-final.log",
+    "exports": "PASS iOS, Android, web: artifacts/final-export.log",
+    "source_preservation": "PASS 141 originals and protected copies",
+    "apk_build": "PASS: artifacts/build-refinement-final.log",
+    "apk_install_identity": "PASS: artifacts/installed-refinement-sha256.txt",
+    "browser_flows": "PASS documented subset: docs/IMPLEMENTATION-AND-VALIDATION.md",
+    "native_full_flow": "BLOCKED: repeated Android system ANRs; Welcome rendered only",
+    "physical_ios": "NOT TESTED",
+    "expo_doctor": "20/21; native config sync warning remains",
+    "npm_audit": "27 advisories remain; unsafe SDK downgrades not applied"
+  },
+  "validator_runtime": "Gravitas CLI unavailable; evidence uses executable project commands and direct UI observations",
+  "verdict": "PASS for scoped implementation/build checks; incomplete native and external-service validation"
+}

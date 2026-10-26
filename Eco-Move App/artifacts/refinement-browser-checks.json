@@ -1,0 +1,229 @@
+{
+  "widths": [
+    {
+      "overflow": false,
+      "searchWidth": 280,
+      "targets": [
+        {
+          "h": 52,
+          "text": "",
+          "w": 54.390625
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 54.390625
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 54.390625
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 54.390625
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 54.390625
+        }
+      ],
+      "width": 320
+    },
+    {
+      "overflow": false,
+      "searchWidth": 320,
+      "targets": [
+        {
+          "h": 52,
+          "text": "",
+          "w": 62.390625
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 62.390625
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 62.390625
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 62.390625
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 62.390625
+        }
+      ],
+      "width": 360
+    },
+    {
+      "overflow": false,
+      "searchWidth": 335,
+      "targets": [
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        }
+      ],
+      "width": 375
+    },
+    {
+      "overflow": false,
+      "searchWidth": 350,
+      "targets": [
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        }
+      ],
+      "width": 390
+    },
+    {
+      "overflow": false,
+      "searchWidth": 372,
+      "targets": [
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        }
+      ],
+      "width": 412
+    },
+    {
+      "overflow": false,
+      "searchWidth": 390,
+      "targets": [
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "text": "",
+          "w": 64.796875
+        }
+      ],
+      "width": 430
+    }
+  ],
+  "tabs": [
+    {
+      "tab": "plan",
+      "selected": "true"
+    },
+    {
+      "tab": "nearby",
+      "selected": "true"
+    },
+    {
+      "tab": "trips",
+      "selected": "true"
+    },
+    {
+      "tab": "profile",
+      "selected": "true"
+    },
+    {
+      "tab": "home",
+      "selected": "true"
+    }
+  ],
+  "search": "Airport query returned original dataset and selection restored map",
+  "modal": "Opened and dismissed travel-mode chooser; blank excess height found and subsequently reduced in source",
+  "landscape": {
+    "width": 844,
+    "height": 390,
+    "horizontalOverflow": false
+  },
+  "highContrast": {
+    "blurLayers": 0,
+    "searchGlow": false
+  }
+}

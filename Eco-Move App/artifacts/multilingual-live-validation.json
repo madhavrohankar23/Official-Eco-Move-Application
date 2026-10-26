@@ -1,0 +1,66 @@
+{
+  "testedAt": "2026-10-25T18:04:43.328Z",
+  "kind": "live transcript contract; not microphone recognition",
+  "results": [
+    {
+      "language": "English",
+      "query": "Plan a route from Sitabuldi to Airport",
+      "intent": "PLAN_ROUTE",
+      "origin": "Sitabuldi",
+      "destination": "Airport",
+      "sourceResolved": "Sitabuldi (Interchange)",
+      "destinationResolved": "Airport Metro Station",
+      "existingPlanInvoked": true,
+      "passed": true,
+      "durationMs": 3926
+    },
+    {
+      "language": "Hindi",
+      "query": "मुझे सीताबर्डी से एयरपोर्ट जाना है",
+      "intent": "PLAN_ROUTE",
+      "origin": "Sitabuldi",
+      "destination": "Airport",
+      "sourceResolved": "Sitabuldi (Interchange)",
+      "destinationResolved": "Airport Metro Station",
+      "existingPlanInvoked": true,
+      "passed": true,
+      "durationMs": 2622
+    },
+    {
+      "language": "Marathi",
+      "query": "मला सीताबर्डीपासून विमानतळापर्यंत जायचे आहे",
+      "intent": "PLAN_ROUTE",
+      "origin": "Sitabuldi",
+      "destination": "Airport",
+      "sourceResolved": "Sitabuldi (Interchange)",
+      "destinationResolved": "Airport Metro Station",
+      "existingPlanInvoked": true,
+      "passed": true,
+      "durationMs": 2977
+    },
+    {
+      "language": "Mixed Hindi",
+      "query": "Sitabuldi se Airport जाना है",
+      "intent": "PLAN_ROUTE",
+      "origin": "Sitabuldi",
+      "destination": "Airport",
+      "sourceResolved": "Sitabuldi (Interchange)",
+      "destinationResolved": "Airport Metro Station",
+      "existingPlanInvoked": true,
+      "passed": true,
+      "durationMs": 2606
+    },
+    {
+      "language": "Mixed Marathi",
+      "query": "मला Dharampeth पासून Nagpur Railway Station पर्यंत जायचे आहे",
+      "intent": "PLAN_ROUTE",
+      "origin": "Dharampeth",
+      "destination": "Nagpur Railway Station",
+      "sourceResolved": "Dharampeth",
+      "destinationResolved": "Nagpur Railway Station (Main Junction)",
+      "existingPlanInvoked": true,
+      "passed": true,
+      "durationMs": 2542
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "objective": "Improve station recognition accuracy and make the existing Matte theme frosted and opaque",
+  "allowed_write_scope": ["Eco-Move App/"],
+  "policy": {"planning":"compact","context_depth":"dependency","verification_depth":"impact","delegation":"none","reason_codes":["speech-context-and-alternatives","shared-material-tokens"]},
+  "evidence": ["User reports many stations are misheard", "Speech hints only use seven popular places", "Three recognizer alternatives are requested but only the first is used", "Matte has low 10–22 blur and already uses centralized presets"],
+  "decisions": ["Derive bounded recognition hints and alternative validation from existing metro/bus names", "Use conservative confidence gates and request transcript correction on uncertain speech", "Adjust only predefined Matte tokens; preserve Liquid default and all customization controls"],
+  "validation": ["speech accuracy helper and lifecycle tests", "material contrast checks", "TypeScript and platform export", "preview of Matte and voice state", "Android incremental rebuild and artifact verification"]
+}

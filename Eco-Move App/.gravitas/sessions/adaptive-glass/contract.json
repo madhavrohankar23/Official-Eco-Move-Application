@@ -1,0 +1,22 @@
+{
+  "mode": "implement",
+  "objective": "Extend the existing mobile appearance system with Liquid, Matte and Solid Glass presets; preserve every existing customization control and functional contract",
+  "allowed_write_scope": ["Eco-Move App/"],
+  "policy": {"planning":"compact","context_depth":"dependency","verification_depth":"impact","delegation":"none","reason_codes":["shared-presentation","appearance-persistence","all-screens"]},
+  "acceptance_criteria": [
+    "Liquid is the default dark emerald material; all three presets share the existing Glass component",
+    "Only three appearance choices are added; existing dark and contrast controls and profile actions remain",
+    "Material changes persist without changing routing, account or unrelated preferences",
+    "Material levels are readable, distinct and respect reduced motion and enhanced contrast",
+    "Responsive UI, keyboard theme selection, panels and route interaction pass runtime checks",
+    "Typecheck, regression tests and platform exports pass; original 141 files remain unchanged"
+  ],
+  "baseline": {"tests":10,"failures":0,"source":"141 original files and all protected copies match"},
+  "decision": {
+    "action":"Add pure preset tokens to the existing ThemeProvider, shared Glass, and three preview choices inside existing settings",
+    "evidence":["theme.tsx owns AsyncStorage contrast settings", "AccountScreens.tsx owns Dark appearance and ContrastSlider", "Glass.tsx uses 0.16–0.70 outer opacity and pale nested highlights", "All service screens already consume Glass/Copy/Action"],
+    "risk":"Shared material contrast and native blur behavior need platform exports and browser verification",
+    "allowed_by_contract":true
+  },
+  "non_goals":["New sliders or toggles", "Backend or data changes", "Rebuild working functionality", "Claim physical-device validation"]
+}

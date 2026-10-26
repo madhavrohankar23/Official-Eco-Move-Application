@@ -1,0 +1,566 @@
+[
+  {
+    "path": ".env",
+    "sha256": "2d5dd0aac257f4dd8be3b89b9e24d8f45bcdc52d119fe617a3c05c050a939582"
+  },
+  {
+    "path": ".env.example",
+    "sha256": "f9822fb810ca098e6ba40558e57f9f3e019f604cc0e5153e9056d166999418ec"
+  },
+  {
+    "path": ".gitignore",
+    "sha256": "5529ff9707df52279720727e1882018de3f9034ace6174dbe3bacc9508cdec46"
+  },
+  {
+    "path": ".prettierignore",
+    "sha256": "52c7c767ff0615eec4eb64cc71265877f7f423eb597d665b5e439f337c661a5a"
+  },
+  {
+    "path": ".prettierrc",
+    "sha256": "1ed88d3b99eced8dc3b6f58f26645466dd1ceaca6c5a9b818531c941ac28e55b"
+  },
+  {
+    "path": "agent.json",
+    "sha256": "0a206761e8d3a8b963da79d859197d61bc30a5afa32c4a02a73b025b68788fcb"
+  },
+  {
+    "path": "components.json",
+    "sha256": "37c484818824d2521eee3367e7aa2c2abbd19635d8103d19734b6e24603d0292"
+  },
+  {
+    "path": "eslint.config.js",
+    "sha256": "3266245a1ff610a0b37dbb8b8c77b93a125e0d8758b9838cfd04b2e0a1397d56"
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "3ba1cbbff76bc7d0c983afbeb6008a133e80d1362a3c8af25891de747d061d9c"
+  },
+  {
+    "path": "package.json",
+    "sha256": "184db7d3d0f32b24bbf08b76a30938534195bf41f0ed137fc771ced0405b4fbb"
+  },
+  {
+    "path": "public/amazon_pay.svg",
+    "sha256": "299dcec9293e2f6e3bea6066ec6ce7e60984891898e1a61f39ce72bd4cc38e39"
+  },
+  {
+    "path": "public/android-chrome-192x192.png",
+    "sha256": "3bb35bc032eb048b6347b1c359a0255aa8941014821c4cc71f63cd0c4f30b085"
+  },
+  {
+    "path": "public/android-chrome-512x512.png",
+    "sha256": "b7e85600578d6440330484bf6772adb8e95e3ccd5b947525e8b13b9bde2a2111"
+  },
+  {
+    "path": "public/apple-touch-icon.png",
+    "sha256": "475aa936ab587da98178562cae9310c7d6d8a1020aa3c53ed3540f5431766f0d"
+  },
+  {
+    "path": "public/auth.png",
+    "sha256": "70dab2f548223994938c53b43e042411f3c082d6d8248173d6c28b9bf0f3d81a"
+  },
+  {
+    "path": "public/background.mp4",
+    "sha256": "185b135dfa40c7c3fffe1b59c1907fea6b6d2ffba77877810d1af9e38cadb49e"
+  },
+  {
+    "path": "public/bhim_logo.svg",
+    "sha256": "bb39d12bd6052b6bdc8b7bd9b3ba50513941a09120902b4240cd145cc3b80c28"
+  },
+  {
+    "path": "public/data/devRoutes.json",
+    "sha256": "658d383919b1eecc8cc695c9a83c01450c225473f88b32548fcbebacc63979ba"
+  },
+  {
+    "path": "public/favicon-16x16.png",
+    "sha256": "fc3fdf53c9534611ff2604e2d4a8f32207baf6be7430183c6f703d676b1c4641"
+  },
+  {
+    "path": "public/favicon-32x32.png",
+    "sha256": "398cf8e0da3f8ff7ac80c9cc4bd94d1544e56b05b420a3ca0a99abcd548a82d5"
+  },
+  {
+    "path": "public/favicon.ico",
+    "sha256": "55808be3990b156a5eef3834d9ddd4f6a1dc05b5aaf35af534aac01ef9d09110"
+  },
+  {
+    "path": "public/favicon.png",
+    "sha256": "b7e85600578d6440330484bf6772adb8e95e3ccd5b947525e8b13b9bde2a2111"
+  },
+  {
+    "path": "public/safarbot-icon.svg",
+    "sha256": "15e7896f496b72e4e8163ebfac5a31fa686bbcfeba9e9ebaaab19bd7e909f461"
+  },
+  {
+    "path": "README.md",
+    "sha256": "513d2a6bbf277e90738a2c3434fba96cc30daece5495448abb1e8dbc7da4965c"
+  },
+  {
+    "path": "src/components/AiRouteExplainer.tsx",
+    "sha256": "9d1f13a6ee70daf8cc3dd40c6c1febf4749325725c1e45aaaf84ed12ccca82fb"
+  },
+  {
+    "path": "src/components/AiTransitChatbot.tsx",
+    "sha256": "ad352ae6c5fd4af3024e6039dce38b16ce12c0bf237282a1584dfe90eda8add8"
+  },
+  {
+    "path": "src/components/BusTimetablePanel.tsx",
+    "sha256": "659180244989eb886a77db48b8f09746f7cfea489dd59e702f10bce026d837d5"
+  },
+  {
+    "path": "src/components/CabOptions.tsx",
+    "sha256": "1a9b6ded4b12c5eaa12a5b513f929deecabe0f4fe498fa87ebc70245c0e8afdf"
+  },
+  {
+    "path": "src/components/DevBusRouteInspector.tsx",
+    "sha256": "fcf423c71d8ce5584211dc8c10abf0a096a754358719d12eee68619ef3927415"
+  },
+  {
+    "path": "src/components/DigitalTicketPass.tsx",
+    "sha256": "b71bacc5c682c214a26533d408048b6105fc51ed0164f526de91ba994729a127"
+  },
+  {
+    "path": "src/components/DummyPaymentModal.tsx",
+    "sha256": "af5edc3265d00b487547ebc2c5915004d6a7477048181967daf3c17e63c5e4b5"
+  },
+  {
+    "path": "src/components/GoogleMapsLayersFAB.tsx",
+    "sha256": "06073033174395f6acfba47bf4c1e6de3d803f44f16c4029cf6e147869a7b857"
+  },
+  {
+    "path": "src/components/GoogleMapsSearchBar.tsx",
+    "sha256": "dbb30795e6449d7bb9949132e8ffd2b86b3bcce9be3740eed045671e04911969"
+  },
+  {
+    "path": "src/components/GreenRewardsPanel.tsx",
+    "sha256": "9702c923e765fbdaf373bcc1db811952bdc7ebde9b6a17414e1110648a1fa9e1"
+  },
+  {
+    "path": "src/components/Hero.tsx",
+    "sha256": "b8b875113270634ce6fe4e9eede233d7a654922f041b81df7110a5c7622b6a0d"
+  },
+  {
+    "path": "src/components/HowItWorks.tsx",
+    "sha256": "c03eea9542d1377ab959e69448b3fd393f54ac6d7700b8be8c4cf93a7b50fb27"
+  },
+  {
+    "path": "src/components/LiveBusTracker.tsx",
+    "sha256": "1c887706ae4e4f481119fc0094129468a949ce4dae0eb82ea6b39e52e480566a"
+  },
+  {
+    "path": "src/components/MapView.tsx",
+    "sha256": "37ec9deb61b280a32dff09ed11f8fb13716f617083a50292b84d0a4c5465c272"
+  },
+  {
+    "path": "src/components/MaterialTimePicker.tsx",
+    "sha256": "8a207a4b0cc29394c6008ac0bf81d2ce28ff37569221189c32daf8f37a674ff8"
+  },
+  {
+    "path": "src/components/Navbar.tsx",
+    "sha256": "67eaeb4b70a6eac70389eb1cf9a3f5200a97020cab8e7885f2d06f18c62d31a5"
+  },
+  {
+    "path": "src/components/PlaceSearch.tsx",
+    "sha256": "194385545c381410b981b7150910781e2d41bb37b0ab42cecd51bab9b03712ca"
+  },
+  {
+    "path": "src/components/ProtectedRoute.tsx",
+    "sha256": "4ffc30bbf3f0574edbd0ba456e3ab38ea1e80a470d0f2af8d0a5105456fe5c84"
+  },
+  {
+    "path": "src/components/SideRouteAiExplainer.tsx",
+    "sha256": "656bbc1c1367540b9e26032c7484665f6aeadf1506255282a3a74d9c693bf1da"
+  },
+  {
+    "path": "src/components/TicketBookingModal.tsx",
+    "sha256": "ddf92bd7ffcc2f9b57df671f40bdd5ec402f56d27f9abd79aa56eb18b6a4cbe3"
+  },
+  {
+    "path": "src/components/TicketWalletDrawer.tsx",
+    "sha256": "e0954975d5eecbcd373f1c878caf67486a6153206ea6b12fc41ea9738a52ad55"
+  },
+  {
+    "path": "src/components/ui/accordion.tsx",
+    "sha256": "0903efcd7b746eef0a10c954a541b0dfa7aa1172f3c380a1a88f4e19a317fda3"
+  },
+  {
+    "path": "src/components/ui/alert-dialog.tsx",
+    "sha256": "ee4d7f3341a1e5592787b7dac8e924bd226189492819f6704d8a7faf8fe64d20"
+  },
+  {
+    "path": "src/components/ui/alert.tsx",
+    "sha256": "e7f4c2e6f78c59270905b4152b7d3ef4d5c6b9e3b2d370daa7b301aa7cbd27b3"
+  },
+  {
+    "path": "src/components/ui/aspect-ratio.tsx",
+    "sha256": "d72c73d629e37995a0a71647d851d68d6fdcd7ec120797f36ab83a8ee89f2cab"
+  },
+  {
+    "path": "src/components/ui/avatar.tsx",
+    "sha256": "0326c9041c5a0b1ba31ff29822c51950b6aeac485cd0985e7df714741a54e7f4"
+  },
+  {
+    "path": "src/components/ui/badge.tsx",
+    "sha256": "6519775252fe729f21c60b92c7c9feefd1fe7d0a8c2cf16d6f1c2fa7e153fe75"
+  },
+  {
+    "path": "src/components/ui/breadcrumb.tsx",
+    "sha256": "d5224e87344b3ac0f8b002e5dda6a71ff8fee296db8a5fbe6b034d06bd5c2ae1"
+  },
+  {
+    "path": "src/components/ui/button.tsx",
+    "sha256": "e39813b666ba434660ec088356a0349246b6803a4e99961295d0c82bab1ab862"
+  },
+  {
+    "path": "src/components/ui/calendar.tsx",
+    "sha256": "e883f2245873fdf360764f77fc8f391426bef5776c6397537012c46970ebd6ee"
+  },
+  {
+    "path": "src/components/ui/card.tsx",
+    "sha256": "f13878a0078a5ef9f3e92af29259fc1e93ea56ea80cb992e0c4dea4e35396459"
+  },
+  {
+    "path": "src/components/ui/carousel.tsx",
+    "sha256": "568e00e8edbfab8af67ee902ca9ef5ceb6d5ed6f3045e7f9b3c15b4f7ef9e974"
+  },
+  {
+    "path": "src/components/ui/chart.tsx",
+    "sha256": "81b1f692f9334ba3030213ff37eeaf2dd762b644e5d96e51ada7072109f07430"
+  },
+  {
+    "path": "src/components/ui/checkbox.tsx",
+    "sha256": "c44d02535d5c9c92807576804407dd63d01e7189dbde526e925b53885e645fd4"
+  },
+  {
+    "path": "src/components/ui/collapsible.tsx",
+    "sha256": "5f0a45d8f6ca72d37ed10bf0a85306158b67d7cbc386319186ce013ead9bc0a6"
+  },
+  {
+    "path": "src/components/ui/command.tsx",
+    "sha256": "ba8c0f8b23044ce9a5066e66d7ab7be3a3c79bfc4a0ab7dfae6ffafe439145a3"
+  },
+  {
+    "path": "src/components/ui/context-menu.tsx",
+    "sha256": "b299f50a0a7840b136db5670f2b2e7eec6fc62b3c06bc2ad0015800959cc381b"
+  },
+  {
+    "path": "src/components/ui/dialog.tsx",
+    "sha256": "e3a6de153fb15597ea95be9c4549211a297c060267787915599e3d680d476bd9"
+  },
+  {
+    "path": "src/components/ui/drawer.tsx",
+    "sha256": "478c487f66245641d5fa0f0d1c53a07d68bd60c4b3c497ec4c41ce08b482e14b"
+  },
+  {
+    "path": "src/components/ui/dropdown-menu.tsx",
+    "sha256": "a6b87c89f5a806225b7f3a81f13a6577289c67e5787c2a56b5a22bd1edea02ce"
+  },
+  {
+    "path": "src/components/ui/form.tsx",
+    "sha256": "1ed53d4ab564a64708938643de590f2bef3718b0b2a309c1019c57e9c1fde23f"
+  },
+  {
+    "path": "src/components/ui/hover-card.tsx",
+    "sha256": "69dc172ece56ac77bf3a044a1cd60ed601b0041945d16b5da4c6cc4f42116988"
+  },
+  {
+    "path": "src/components/ui/input-otp.tsx",
+    "sha256": "45b7c4fd518616f76dd611b9da13bc60bece1352e050878bf943e1cc6a4ed678"
+  },
+  {
+    "path": "src/components/ui/input.tsx",
+    "sha256": "92debb7d6d2d96d9e607a42d5ce8f37b2d63384ae5dd9ffbbf5f047b680ffb85"
+  },
+  {
+    "path": "src/components/ui/label.tsx",
+    "sha256": "9f72e2ecf16206593aa9e3c4fbc14cd8e81aa8488d57d92d4a950b30935a9fa9"
+  },
+  {
+    "path": "src/components/ui/menubar.tsx",
+    "sha256": "5bd157c3a446ea1e451867e63724b2e87ad6bba6251c8b5f1b267d1df7bd4e0e"
+  },
+  {
+    "path": "src/components/ui/navigation-menu.tsx",
+    "sha256": "755aecc77b7911ab61159c9fbb9b25254009eb4c32c95b1430b6b5b7d37ed8f0"
+  },
+  {
+    "path": "src/components/ui/pagination.tsx",
+    "sha256": "cbe8559c578ee2d34c7daef5ee75dc3afeb795851e294b111dec375ba44a9a2d"
+  },
+  {
+    "path": "src/components/ui/popover.tsx",
+    "sha256": "861c18577ea5988c6f5ca00d1c677200319fd427cf8b424e59a5cca6ff24f830"
+  },
+  {
+    "path": "src/components/ui/progress.tsx",
+    "sha256": "418f612946a520d1380b7a0d058185bb6a6d09846846dd6d6904a0016152dd4a"
+  },
+  {
+    "path": "src/components/ui/radio-group.tsx",
+    "sha256": "8c55aa0496b00a27fc4f609ca8b43a7e82c6802f6bf613998438b7632899fa96"
+  },
+  {
+    "path": "src/components/ui/resizable.tsx",
+    "sha256": "f0399fec7bc334f06433b41b6ebf34255942ce4916b99173898893fa7fcc8281"
+  },
+  {
+    "path": "src/components/ui/scroll-area.tsx",
+    "sha256": "b607f562455152a079d70a22538c95072b0267e0d59a1a1cf16a905a2e373a6f"
+  },
+  {
+    "path": "src/components/ui/select.tsx",
+    "sha256": "6d4deee18cf7ced0354eb719300833a83caf46400de6ee9c3d1942fa4c579ad4"
+  },
+  {
+    "path": "src/components/ui/separator.tsx",
+    "sha256": "bf5838b692e5f74fde7083280b99492dd402bce6966e912e79f5e23f14bc98eb"
+  },
+  {
+    "path": "src/components/ui/sheet.tsx",
+    "sha256": "a82f9341962e766ee925a2fe883b0a9ab5d5dd8475c402ac8e491ee37dc95fde"
+  },
+  {
+    "path": "src/components/ui/sidebar.tsx",
+    "sha256": "9f44f4523271f965adec608ae1c3b8a2f350f2f45ba1401a2c7ee33bc5eda238"
+  },
+  {
+    "path": "src/components/ui/skeleton.tsx",
+    "sha256": "f4c42257d73925b0b856a3500e2cbdd918fe6744fcd6be87ef28bb88e7eb7366"
+  },
+  {
+    "path": "src/components/ui/slider.tsx",
+    "sha256": "d307cf3ff05b54be4a04389ef4379f9e8b4dc49720197937991ce843a8d4b5ec"
+  },
+  {
+    "path": "src/components/ui/sonner.tsx",
+    "sha256": "3ad40f66c339e799b1a57c00e10b4627294c7d580d99d8a48ae0d8d4c13cf931"
+  },
+  {
+    "path": "src/components/ui/switch.tsx",
+    "sha256": "c3c298df4ffb56695e4a8f0ff3e37eee08437dec542a677153ec16bed0820107"
+  },
+  {
+    "path": "src/components/ui/table.tsx",
+    "sha256": "1e945e564c2cc5ca3ef33019ba7da7a8b94cbc73feb3cbc2b7b33c36ea648d92"
+  },
+  {
+    "path": "src/components/ui/tabs.tsx",
+    "sha256": "e9b454d2f987c83b36cc8870bba47d9355db4e8f5c733b310dbc1119a7d27654"
+  },
+  {
+    "path": "src/components/ui/textarea.tsx",
+    "sha256": "35617a2cf053e52c9e56983bde82d556861d38e462f9e578876c8e99a0432687"
+  },
+  {
+    "path": "src/components/ui/toggle-group.tsx",
+    "sha256": "d59cd3937c967a3e221fdfcfe4ea5cd57eb97cbe37e1ac98126664c9c7db49c1"
+  },
+  {
+    "path": "src/components/ui/toggle.tsx",
+    "sha256": "62e6e21993f1ab633b9f830cbbf0c181f3d161bae3a7792dbf2d842d42a2f09c"
+  },
+  {
+    "path": "src/components/ui/tooltip.tsx",
+    "sha256": "9682690fc3755d0f4b8684f2d7b1f77945876d41a45b723d0761b26804ad5010"
+  },
+  {
+    "path": "src/components/WhyNagpurConnect.tsx",
+    "sha256": "abc75a05345118c6e99184a4edc899ea0b0216d1a2192bfd0ed8184ee59fd117"
+  },
+  {
+    "path": "src/context/AuthContext.tsx",
+    "sha256": "a2b33ebd066dcfd94b639544fa2ab5ccb284a2596e92b7e804702be33d086287"
+  },
+  {
+    "path": "src/data/bus_fares.json",
+    "sha256": "16342757c5e03f1cb0079dd59d1c08a63a71eed73e58ab61133e575e1c88e02c"
+  },
+  {
+    "path": "src/data/bus_schedules.json",
+    "sha256": "1635b3495265b02ff70290eb6ee99fe5bc3c3c60f7d4a70f3423c1fda4f78e89"
+  },
+  {
+    "path": "src/data/chalo_routes_index.json",
+    "sha256": "38a405e2d30e5ba20f6a9c73b82748b03995f7499048fbb07e3f82f9b2241974"
+  },
+  {
+    "path": "src/data/lineGeometries.json",
+    "sha256": "fedcc5b28270c2c774925d624ba3607a9f466eb5448321746927271b0ec56810"
+  },
+  {
+    "path": "src/data/metro_fares.json",
+    "sha256": "93339c9bca9442d080076574948d3d7e5048195471fae1b3a16af0b8e85c5f62"
+  },
+  {
+    "path": "src/data/network.json",
+    "sha256": "0a7429a9da6894ecdcc0d4246a5426451f475818de4c94e10286dc947f3c9c53"
+  },
+  {
+    "path": "src/hooks/use-mobile.tsx",
+    "sha256": "21eff740f9e5c965c7f0782925a7e8f67ddfcdf0f58b6613550f99c3e1c454e9"
+  },
+  {
+    "path": "src/lib/busTimetableService.ts",
+    "sha256": "a2e92a344cd06f0988b4b842eceeca7b72216bbff38c441a91b44b71842ed4c8"
+  },
+  {
+    "path": "src/lib/error-capture.ts",
+    "sha256": "779eabc931ad7a72b80802b69fc286d849e88d0b9298125042b6cc875931125c"
+  },
+  {
+    "path": "src/lib/error-page.ts",
+    "sha256": "635915886f5d44a18b6add2a53959dbe2e8ba1bb3f7e597fc714650e74157bb6"
+  },
+  {
+    "path": "src/lib/fares.ts",
+    "sha256": "042531fe4e143a6f4bcbb432ba9eac3f1734535439b7361bf83677463471cce9"
+  },
+  {
+    "path": "src/lib/frequencies.ts",
+    "sha256": "8bfd00e65cce910a49b4a9150824c455ab7aeef44729534387bf05cfc29c0199"
+  },
+  {
+    "path": "src/lib/liveBus.ts",
+    "sha256": "bca7b8857cf2ce46b16a4db81344dc3595dec7a3c3507e29dc65f500fd2b72f2"
+  },
+  {
+    "path": "src/lib/n8nAiService.ts",
+    "sha256": "83825bc999005020474d347c355b1b597a1c6aabf2a11c0ca864845e2a88184c"
+  },
+  {
+    "path": "src/lib/nagpurPlaces.ts",
+    "sha256": "3826ae9e617e8ead240235d35f8c07b2dfb982c8a8ba69fdc902767b9f9da4bf"
+  },
+  {
+    "path": "src/lib/nearby.ts",
+    "sha256": "eca1d79ac805c6ba7d0e103bdf4d17cd9a9fffe97d4278816a0ebf075686915b"
+  },
+  {
+    "path": "src/lib/network.ts",
+    "sha256": "40c4a9a5ec305cf6cca25ae5f822d381cf0bbc4f6745e7ea85c1ee21f7190adb"
+  },
+  {
+    "path": "src/lib/ors.ts",
+    "sha256": "8a80c0f18f9cb03d0c67e2cabf922384a06edf5ca58fbdd7379d14a786831e16"
+  },
+  {
+    "path": "src/lib/placesSearch.ts",
+    "sha256": "1095811d06b1e35717dd1a456612a55cc50bc509a162bfd403ff5160376f830e"
+  },
+  {
+    "path": "src/lib/routing.ts",
+    "sha256": "790d2eb36eb854fea4dcb4f55fc5d5c1b98fbcf7561927b53cf5679281d36369"
+  },
+  {
+    "path": "src/lib/supabase-schema.sql",
+    "sha256": "b746546e8d18999460bf8b26c4333764732f1f059f5dee8795c94184fd37fb5b"
+  },
+  {
+    "path": "src/lib/ticketExporter.ts",
+    "sha256": "0e26594f3e688f7b549069a2460e36e8caec8c9cde532d804a6d76aa7cde8190"
+  },
+  {
+    "path": "src/lib/ticketing.ts",
+    "sha256": "3609c924b8d8011e1e5f1042bb0dfa2244612ad5899ec68a4549bfb72ce76c0f"
+  },
+  {
+    "path": "src/lib/uberApi.ts",
+    "sha256": "642f8cf0fc060079b1696e1d89a8d22d8cd2c9bb2f76920141e7fbf6a524df19"
+  },
+  {
+    "path": "src/lib/utils.ts",
+    "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27"
+  },
+  {
+    "path": "src/lib/wavRecorder.ts",
+    "sha256": "a579f8e712594d237a9ba598cf0183eccdff16cde51e79a6c398189335965f83"
+  },
+  {
+    "path": "src/router.tsx",
+    "sha256": "72b68964d3f55ba4f7dcf2a04aad9d97d7c61fabad13aec1d298f1e39ee59fcc"
+  },
+  {
+    "path": "src/routes/app.tsx",
+    "sha256": "387bd036a37fe11194aeec8a11d9fa36ebd17c0e6a8d4c16b1a36aece1051a93"
+  },
+  {
+    "path": "src/routes/forgot-password.tsx",
+    "sha256": "680345820cf654460dc3e08d6e8eff9cc3c0e036f94be57ebc8b2c12315fa6b4"
+  },
+  {
+    "path": "src/routes/index.tsx",
+    "sha256": "004f3f82f44dd8e96165e04b9ea3878829d24df23172d23edcd89c251e68774e"
+  },
+  {
+    "path": "src/routes/login.tsx",
+    "sha256": "5f500c4bd5d26d6e5b942de7c1808fcf9a7c73e077d1d5fae259882f06b043c2"
+  },
+  {
+    "path": "src/routes/signup.tsx",
+    "sha256": "086698f4245c1a4b2f44d960febecccae51c6994e6c8892c6c608f62ee71692a"
+  },
+  {
+    "path": "src/routes/update-password.tsx",
+    "sha256": "81362cd473ee82ec64942b46c3aaea9d330d67c2e84957ccbb6d55fd9e244421"
+  },
+  {
+    "path": "src/routes/__root.tsx",
+    "sha256": "d40cfb3056d6f53bdc5ca8bdc575b6ffaaecfe9bcf6566bce6865cd693e4019e"
+  },
+  {
+    "path": "src/routeTree.gen.ts",
+    "sha256": "b7d9bf69f52b45430038314d22903338b152baf4c757125f3528f46f16725f70"
+  },
+  {
+    "path": "src/server.ts",
+    "sha256": "ca5af713cff12bf4bc555847ab1c94a03d31bed61ff75e413dc96444b49564ea"
+  },
+  {
+    "path": "src/services/dbTypes.ts",
+    "sha256": "019adfc7bc2e1e0b4f22d0d5ff13e5ee009c76fcae9483c614a356f9cbeffcb9"
+  },
+  {
+    "path": "src/services/ecoRewardsService.ts",
+    "sha256": "bcf407e52d0a28dee82a91fa4ebecaebbb7e46f5dbc274d5c05bf96064fe8622"
+  },
+  {
+    "path": "src/services/emailService.ts",
+    "sha256": "26f4e16f45314ce69efda28239e2f654358e525ef19cf7f22a2b5e450840edee"
+  },
+  {
+    "path": "src/services/profileService.ts",
+    "sha256": "1c64235fe89d5958578b7bc70cac150e6deec6fed1f65f6f3accf465de6e3509"
+  },
+  {
+    "path": "src/services/recentJourneysService.ts",
+    "sha256": "0e66fc217f634b4b336aa74004c77083f72f470077ef67bdb719e79fd0cba548"
+  },
+  {
+    "path": "src/services/savedJourneysService.ts",
+    "sha256": "5816c2b3910de717d8b466d5dfd02105c17f1d4e3b2461e28c10490cce81d212"
+  },
+  {
+    "path": "src/services/ticketService.ts",
+    "sha256": "e99643150442e9a569188a5f32c2932f99b8d7700fa7394401b803aed94692dc"
+  },
+  {
+    "path": "src/start.ts",
+    "sha256": "b73ce7a01bfe824fb1ce6185e6eb0239f2c2b00d9dbde608587aa4f5ba08239d"
+  },
+  {
+    "path": "src/styles.css",
+    "sha256": "cb26c1d4d2f85c6a5963c903eb57a088e94983d5608093223ca97a3ff7583ce7"
+  },
+  {
+    "path": "src/supabaseClient.ts",
+    "sha256": "f4065ce1d11ecc461099aed1421465cda02056dfd9d835fcbe57b6da0d850c09"
+  },
+  {
+    "path": "tsconfig.json",
+    "sha256": "0ff5b0536ac765fe8beabcfe2202c3069c4cc43136e20e4c2f04c55f6f4ebc84"
+  },
+  {
+    "path": "vite.config.ts",
+    "sha256": "8d8ca808e8cb084761c143a32266ab66d9220dc109c41eb4b565c0bb94fda06a"
+  }
+]

@@ -1,0 +1,324 @@
+{
+  "date": "2026-10-15",
+  "navigation": [
+    {
+      "height": 52,
+      "id": "nav-home",
+      "selected": "true",
+      "text": "",
+      "width": 64.796875
+    },
+    {
+      "height": 52,
+      "id": "nav-plan",
+      "selected": "true",
+      "text": "",
+      "width": 64.796875
+    },
+    {
+      "height": 52,
+      "id": "nav-nearby",
+      "selected": "true",
+      "text": "",
+      "width": 64.796875
+    },
+    {
+      "height": 52,
+      "id": "nav-trips",
+      "selected": "true",
+      "text": "",
+      "width": 64.796875
+    },
+    {
+      "height": 52,
+      "id": "nav-profile",
+      "selected": "true",
+      "text": "",
+      "width": 64.796875
+    }
+  ],
+  "responsive": [
+    {
+      "height": 568,
+      "overflow": false,
+      "targets": [
+        {
+          "h": 52,
+          "left": 24,
+          "name": "Home",
+          "right": 78.390625,
+          "text": "",
+          "w": 54.390625
+        },
+        {
+          "h": 52,
+          "left": 78.390625,
+          "name": "Plan routes",
+          "right": 132.78125,
+          "text": "",
+          "w": 54.390625
+        },
+        {
+          "h": 52,
+          "left": 132.78125,
+          "name": "Nearby transit",
+          "right": 187.171875,
+          "text": "",
+          "w": 54.390625
+        },
+        {
+          "h": 52,
+          "left": 187.171875,
+          "name": "Trips and tickets",
+          "right": 241.5625,
+          "text": "",
+          "w": 54.390625
+        },
+        {
+          "h": 52,
+          "left": 241.5625,
+          "name": "Profile and more",
+          "right": 295.953125,
+          "text": "",
+          "w": 54.390625
+        }
+      ],
+      "width": 320
+    },
+    {
+      "height": 844,
+      "overflow": false,
+      "targets": [
+        {
+          "h": 52,
+          "left": 24,
+          "name": "Home",
+          "right": 86.390625,
+          "text": "",
+          "w": 62.390625
+        },
+        {
+          "h": 52,
+          "left": 86.390625,
+          "name": "Plan routes",
+          "right": 148.78125,
+          "text": "",
+          "w": 62.390625
+        },
+        {
+          "h": 52,
+          "left": 148.78125,
+          "name": "Nearby transit",
+          "right": 211.171875,
+          "text": "",
+          "w": 62.390625
+        },
+        {
+          "h": 52,
+          "left": 211.171875,
+          "name": "Trips and tickets",
+          "right": 273.5625,
+          "text": "",
+          "w": 62.390625
+        },
+        {
+          "h": 52,
+          "left": 273.5625,
+          "name": "Profile and more",
+          "right": 335.953125,
+          "text": "",
+          "w": 62.390625
+        }
+      ],
+      "width": 360
+    },
+    {
+      "height": 844,
+      "overflow": false,
+      "targets": [
+        {
+          "h": 52,
+          "left": 25.5,
+          "name": "Home",
+          "right": 90.296875,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 90.296875,
+          "name": "Plan routes",
+          "right": 155.09375,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 155.09375,
+          "name": "Nearby transit",
+          "right": 219.890625,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 219.890625,
+          "name": "Trips and tickets",
+          "right": 284.6875,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 284.6875,
+          "name": "Profile and more",
+          "right": 349.484375,
+          "text": "",
+          "w": 64.796875
+        }
+      ],
+      "width": 375
+    },
+    {
+      "height": 844,
+      "overflow": false,
+      "targets": [
+        {
+          "h": 52,
+          "left": 33,
+          "name": "Home",
+          "right": 97.796875,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 97.796875,
+          "name": "Plan routes",
+          "right": 162.59375,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 162.59375,
+          "name": "Nearby transit",
+          "right": 227.390625,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 227.390625,
+          "name": "Trips and tickets",
+          "right": 292.1875,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 292.1875,
+          "name": "Profile and more",
+          "right": 356.984375,
+          "text": "",
+          "w": 64.796875
+        }
+      ],
+      "width": 390
+    },
+    {
+      "height": 844,
+      "overflow": false,
+      "targets": [
+        {
+          "h": 52,
+          "left": 44,
+          "name": "Home",
+          "right": 108.796875,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 108.796875,
+          "name": "Plan routes",
+          "right": 173.59375,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 173.59375,
+          "name": "Nearby transit",
+          "right": 238.390625,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 238.390625,
+          "name": "Trips and tickets",
+          "right": 303.1875,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 303.1875,
+          "name": "Profile and more",
+          "right": 367.984375,
+          "text": "",
+          "w": 64.796875
+        }
+      ],
+      "width": 412
+    },
+    {
+      "height": 844,
+      "overflow": false,
+      "targets": [
+        {
+          "h": 52,
+          "left": 53,
+          "name": "Home",
+          "right": 117.796875,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 117.796875,
+          "name": "Plan routes",
+          "right": 182.59375,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 182.59375,
+          "name": "Nearby transit",
+          "right": 247.390625,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 247.390625,
+          "name": "Trips and tickets",
+          "right": 312.1875,
+          "text": "",
+          "w": 64.796875
+        },
+        {
+          "h": 52,
+          "left": 312.1875,
+          "name": "Profile and more",
+          "right": 376.984375,
+          "text": "",
+          "w": 64.796875
+        }
+      ],
+      "width": 430
+    }
+  ]
+}

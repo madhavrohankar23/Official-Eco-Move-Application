@@ -1,0 +1,10 @@
+{
+  "action": "Update the mobile Gradle wrapper to 9.4.1 with the official distribution checksum",
+  "reason": "AGP 9.2.1 requires Gradle 9.4.1 and its default built-in Kotlin conflicts with the existing Kotlin Android plugin. Keep the documented legacy Kotlin/DSL compatibility flags for the installed React Native/Expo modules.",
+  "evidence": "artifacts/voice-android-previous-build.log",
+  "allowed_write_scope": ["Eco-Move App/"],
+  "java": "17",
+  "verification": ["assembleRelease", "signature and ABI verification", "source parity", "emulator launch"],
+  "planning": "direct",
+  "delegation": "none"
+}

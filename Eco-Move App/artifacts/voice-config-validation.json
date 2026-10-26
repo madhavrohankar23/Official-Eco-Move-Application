@@ -1,0 +1,8 @@
+{
+  "mobileEndpointMatchesUserEnv": true,
+  "mobileTestEndpointMatchesUserEnv": true,
+  "nativeRuntimeUsesConfiguredEndpoint": true,
+  "webRuntimeUsesConfiguredEndpoint": true,
+  "runtimeCopiesEqual": true,
+  "sourceEnvironmentUnchanged": true
+}

@@ -1,0 +1,6 @@
+{
+  "path": ".env",
+  "sha256": "698a74c9ae106996ce64e00c16204bdbf96f3360dba5d24c4a38a17c309996ee",
+  "recordedAt": "2026-10-24T04:59:12.5157352Z",
+  "reason": "User explicitly supplied updated n8n environment configuration on 2026-10-24. Original file remains read-only; this exact hash is the environment checkpoint for subsequent validation."
+}

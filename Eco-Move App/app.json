@@ -1,0 +1,69 @@
+{
+  "expo": {
+    "name": "Eco-Move",
+    "slug": "eco-move-nagpur",
+    "version": "1.0.0",
+    "scheme": "ecomove",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "in.ecomove.nagpur",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Use the front camera to zoom the map with thumb and index finger gestures. Video stays on your device.",
+        "NSMotionUsageDescription": "Detect a deliberate phone shake to toggle the Eco-Move voice assistant."
+      }
+    },
+    "android": {
+      "package": "in.ecomove.nagpur",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "INTERNET",
+        "RECORD_AUDIO",
+        "CAMERA"
+      ],
+      "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#eaf3ed"
+      }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 37,
+            "targetSdkVersion": 36,
+            "buildToolsVersion": "36.0.0",
+            "minSdkVersion": 26,
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Find nearby transit and set your journey origin."
+        }
+      ],
+      "expo-secure-store",
+      [
+        "expo-speech-recognition",
+        {
+          "microphonePermission": "Speak a transit question or destination.",
+          "speechRecognitionPermission": "Turn your spoken transit question into text."
+        }
+      ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Detect a deliberate phone shake to toggle the Eco-Move voice assistant."
+        }
+      ]
+    ]
+  }
+}

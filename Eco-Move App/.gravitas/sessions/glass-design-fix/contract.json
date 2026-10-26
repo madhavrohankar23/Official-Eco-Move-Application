@@ -1,0 +1,12 @@
+{
+  "mode": "implement",
+  "objective": "Repair shared Liquid Glass presentation and fixed-size controls without changing application behavior",
+  "allowed_write_scope": ["Eco-Move App/"],
+  "acceptance_criteria": ["Glass fills fixed-size map buttons and active navigation lens", "Web backdrop blur and iOS native glass retain visible material depth", "Navbar remains icon-only with equal touch targets and moving selected lens", "Original 141 files remain unchanged"],
+  "non_goals": ["Change backend, datasets, routing or authentication", "Claim iOS device validation without an iOS device"],
+  "risk": "medium",
+  "budget": "balanced",
+  "verification": "impact",
+  "policy": {"planning":"compact","context_depth":"dependency","verification_depth":"impact","delegation":"none","reason_codes":["shared-presentation-module","reproduced-sizing-defect"]},
+  "decision": {"action":"Repair Glass, LiquidNav and theme presentation","evidence":["DOM: 44px map button contains a 21px glass surface","Glass ignores moving prop and limits BlurView to iOS","Existing validation documents Android WebView blur artifacts"],"risk":"presentation regression","allowed_by_contract":true}
+}

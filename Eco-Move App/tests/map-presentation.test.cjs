@@ -1,0 +1,26 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const esbuild=require('esbuild');
+const box={exports:{}};
+new Function('module','exports',esbuild.buildSync({entryPoints:['src/mapPresentation.ts'],bundle:true,platform:'node',format:'cjs',write:false}).outputFiles[0].text)(box,box.exports);
+const {mapPresentation}=box.exports;
+test('switching map features hides unrelated overlays and preserves their source objects for reopening',()=>{
+  const input={journey:{id:'journey'},origin:{lat:21,lon:79},destination:{lat:21.1,lon:79.1},nearbyAnchor:{lat:21,lon:79},nearbyMarkers:[{id:'stop'}],nearbyLiveBuses:[],liveRoute:{id:'live'},liveTelemetry:{vehicles:[]},cabPolyline:[[21,79],[21.1,79.1]],nearbyCabs:[],showNetwork:true,mapStyle:'carto'};
+  const plan=mapPresentation('plan',input);
+  assert.equal(plan.journey,input.journey);
+  assert.equal(plan.liveRoute,null);
+  assert.equal(plan.nearbyAnchor,null);
+  assert.deepEqual(plan.nearbyMarkers,[]);
+  assert.deepEqual(plan.cabPolyline,[]);
+  const live=mapPresentation('live',input);
+  assert.equal(live.journey,null);
+  assert.equal(live.liveRoute,input.liveRoute);
+  assert.equal(live.liveTelemetry,input.liveTelemetry);
+  const nearby=mapPresentation('nearby',input);
+  assert.equal(nearby.nearbyMarkers,input.nearbyMarkers);
+  assert.equal(nearby.nearbyAnchor,input.nearbyAnchor);
+  assert.equal(mapPresentation('cabs',input).cabPolyline,input.cabPolyline);
+  assert.equal(mapPresentation('plan',input).journey,input.journey);
+  assert.equal(plan.showNetwork,true);
+  assert.equal(input.liveRoute.id,'live');
+});

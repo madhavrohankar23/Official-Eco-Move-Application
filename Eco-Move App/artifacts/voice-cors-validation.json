@@ -1,0 +1,6 @@
+{
+  "status": 204,
+  "allowOrigin": "http://127.0.0.1:8082",
+  "allowMethods": "OPTIONS, POST",
+  "allowHeaders": "content-type"
+}
