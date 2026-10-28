@@ -16,7 +16,8 @@ const box={exports:{}};
 new Function('require','module','fs','path','__dirname',js)(require,box,fs,path,app);
 let handler;box.exports().configureServer({middlewares:{use:fn=>{handler=fn}}});
 const port=Number(process.env.ECO_EMAIL_PORT||8099),host=process.env.ECO_EMAIL_HOST||'127.0.0.1';
-http.createServer((req,res)=>{
+http.createServer(async (req,res)=>{
+  if(await require('./routing-proxy.cjs').routingProxy(req,res))return;
   if(req.url==='/health'){res.setHeader('Content-Type','application/json');res.end(JSON.stringify({ok:true,service:'original-eco-move-email-middleware'}));return;}
   handler(req,res,()=>{res.statusCode=404;res.end('Not found');});
 }).listen(port,host,()=>console.log(`Original Eco-Move email middleware listening at http://${host}:${port}`));

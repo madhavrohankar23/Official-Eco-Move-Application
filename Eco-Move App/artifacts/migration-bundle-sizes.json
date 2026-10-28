@@ -1,0 +1,64 @@
+{
+  "measuredAt": "2026-10-27T10:06:36.204Z",
+  "runtime": {
+    "before": 21407187,
+    "after": 14322447,
+    "changePercent": -33.1
+  },
+  "web": {
+    "before": 2671159,
+    "after": 2681280,
+    "changePercent": 0.38
+  },
+  "ios": {
+    "before": 3958803,
+    "after": 3976952,
+    "changePercent": 0.46
+  },
+  "android": {
+    "before": 3976210,
+    "after": 3994354,
+    "changePercent": 0.46
+  },
+  "apk": {
+    "before": 55127749,
+    "after": 54706741,
+    "changePercent": -0.76
+  },
+  "freshExportBytes": 66575496,
+  "largestRuntimeInputs": [
+    {
+      "file": "protected/src/data/lineGeometries.json",
+      "bytes": 5346316
+    },
+    {
+      "file": "protected/src/data/network.json",
+      "bytes": 3388976
+    },
+    {
+      "file": "protected/src/data/bus_fares.json",
+      "bytes": 3265281
+    },
+    {
+      "file": "protected/src/data/chalo_routes_index.json",
+      "bytes": 719249
+    },
+    {
+      "file": "protected/src/data/bus_schedules.json",
+      "bytes": 356852
+    },
+    {
+      "file": "protected/src/data/metro_fares.json",
+      "bytes": 255536
+    },
+    {
+      "file": "node_modules/react-dom/cjs/react-dom-client.production.js",
+      "bytes": 205687
+    },
+    {
+      "file": "node_modules/leaflet/dist/leaflet-src.js",
+      "bytes": 150083
+    }
+  ],
+  "runtimeSha256": "dcf97e5acf3d79dfa8d4aa2de657a7891c896f595f9d5a5aadf682f9355b82aa"
+}

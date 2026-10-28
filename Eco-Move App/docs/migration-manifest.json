@@ -1,0 +1,56 @@
+{
+  "sourceCommit": "0a8957b",
+  "targetBaseline": "da8b333",
+  "files": [
+    {
+      "path": "src/lib/nearby.ts",
+      "sha256": "a987e83729b864c6dca7870132fe234cc0df61cc4b9a8d0c91785dcfb505bcd8",
+      "decision": "Source spatial filter and line cache; parity required"
+    },
+    {
+      "path": "src/lib/liveBus.ts",
+      "sha256": "cca6ce06d8d46614f4ef2ccdb35b44465757256586c2bd19b41bb3d16ac82d20",
+      "decision": "Source spatial sampling with bounded requests, typed deduplication and real timestamps"
+    },
+    {
+      "path": "src/lib/nagpurPlaces.ts",
+      "sha256": "5c918695031e80b09e30a0b86b007437085d7220ff936c440f204738a17cff57",
+      "decision": "Source police-station lookup; unused corridor import removed"
+    },
+    {
+      "path": "src/lib/n8nAiService.ts",
+      "sha256": "3ce6210bb707e5b97f438fd3d03945d61ce4f565b6372183b79561491f2a2a42",
+      "decision": "Source environment-based endpoints, retaining live target requests"
+    },
+    {
+      "path": "src/lib/ors.ts",
+      "sha256": "208f678080b7636509c919dc0f72f5c3ade23fdb5e3a4e255135d768cae9fbef",
+      "decision": "Server-only credential adapter; preserve pedestrian routing and geometry fallback"
+    },
+    {
+      "path": "src/lib/turnByTurn.ts",
+      "sha256": "86999161fc1a418a1e9e3f2be31190c4fb649aa59959d085cfa09904232d0c3e",
+      "decision": "Source geometry-based route preview; approximate road-name claims removed"
+    },
+    {
+      "path": "src/services/profileService.ts",
+      "sha256": "2096bfbbd9edff77a0f727c3ea41f531b6284ca5d4ae46a7c38f9b8867dc56ac",
+      "decision": "Source TTL cache with demo update retention"
+    },
+    {
+      "path": "src/services/commuterProfileService.ts",
+      "sha256": "c0eb18e963c89cc77dc496c338521128b3f54762a948530c012055f295d955bb",
+      "decision": "Source account schema and local/cloud storage; honest sync status and preference preservation"
+    },
+    {
+      "path": "src/data/nagpur_official_police_stations.json",
+      "sha256": "bdef5a5517785fbcd17ae5872cd0010e932166470a1fb14b2c8eb9e1492ace87",
+      "decision": "Supplied source static police-station directory"
+    },
+    {
+      "path": "src/components/MapView.tsx",
+      "sha256": "890416dcdda416d71a4fe2345edfcd66e4dae52412d8550a804fe5e4cc145ae6",
+      "decision": "Existing map with child extension, progressive stops and police marker"
+    }
+  ]
+}

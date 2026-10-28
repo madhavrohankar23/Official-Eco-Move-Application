@@ -24,6 +24,9 @@ import {issueFromSource} from './source-issue';
 import {satelliteController} from './satellite';
 import {N8N_CONFIG} from '../src/generated/serviceConfig';
 import {voiceCommand,cancelVoice} from './voice';
+import {useRoutePreview} from './features/maps/useRoutePreview';
+import * as commuter from '@/services/commuterProfileService';
+import {invalidateProfileCache} from '@/services/profileService';
 import {searchVoicePlaces} from './voicePlaces';
 const PreservedMap = React.memo(MapView);
 
@@ -48,6 +51,7 @@ const send=window.EcoSend;
 const initialMap={journey:null,origin:null,destination:null,showNetwork:false,showBusStops:false,showMetroStations:false,mapStyle:'carto',nearbyMarkers:[],poiMarkers:[]};
 function Engine(){
   const auth=useAuth();
+  const preview=useRoutePreview();
   const [props,setProps]=useState<any>(initialMap);
   const currentProps=useRef(props);currentProps.current=props;
   useEffect(()=>{send({type:'auth',user:auth.user,profile:auth.profile,loading:auth.loading,isDemoUser:auth.isDemoUser})},[auth.user,auth.profile,auth.loading]);
@@ -70,7 +74,11 @@ function Engine(){
         if(p.get('code'))return supabase.auth.exchangeCodeForSession(p.get('code')!);
         throw Error('The sign-in link has no session. Please request a fresh link.');
       },
-      logout:()=>auth.signOut(),
+      logout:()=>{preview.control({action:"stop"});invalidateProfileCache();return auth.signOut()},
+      commuter:()=>commuter.fetchCommuterProfile(userId()),
+      saveCommuter:a=>commuter.saveCommuterProfile(userId(),a.profile,!!a.skipped),
+      preview:a=>{userId();return preview.control(a)},
+      previewStatus:()=>preview.status(),
       profile:a=>auth.updateUserProfile(a),
       searchLocal:a=>places.searchLocalPlaces(a.query,20),
       voicePlaces:a=>searchVoicePlaces(a.query),
@@ -117,7 +125,7 @@ function Engine(){
       rewards:()=>rewards.fetchUserEcoStats(userId()),
       claim:a=>rewards.claimUserRewardMilestone(userId(),a.id),
       map:a=>{setProps((p:any)=>{let changed=false;const next={...p};for(const key of Object.keys(a)){const same=JSON.stringify(p[key])===JSON.stringify(a[key]);next[key]=same?p[key]:a[key];changed=changed||!same;}return changed?next:p});return true},
-      appearance:a=>{reduceMapMotion=!!a.reduceMotion;const root=document.documentElement;for(const [key,value]of Object.entries(a.colors||{}))root.style.setProperty('--eco-'+key,String(value));root.style.setProperty('--eco-safe-bottom',`${Math.max(0,Number(a.safeBottom)||0)}px`);root.dataset.contrast=a.contrast>=50?'enhanced':'standard';return true},
+      appearance:a=>{reduceMapMotion=!!a.reduceMotion;const root=document.documentElement;root.dataset.night=a.night?'true':'false';for(const [key,value]of Object.entries(a.colors||{}))root.style.setProperty('--eco-'+key,String(value));root.style.setProperty('--eco-safe-bottom',`${Math.max(0,Number(a.safeBottom)||0)}px`);root.dataset.contrast=a.contrast>=50?'enhanced':'standard';return true},
       zoom:a=>{window.EcoMap?.setZoom(window.EcoMap.getZoom()+a.delta);return true},
       center:a=>{window.EcoMap?.flyTo([a.lat,a.lon],a.zoom||15,{duration:.6});return true},
       resize:()=>{setTimeout(()=>window.EcoMap?.invalidateSize({pan:false}),100);return true},
@@ -129,10 +137,10 @@ function Engine(){
       try{const fn=actions[m.method];if(!fn)throw Error('Unknown app action');const result=await fn(m.args||{});if(result?.error&&['login','signup','verify','resend','reset','updatePassword','oauth','callback','profile'].includes(m.method))throw Error(result.error.message||String(result.error));send({type:'result',id:m.id,value:result??null})}
       catch(e:any){send({type:'result',id:m.id,error:e?.message||String(e)})}
     };
-  },[auth]);
+  },[auth,preview.control,preview.status]);
   useEffect(()=>{send({type:'ready'});return()=>{}},[]);
   useEffect(()=>{void window.EcoSatellite?.select(props.mapStyle==='satellite',props.mapStyle!=='roadmap')},[props.mapStyle]);
   const events=useMemo(()=>{const event=(name:string)=>(value:any)=>send({type:'mapEvent',name,value});return {onMapClick:event('pick'),onSelectNearbyBus:event('nearbyBus'),onSelectLiveStop:event('liveStop'),onSelectBusTimetable:event('timetable'),onDirectionsToSearchedLocation:event('directions'),onDirectionsToPoi:event('directions')}},[]);
-  return <PreservedMap {...props} mapStyle={props.mapStyle==='satellite'?'carto':props.mapStyle} {...events}/>;
+  return <PreservedMap {...props} mapStyle={props.mapStyle==='satellite'?'carto':props.mapStyle} {...events}>{preview.node}</PreservedMap>;
 }
 export function mount(){createRoot(document.getElementById('root')!).render(<AuthProvider><Engine/></AuthProvider>)}

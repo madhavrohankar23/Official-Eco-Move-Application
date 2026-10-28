@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Platform, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Platform, View, useWindowDimensions } from 'react-native';
 import { MotionPressable as Pressable } from '../components/MotionPressable';
 import {
   ArrowDownUp,
@@ -22,16 +22,20 @@ import {
   Sparkles,
   Ticket,
   TrainFront,
+  X,
 } from 'lucide-react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useApp } from '../AppContext';
 import { useTheme } from '../theme';
 import { Action, Badge, Copy, Field, Glass, Notice } from '../components/Glass';
 import { duration, distance, PREFS, type Journey, type Point, type SearchTarget } from '../types';
+import { LoadingRows } from '../components/Loading';
 
 export function HomeScreen() {
   const app = useApp();
   const { c, dark } = useTheme();
+  const { height } = useWindowDimensions();
+  const compactHome = height < 650 && !app.expanded;
   const [showAllPresets, setShowAllPresets] = useState(false);
   const presets = app.data?.presets || [];
   const visiblePresets = showAllPresets ? presets : presets.slice(0, 2);
@@ -39,11 +43,11 @@ export function HomeScreen() {
   return (
     <>
       <View style={{ gap: 4 }}>
-        <Copy size={11} muted weight="600" style={{ letterSpacing: 1.5, textTransform: 'uppercase' }}>
+        {!compactHome && <Copy size={11} muted weight="600" style={{ letterSpacing: 1.5, textTransform: 'uppercase' }}>
           Sustainable Transit
-        </Copy>
-        <Copy size={28} weight="600" style={{ lineHeight: 32, letterSpacing: -0.8 }}>
-          A greener way{'\n'}to get there.
+        </Copy>}
+        <Copy size={compactHome ? 20 : 28} weight="600" style={{ lineHeight: compactHome ? 26 : 32, letterSpacing: -0.8 }}>
+          {compactHome ? 'A greener journey.' : 'A greener way\nto get there.'}
         </Copy>
       </View>
 
@@ -160,6 +164,17 @@ export function LocationField({
   const app = useApp();
   const { c } = useTheme();
 
+  const handleClear = () => {
+    if (target === 'origin') app.setOrigin(null);
+    else if (target === 'destination') app.setDestination(null);
+    else if (target === 'cab_origin') app.setCabOrigin(null);
+    else if (target === 'cab_destination') app.setCabDestination(null);
+    else if (target === 'anchor') app.setAnchor(null);
+    else if (target === 'place') app.setSearchedPlace(null);
+    app.dismissRouteResults();
+    app.setSearchedPlace(null);
+  };
+
   return (
     <View style={{ gap: 5 }}>
       <Copy size={11} muted weight="600" style={{ letterSpacing: 0.6, textTransform: 'uppercase' }}>
@@ -185,11 +200,22 @@ export function LocationField({
               {value?.name || `Choose ${label.toLowerCase()}`}
             </Copy>
           </Pressable>
+          {Boolean(value) && (
+            <Pressable
+              accessibilityLabel={`Clear ${label.toLowerCase()}`}
+              accessibilityRole="button"
+              testID={`clear-${target}`}
+              onPress={handleClear}
+              style={{ width: 40, height: 48, alignItems: 'center', justifyContent: 'center' }}
+            >
+              <X size={17} color={c.muted} strokeWidth={2} />
+            </Pressable>
+          )}
           <Pressable
             accessibilityLabel={`Choose ${label.toLowerCase()} on map`}
             accessibilityRole="button"
             onPress={() => app.pickMap(target)}
-            style={{ width: 48, height: 48, alignItems: 'center', justifyContent: 'center' }}
+            style={{ width: 44, height: 48, alignItems: 'center', justifyContent: 'center' }}
           >
             <LocateFixed size={19} color={c.accent} strokeWidth={1.8} />
           </Pressable>
@@ -204,11 +230,24 @@ export function PlanScreen() {
   const { c, dark } = useTheme();
   const [timeOpen, setTimeOpen] = useState(false);
   const [prefsExpanded, setPrefsExpanded] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
+  useEffect(() => { setDetailsOpen(false); }, [app.routeResultsOpen]);
+
+  const uniqueJourneys = React.useMemo(() => {
+    const seen = new Set<string>();
+    return app.journeys.filter(j => {
+      const sig = `${j.totalTimeMin}-${j.totalFareRs}-${j.legs.map(l => `${l.mode}:${l.line||l.busNumber||''}:${l.from}->${l.to}`).join('|')}`;
+      if (seen.has(sig)) return false;
+      seen.add(sig);
+      return true;
+    });
+  }, [app.journeys]);
 
   const currentPref = PREFS.find(p => p.id === app.preference);
 
   return (
     <>
+      {!app.routeResultsOpen && <>
       <LocationField label="Starting point" value={app.origin} target="origin" />
 
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
@@ -327,14 +366,37 @@ export function PlanScreen() {
         }
         onPress={() => app.plan()}
       />
+      </>}
+
+      {app.routeResultsOpen && <>
+        <View style={{gap:5}}>
+          <Copy size={14} weight="600">{app.origin?.name} → {app.destination?.name}</Copy>
+          <Copy size={12} muted>{app.planning ? 'Finding available connections…' : `${uniqueJourneys.length} available route${uniqueJourneys.length===1?'':'s'}`}</Copy>
+        </View>
+        <Action label="Edit trip" icon={SlidersHorizontal} quiet compact onPress={app.dismissRouteResults}/>
+        {app.planning && <LoadingRows/>}
+        {!app.planning && !uniqueJourneys.length && <Action label="Retry routes" icon={Route} onPress={()=>app.plan()}/>}
+        {uniqueJourneys.length > 1 && !app.planning && (
+          <View style={{ gap: 8, marginTop: 4 }}>
+            <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
+              <Badge label={`Fastest: ${duration(Math.min(...uniqueJourneys.map(j => j.totalTimeMin)))}`} color={c.accent} />
+              <Badge label={`From ₹${Math.min(...uniqueJourneys.map(j => j.totalFareRs))}`} color="#10b981" />
+              {uniqueJourneys.some(j => j.co2g != null && j.co2g > 0) && (
+                <Badge label={`Lowest CO₂: ${Math.round(Math.min(...uniqueJourneys.filter(j => j.co2g != null && j.co2g > 0).map(j => j.co2g!)))}g`} color="#059669" />
+              )}
+            </View>
+            <Action label="Compare route options" icon={Sparkles} quiet compact onPress={() => app.open('explain')} />
+          </View>
+        )}
+      </>}
 
       {app.notice ? <Notice>{app.notice}</Notice> : null}
       <View style={{ minHeight: 18 }} accessibilityLiveRegion="polite">{app.enriching && <Copy size={12} muted>Refining pedestrian paths…</Copy>}</View>
 
       {/* Journey candidate cards */}
-      {app.journeys.map((journey, i) => (
+      {uniqueJourneys.map((journey, i) => (
         <JourneyCard
-          key={i}
+          key={`route-${i}-${journey.totalTimeMin}-${journey.totalFareRs}`}
           journey={journey}
           selected={i === app.selected}
           index={i}
@@ -343,7 +405,8 @@ export function PlanScreen() {
       ))}
 
       {/* Selected journey details */}
-      {app.journey && (
+      {app.journey && <Action label={detailsOpen?'Hide journey details':'Journey details'} icon={detailsOpen?ChevronUp:ChevronDown} quiet compact onPress={()=>setDetailsOpen(value=>!value)}/>}
+      {app.journey && detailsOpen && (
         <View style={{ gap: 14, marginTop: 6 }}>
           <View style={{ flexDirection: 'row', gap: 8 }}>
             <Action label="Save" icon={Bookmark} compact quiet onPress={app.saveJourney} style={{ flex: 1 }} />
@@ -355,6 +418,7 @@ export function PlanScreen() {
             Your Journey, Step by Step
           </Copy>
 
+          <Action label="Preview this route" icon={Route} quiet onPress={() => app.open('preview')} />
           {app.journey.legs.map((l, i) => (
             <LegRow leg={l} key={i} />
           ))}
@@ -453,9 +517,19 @@ function JourneyCard({
                 ))}
             </View>
 
-            <Copy muted size={12}>
-              {j.departureTimeStr} → {j.arrivalTimeStr} · {distance(j.walkDistanceM)} walk · {j.transfers} transfer{j.transfers === 1 ? '' : 's'}
-            </Copy>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 }}>
+              <Copy muted size={12}>
+                {j.departureTimeStr} → {j.arrivalTimeStr} · {distance(j.walkDistanceM)} walk · {j.transfers} transfer{j.transfers === 1 ? '' : 's'}
+              </Copy>
+              {j.co2g != null && j.co2g > 0 && (
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                  <Leaf size={12} color="#16a34a" />
+                  <Copy size={12} style={{ color: dark ? '#4ade80' : '#15803d', fontWeight: '500' }}>
+                    {j.co2g >= 1000 ? `${(j.co2g / 1000).toFixed(1)} kg CO₂` : `${Math.round(j.co2g)} g CO₂`}
+                  </Copy>
+                </View>
+              )}
+            </View>
           </View>
         </Glass>
       )}

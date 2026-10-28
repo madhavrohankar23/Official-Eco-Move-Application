@@ -57,6 +57,9 @@ export class VoiceSession {
   private dispatch(text:string){
     clearTimeout(this.endTimer);clearTimeout(this.listenTimer);
     this.state('thinking');
+    // A final transcript owns the request now. Release the recognizer before
+    // network work or TTS; synchronous abort/end events are ignored in thinking.
+    this.adapter.abort();
     const run=this.epoch,id=`voice-${Date.now()}-${++sequence}`;this.requestId=id;
     const isCurrent=()=>run===this.epoch;
     void (async()=>{try{

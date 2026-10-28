@@ -1309468,6 +1309468,11 @@ function extractDatasetInfoForQuery(query) {
   }
   return null;
 }
+var env = define_import_meta_env_default;
+var N8N_PRODUCTION_WEBHOOK_URL = env["VITE_N8N_WEBHOOK_URL"]?.trim() || "";
+var N8N_TEST_WEBHOOK_URL = env["VITE_N8N_TEST_WEBHOOK_URL"]?.trim() || "";
+var N8N_CHATBOT_PRODUCTION_WEBHOOK_URL = env["VITE_N8N_CHATBOT_WEBHOOK_URL"]?.trim() || N8N_PRODUCTION_WEBHOOK_URL;
+var N8N_CHATBOT_TEST_WEBHOOK_URL = env["VITE_N8N_CHATBOT_TEST_WEBHOOK_URL"]?.trim() || N8N_TEST_WEBHOOK_URL;
 function extractCleanAiText(data) {
   if (!data) return "";
   if (typeof data === "string") {
@@ -1309743,7 +1309748,7 @@ function selectVoicePlace(query, places) {
   return places.length === 1 ? places[0] : null;
 }
 function cleanEndpoint(value) {
-  return normalizeSpokenPlace(value.replace(/^(?:(?:please|plan|a|route|journey|directions|show|me|take|go|travel|how|do|i|can|want|to|reach|get)\s+)+/i, "").replace(/^(?:(?:मुझे|मला|कृपया|मी|मैं|हमें|आपण|mujhe|mala|please)\s+)+/iu, "").replace(/\s*(?:(?:तक|पर्यंत|पर्यन्त|ला)(?:\s|$).*|(?:जाना|जाने|जायचे|जायचं|जायचेय|जायचय|जायचंय|पोहोचायचे|पोहचायचे|जाऊ|कसे|कैसे|जायला|jana|jaana|jayche|jaycha|jaayche|paryant|tak)\b.*)$/iu, "").replace(/\s*(?:जाना|जाने|जायचे|जायचं|जायचेय|जायचय|जायचंय|पोहोचायचे|पोहचायचे|जाऊ|कसे|कैसे|जायला).*$/u, "").replace(/\s+(?:please|by\s+(?:bus|metro)|using\s+(?:bus|metro))[.!?\s]*$/i, ""));
+  return normalizeSpokenPlace(value.replace(/\s+(?:at\s+\d{1,2}(?::\d{2})?(?:\s*[ap]m)?|today|tomorrow|tonight|by\s+(?:bus|metro)|using\s+(?:bus|metro)|fastest|cheapest|with\s+(?:less|least|fewest))\b.*$/i, "").replace(/\s+(?:सुबह|शाम|रात|सकाळी|उद्या|आज|स्वस्त).*$/u, "").replace(/^(?:(?:please|plan|a|route|journey|directions|show|me|take|go|travel|how|do|i|can|want|to|reach|get)\s+)+/i, "").replace(/^(?:(?:मुझे|मला|कृपया|मी|मैं|हमें|आपण|mujhe|mala|please)\s+)+/iu, "").replace(/\s*(?:(?:तक|पर्यंत|पर्यन्त|ला)(?:\s|$).*|(?:जाना|जाने|जायचे|जायचं|जायचेय|जायचय|जायचंय|पोहोचायचे|पोहचायचे|जाऊ|कसे|कैसे|जायला|jana|jaana|jayche|jaycha|jaayche|paryant|tak)\b.*)$/iu, "").replace(/\s*(?:जाना|जाने|जायचे|जायचं|जायचेय|जायचय|जायचंय|पोहोचायचे|पोहचायचे|जाऊ|कसे|कैसे|जायला).*$/u, "").replace(/\s+(?:please|by\s+(?:bus|metro)|using\s+(?:bus|metro))[.!?\s]*$/i, ""));
 }
 function extractSpokenRoute(query) {
   const text = query.normalize("NFC").trim().replace(/[।?!]+$/u, "");
@@ -1309836,9 +1309841,10 @@ var { voiceCommand, cancelVoice } = createVoiceService({ endpoint: N8N_CONFIG.pr
 function searchVoicePlaces(query) {
   const text = normalizeSpokenPlace(query);
   const local = searchLocalPlaces(text, 20);
-  if (selectVoicePlace(text, local)) return local;
   const key = voiceStationKey(text);
   if (!key) return [];
+  const selected = selectVoicePlace(text, local);
+  if (selected && voiceStationKey(selected.name) === key) return local;
   const stations = metroStations.filter((station) => voiceStationKey(station.name) === key);
   return stations.length ? stations : local;
 }

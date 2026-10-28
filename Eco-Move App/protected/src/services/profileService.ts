@@ -11,9 +11,33 @@ const DEMO_PROFILE: UserProfile = {
   updatedAt: new Date().toISOString(),
 };
 
-export async function getUserProfile(userId: string): Promise<UserProfile | null> {
+interface ProfileCacheEntry {
+  data: UserProfile | null;
+  timestamp: number;
+}
+
+const profileCache = new Map<string, ProfileCacheEntry>();
+const PROFILE_CACHE_TTL_MS = 30000; // 30-second in-memory deduplication window
+
+export function invalidateProfileCache(userId?: string) {
+  if (userId) {
+    profileCache.delete(userId);
+  } else {
+    profileCache.clear();
+  }
+}
+
+export async function getUserProfile(userId: string, forceRefresh = false): Promise<UserProfile | null> {
   if (userId === "demo-user-nagpur-001") {
-    return DEMO_PROFILE;
+    return profileCache.get(userId)?.data || DEMO_PROFILE;
+  }
+
+  // Return cached profile if available and still fresh
+  if (!forceRefresh && profileCache.has(userId)) {
+    const entry = profileCache.get(userId)!;
+    if (Date.now() - entry.timestamp < PROFILE_CACHE_TTL_MS) {
+      return entry.data;
+    }
   }
 
   try {
@@ -28,9 +52,12 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
       return null;
     }
 
-    if (!data) return null;
+    if (!data) {
+      profileCache.set(userId, { data: null, timestamp: Date.now() });
+      return null;
+    }
 
-    return {
+    const result: UserProfile = {
       id: data.id,
       fullName: data.full_name || "Nagpur Commuter",
       email: data.email,
@@ -40,6 +67,9 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
+
+    profileCache.set(userId, { data: result, timestamp: Date.now() });
+    return result;
   } catch (err) {
     console.warn("Profile fetch error:", err);
     return null;
@@ -48,7 +78,9 @@ export async function getUserProfile(userId: string): Promise<UserProfile | null
 
 export async function upsertUserProfile(profile: Partial<UserProfile> & { id: string }): Promise<UserProfile | null> {
   if (profile.id === "demo-user-nagpur-001") {
-    return { ...DEMO_PROFILE, ...profile };
+    const merged = { ...DEMO_PROFILE, ...profile };
+    profileCache.set(profile.id, { data: merged, timestamp: Date.now() });
+    return merged;
   }
 
   try {
@@ -71,7 +103,7 @@ export async function upsertUserProfile(profile: Partial<UserProfile> & { id: st
       return null;
     }
 
-    return {
+    const result: UserProfile = {
       id: data.id,
       fullName: data.full_name,
       email: data.email,
@@ -81,6 +113,9 @@ export async function upsertUserProfile(profile: Partial<UserProfile> & { id: st
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
+
+    profileCache.set(result.id, { data: result, timestamp: Date.now() });
+    return result;
   } catch (err) {
     console.warn("Profile upsert error:", err);
     return null;

@@ -183,14 +183,20 @@ export interface AiSearchIntentResult {
   message: string;
 }
 
-// Production & Test n8n Webhook URLs (Single Unified Workflow: Eco-Move Nagpur - Explainable Route AI Agent)
-export const N8N_PRODUCTION_WEBHOOK_URL = "https://rohit134.app.n8n.cloud/webhook/explain-route";
-export const N8N_TEST_WEBHOOK_URL = "https://rohit134.app.n8n.cloud/webhook-test/explain-route";
-export const N8N_WEBHOOK_URL = N8N_PRODUCTION_WEBHOOK_URL;
+const env = import.meta.env as Record<string,string | undefined>;
+// Production & Test n8n Webhook URLs (Loaded dynamically from .env, zero hardcoded URLs)
+export const N8N_PRODUCTION_WEBHOOK_URL =
+  env["VITE_N8N_WEBHOOK_URL"]?.trim() || "";
+export const N8N_TEST_WEBHOOK_URL =
+  env["VITE_N8N_TEST_WEBHOOK_URL"]?.trim() || "";
+export const N8N_WEBHOOK_URL = N8N_PRODUCTION_WEBHOOK_URL || N8N_TEST_WEBHOOK_URL;
 
-export const N8N_CHATBOT_PRODUCTION_WEBHOOK_URL = N8N_PRODUCTION_WEBHOOK_URL;
-export const N8N_CHATBOT_TEST_WEBHOOK_URL = N8N_TEST_WEBHOOK_URL;
-export const N8N_CHATBOT_WEBHOOK_URL = N8N_CHATBOT_PRODUCTION_WEBHOOK_URL;
+export const N8N_CHATBOT_PRODUCTION_WEBHOOK_URL =
+  env["VITE_N8N_CHATBOT_WEBHOOK_URL"]?.trim() || N8N_PRODUCTION_WEBHOOK_URL;
+export const N8N_CHATBOT_TEST_WEBHOOK_URL =
+  env["VITE_N8N_CHATBOT_TEST_WEBHOOK_URL"]?.trim() || N8N_TEST_WEBHOOK_URL;
+export const N8N_CHATBOT_WEBHOOK_URL =
+  N8N_CHATBOT_PRODUCTION_WEBHOOK_URL || N8N_CHATBOT_TEST_WEBHOOK_URL;
 
 /**
  * Robust extractor that parses clean markdown text from any n8n or Gemini AI output format.

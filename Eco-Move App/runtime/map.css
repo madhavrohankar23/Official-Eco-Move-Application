@@ -20,3 +20,9 @@ html,body,#root{height:100%;width:100%;margin:0;overflow:hidden;background:#edf3
 @media(prefers-reduced-motion:reduce){.leaflet-zoom-animated{transition:none!important}.leaflet-fade-anim .leaflet-tile{transition:none!important}}
 .eco-google-attribution{margin-bottom:calc(18px + var(--eco-safe-bottom,0px))!important}
 .eco-google-attribution{padding:0 9px}.eco-google-attribution summary{min-height:44px}
+/* Night appearance changes only the existing raster base pane. Transit SVGs,
+   markers, hit testing and the separate Google imagery pane stay untouched. */
+[data-night=true] .leaflet-tile-pane{filter:invert(1) hue-rotate(175deg) saturate(.65) brightness(.65)}
+[data-night=true] .leaflet-container{background:#071219}
+[data-night=true] .leaflet-control-attribution{background:rgba(12,23,29,.94)!important;color:#d8e7e0}
+[data-night=true] .leaflet-control-attribution a{color:#b6f1d0}

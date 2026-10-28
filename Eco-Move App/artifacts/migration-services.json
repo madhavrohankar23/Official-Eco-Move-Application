@@ -1,0 +1,30 @@
+{
+  "testedAt": "2026-10-26T20:30:00.912Z",
+  "checks": [
+    {
+      "name": "Chalo nearby telemetry",
+      "status": "reachable",
+      "http": [
+        200,
+        200,
+        200,
+        200,
+        200
+      ],
+      "vehicles": 0,
+      "timestamped": 0
+    },
+    {
+      "name": "Supabase commuter table (anonymous read, no rows)",
+      "status": "reachable",
+      "http": 200,
+      "authenticatedWriteTested": false
+    },
+    {
+      "name": "Server-side ORS pedestrian route",
+      "status": "passed",
+      "http": 200,
+      "geometryPoints": 7
+    }
+  ]
+}

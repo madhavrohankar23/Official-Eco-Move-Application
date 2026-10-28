@@ -1,5 +1,5 @@
 {
-  "testedAt": "2026-10-25T18:04:43.328Z",
+  "testedAt": "2026-10-27T09:51:07.616Z",
   "kind": "live transcript contract; not microphone recognition",
   "results": [
     {
@@ -12,7 +12,7 @@
       "destinationResolved": "Airport Metro Station",
       "existingPlanInvoked": true,
       "passed": true,
-      "durationMs": 3926
+      "durationMs": 6349
     },
     {
       "language": "Hindi",
@@ -24,7 +24,7 @@
       "destinationResolved": "Airport Metro Station",
       "existingPlanInvoked": true,
       "passed": true,
-      "durationMs": 2622
+      "durationMs": 3206
     },
     {
       "language": "Marathi",
@@ -36,7 +36,7 @@
       "destinationResolved": "Airport Metro Station",
       "existingPlanInvoked": true,
       "passed": true,
-      "durationMs": 2977
+      "durationMs": 2935
     },
     {
       "language": "Mixed Hindi",
@@ -48,7 +48,7 @@
       "destinationResolved": "Airport Metro Station",
       "existingPlanInvoked": true,
       "passed": true,
-      "durationMs": 2606
+      "durationMs": 2663
     },
     {
       "language": "Mixed Marathi",
@@ -60,7 +60,7 @@
       "destinationResolved": "Nagpur Railway Station (Main Junction)",
       "existingPlanInvoked": true,
       "passed": true,
-      "durationMs": 2542
+      "durationMs": 3255
     }
   ]
 }

@@ -91,6 +91,7 @@ export function ProfileScreen() {
           { label: 'Saved journeys', icon: Bookmark, panel: 'saved' },
           { label: 'Recent journeys', icon: History, panel: 'recents' },
           { label: 'Carbon & network', icon: Leaf, panel: 'impact' },
+          { label: 'Daily commute', icon: MapPin, panel: 'commuter' },
           { label: 'Profile & preferences', icon: Settings, panel: 'settings' },
         ].map(x => (
           <Action key={x.label} label={x.label} icon={x.icon} quiet onPress={() => app.open(x.panel as any)} />
@@ -470,24 +471,7 @@ export function SettingsScreen() {
       {saved && <Notice>Profile saved.</Notice>}
 
       <GlassAppearanceSelector />
-      <ToggleRow
-        label="Dark appearance"
-        detail="A deeper, tinted liquid glass material"
-        value={theme.dark}
-        onChange={theme.setDark}
-      />
-      <ToggleRow
-        label="Shake for voice assistant"
-        detail="A deliberate, strong shake opens Voice. Shake again to stop. Gentle movements and single knocks are ignored."
-        value={app.shakeEnabled}
-        onChange={app.setShakeEnabled}
-      />
-      {app.shakeEnabled && app.motionStatus === 'permission' && (
-        <Action label="Allow motion access" quiet onPress={() => app.setShakeEnabled(true)} />
-      )}
-      {app.shakeEnabled && app.motionStatus === 'unavailable' && (
-        <Notice>Motion sensing is unavailable on this device or browser. Use the Voice button beside the map or inside SafarBot.</Notice>
-      )}
+
       <Glass level={1} blur={false} style={{ borderRadius: 22 }}>
         <View style={{ padding: 16, gap: 10 }}>
           <Copy weight="600">Double Back Tap · Current Source</Copy>

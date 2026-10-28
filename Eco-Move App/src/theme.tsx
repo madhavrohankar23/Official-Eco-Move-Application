@@ -5,13 +5,13 @@ import { DEFAULT_GLASS_APPEARANCE, GLASS_APPEARANCE_KEY, readGlassAppearance, ty
 import { preferenceWriter } from './preferenceWriter';
 
 export const light = {
-  ink: '#0e241c',
-  muted: '#304b3c',
-  accent: '#155239',
+  ink: '#101c1a',
+  muted: '#293c36',
+  accent: '#124831',
   accentMint: '#22c55e',
   soft: '#dceee3',
   line: '#b9d2c4',
-  paper: '#f3f8f5',
+  paper: '#f7f8f4',
   surface: '#ffffff',
   error: '#b83232',
   gold: '#b07f35',
@@ -24,8 +24,8 @@ export const dark = {
   accentMint: '#86efac',
   soft: '#214b38',
   line: '#537865',
-  paper: '#0b1913',
-  surface: '#12281f',
+  paper: '#071015',
+  surface: '#142124',
   error: '#f87171',
   gold: '#fbbf24',
 };
@@ -76,14 +76,19 @@ export type Theme = {
 };
 
 const Context = createContext<Theme>(null!);
+const NIGHT_MODE_KEY = '@eco.theme.night_mode';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Start with the signature forest-green appearance. The existing light/dark
-  // control remains independent of material selection.
-  const [isDark, setDark] = useState(true);
+  // Appearance remains independent of the three existing material choices.
+  const [isDark, setDarkState] = useState(false);
   const [appearance, setAppearanceState] = useState<GlassAppearance>(DEFAULT_GLASS_APPEARANCE);
   const [appearanceReady, setAppearanceReady] = useState(false);
   const appearanceWrites = useRef(preferenceWriter(value => AsyncStorage.setItem(GLASS_APPEARANCE_KEY, value)));
+  const nightWrites = useRef(preferenceWriter(value => AsyncStorage.setItem(NIGHT_MODE_KEY, value)));
+  const setDark = (value: boolean) => {
+    setDarkState(value);
+    nightWrites.current.set(String(value));
+  };
   const [reduceMotion, setReduceMotion] = useState(false);
   const [systemTransparency, setSystemTransparency] = useState(false);
   // The removed app slider no longer overrides presets, including old saved
@@ -101,9 +106,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let mounted = true;
-    Promise.all([AsyncStorage.getItem(GLASS_APPEARANCE_KEY).catch(() => null), AccessibilityInfo.isReduceMotionEnabled().catch(() => false), Platform.OS === 'ios' ? AccessibilityInfo.isReduceTransparencyEnabled().catch(() => false) : Promise.resolve(false)]).then(([appearance, motion, transparency]) => {
+    Promise.all([AsyncStorage.getItem(GLASS_APPEARANCE_KEY).catch(() => null), AccessibilityInfo.isReduceMotionEnabled().catch(() => false), Platform.OS === 'ios' ? AccessibilityInfo.isReduceTransparencyEnabled().catch(() => false) : Promise.resolve(false), AsyncStorage.getItem(NIGHT_MODE_KEY).catch(() => null)]).then(([appearance, motion, transparency, night]) => {
       if (!mounted) return;
       setAppearanceState(readGlassAppearance(appearance));
+      setDarkState(night === 'true');
       setReduceMotion(motion); setSystemTransparency(transparency);
     }).catch(() => {}).finally(() => { if (mounted) setAppearanceReady(true); });
     return () => { mounted = false; };
@@ -111,14 +117,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // System accessibility takes precedence without overwriting the saved choice.
+    const materialWriter = appearanceWrites.current;
+    const nightWriter = nightWrites.current;
     const a = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduceMotion);
     const transparency =
       Platform.OS === 'ios'
         ? AccessibilityInfo.addEventListener('reduceTransparencyChanged', setSystemTransparency)
         : undefined;
-    const b = AppState.addEventListener('change', s => { setActive(s === 'active'); if (s !== 'active') void appearanceWrites.current.flush().catch(() => {}); });
+    const b = AppState.addEventListener('change', s => { setActive(s === 'active'); if (s !== 'active') { void materialWriter.flush().catch(() => {}); void nightWriter.flush().catch(() => {}); } });
     return () => {
-      void appearanceWrites.current.flush().catch(() => {});
+      void materialWriter.flush().catch(() => {});
+      void nightWriter.flush().catch(() => {});
       a.remove();
       transparency?.remove();
       b.remove();
@@ -143,7 +152,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         blurRef,
       }}
     >
-      {appearanceReady ? children : <View style={{ flex: 1, backgroundColor: dark.paper }} />}
+      {appearanceReady ? children : <View style={{ flex: 1, backgroundColor: light.paper }} />}
     </Context.Provider>
   );
 }

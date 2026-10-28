@@ -1,0 +1,28 @@
+// Source commute hub labels, unchanged. No replacement coordinates.
+export const NAGPUR_COMMUTE_HUBS = [
+  { id: "sitabuldi", name: "Sitabuldi Interchange", zone: "Central Hub", icon: "🚇" },
+  { id: "zero_mile", name: "Zero Mile Freedom Park", zone: "Central Nagpur", icon: "📍" },
+  { id: "mihan", name: "MIHAN & SEZ (TCS / Infosys)", zone: "South Corridor", icon: "🏢" },
+  { id: "dharampeth", name: "Dharampeth & WHC Road", zone: "West Nagpur", icon: "🛍️" },
+  { id: "vnit", name: "VNIT & Bajaj Nagar", zone: "South-West", icon: "🎓" },
+  { id: "it_park", name: "IT Park (Gayatri Nagar)", zone: "South Ambazari", icon: "💻" },
+  { id: "sadar", name: "Sadar & Residency Road", zone: "North-Central", icon: "🍽️" },
+  { id: "hingna", name: "Hingna MIDC Industrial Zone", zone: "South-West MIDC", icon: "🏭" },
+  { id: "rcoem", name: "Ramdeobaba University / Katol Rd", zone: "North-West", icon: "🏛️" },
+  { id: "mahal", name: "Mahal & Gandhibagh", zone: "East Heritage", icon: "🏰" },
+  { id: "itwari", name: "Itwari & Sarafa Bazaar", zone: "East Trade Hub", icon: "🪙" },
+  { id: "airport", name: "Dr. Ambedkar Airport (MIHAN)", zone: "Wardha Road", icon: "✈️" },
+  {
+    id: "railway_station",
+    name: "Nagpur Main Railway Station",
+    zone: "Central Railway",
+    icon: "🚆",
+  },
+  { id: "futala", name: "Futala Waterfront & Promenade", zone: "West Nagpur", icon: "🌊" },
+  { id: "ambazari", name: "Ambazari Lake & Bio Park", zone: "South-West", icon: "🌳" },
+  { id: "koradi", name: "Koradi Temple & Power Plant", zone: "North Nagpur", icon: "🛕" },
+  { id: "medical_sq", name: "GMC Hospital & Medical Square", zone: "South-Central", icon: "🏥" },
+  { id: "aiims", name: "AIIMS Nagpur Campus", zone: "MIHAN Corridor", icon: "🩺" },
+  { id: "butibori", name: "Butibori Industrial Estate", zone: "Outer South", icon: "🏭" },
+  { id: "pardi", name: "Prajapati Nagar & Pardi", zone: "East Metro Terminal", icon: "🚇" },
+];

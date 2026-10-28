@@ -22,7 +22,7 @@ function harness({permission=Promise.resolve({granted:true}),available=true,enab
   const effects=[],states=[];let listener,changes,removed=0,appRemoved=0,count=0,time=1000;
   const appState={currentState:'active',addEventListener:(_,cb)=>{changes=cb;return {remove(){appRemoved++}}}};
   const sensor={getPermissionsAsync:()=>permission,requestPermissionsAsync:()=>permission,isAvailableAsync:async()=>available,setUpdateInterval:()=>{},addListener:cb=>{listener=cb;return {remove(){removed++;listener=null}}}};
-  const hook=load('src/platform/shake.ts',{react:{useRef:x=>({current:x}),useState:()=>['off',x=>states.push(x)],useEffect:fn=>effects.push(fn)},'react-native':{AppState:appState},'expo-sensors':{DeviceMotion:sensor},'expo-haptics':{selectionAsync:async()=>{}},'./shakeRecognizer':{ShakeRecognizer}},{Date:{now:()=>time}});
+  const hook=load('src/platform/shake.ts',{react:{useRef:x=>({current:x}),useState:()=>['off',x=>states.push(x)],useEffect:fn=>effects.push(fn)},'react-native':{AppState:appState,Platform:{OS:'android'}},'expo-sensors':{DeviceMotion:sensor},'expo-haptics':{selectionAsync:async()=>{}},'./shakeRecognizer':{ShakeRecognizer}},{Date:{now:()=>time}});
   hook.useShakeDetector({onShake:()=>count++,enabled});const cleanup=effects[0]();
   return {states,cleanup,emit:x=>{time+=120;listener?.({accelerationIncludingGravity:{x:x*9.80665,y:0,z:9.80665}})},change:state=>{appState.currentState=state;changes?.(state)},get listener(){return listener},get count(){return count},get removed(){return removed},get appRemoved(){return appRemoved}};
 }
@@ -39,4 +39,16 @@ test('motion permissions are never prompted by the effect and denial/unavailable
 });
 test('late motion permission cannot subscribe after cleanup or create duplicate listeners on resume',async()=>{
   const p=deferred(),h=harness({permission:p.promise});h.change('active');h.cleanup();p.resolve({granted:true});await tick();assert.ok(!h.listener);assert.equal(h.removed,0);
+});
+
+test('Safari explicit session grant survives Expo undetermined queries but still checks sensor availability',async()=>{
+  const effects=[],states=[];let requests=0,queries=0,availability=0,subscribed=0;
+  const hook=load('src/platform/shake.ts',{
+    react:{useRef:x=>({current:x}),useState:()=>['off',x=>states.push(x)],useEffect:fn=>effects.push(fn)},
+    'react-native':{Platform:{OS:'web'},AppState:{currentState:'active',addEventListener:()=>({remove(){}})}},
+    'expo-sensors':{DeviceMotion:{requestPermissionsAsync:async()=>{requests++;return {granted:true}},getPermissionsAsync:async()=>{queries++;return {granted:false}},isAvailableAsync:async()=>{availability++;return true},setUpdateInterval(){},addListener(){subscribed++;return {remove(){}}}}},
+    'expo-haptics':{selectionAsync:async()=>{}},'./shakeRecognizer':{ShakeRecognizer},
+  });
+  await hook.requestShakePermission();hook.useShakeDetector({onShake(){}});const cleanup=effects[0]();await tick();
+  assert.equal(requests,1);assert.equal(queries,0);assert.equal(availability,1);assert.equal(subscribed,1);assert.equal(states.at(-1),'ready');cleanup();
 });

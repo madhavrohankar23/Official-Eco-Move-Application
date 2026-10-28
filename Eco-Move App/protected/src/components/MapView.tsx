@@ -1,3 +1,4 @@
+import {useProgressiveStops} from '../../../runtime/features/maps/useProgressiveStops';
 import DevBusRouteInspector from "./DevBusRouteInspector";
 import {
   MapContainer,
@@ -613,6 +614,28 @@ function FitCabRoute({
   return null;
 }
 
+function createPoliceMarkerIcon() {
+  return L.divIcon({
+    className: "custom-police-pin",
+    html: `
+      <div style="position: relative; width: 32px; height: 38px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; cursor: pointer; filter: drop-shadow(0 4px 10px rgba(37, 99, 235, 0.45));">
+        <div style="width: 30px; height: 30px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); border: 2px solid #ffffff; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.25);">
+          <div style="transform: rotate(45deg); display: flex; align-items: center; justify-content: center; color: white;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="m9 12 2 2 4-4"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+    `,
+    iconSize: [32, 38],
+    iconAnchor: [16, 36],
+  });
+}
+
+/** Official Police Station Card matching nagpurpolice.gov.in format */
+
 export default function MapView({
   journey,
   origin,
@@ -650,7 +673,9 @@ export default function MapView({
   mapStyle = "roadmap",
   onRegisterZoom,
   onZoomDelta,
+  children,
 }: {
+  children?: import("react").ReactNode;
   journey: Journey | null;
   origin?: { lat: number; lon: number; name?: string } | null;
   destination?: { lat: number; lon: number; name?: string } | null;
@@ -711,7 +736,7 @@ export default function MapView({
   /** Discovered POI markers (Restaurants or Hospitals) to render on the map */
   poiMarkers?: NearbyPoiResult[];
   /** Active POI category */
-  activePoiCategory?: "Restaurant" | "Hospital" | null;
+  activePoiCategory?: "Restaurant" | "Hospital" | "Police Station" | null;
   /** Callback when user clicks directions to a POI from its popup */
   onDirectionsToPoi?: ((poi: { lat: number; lon: number; name: string }) => void) | undefined;
   /** Base map layer style */
@@ -721,6 +746,7 @@ export default function MapView({
   /** Optional direct zoom delta callback */
   onZoomDelta?: ((delta: number) => void) | undefined;
 }) {
+  const visibleNearbyStops = useProgressiveStops(nearbyMarkers);
   const cartoApiKey = (import.meta.env as Record<string, string | undefined>)["VITE_CARTO_API_KEY"] || "cb1_3m87_1_9a62d04449bdddc8bb5b8466";
   const cartoTileUrl = cartoApiKey
     ? `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png?key=${cartoApiKey}`
@@ -996,7 +1022,7 @@ export default function MapView({
 
       {/* Nearby transit markers: Stops mode */}
       {nearbyAnchor && nearbyTab === "stops" && (
-        nearbyMarkers.map((s) => {
+        visibleNearbyStops.map((s) => {
           const color =
             s.mode === "metro"
               ? (METRO_LINE_COLOR[s.lineName ?? ""] ?? MODE_COLOR["metro"] ?? "#e07a1f")
@@ -1063,7 +1089,8 @@ export default function MapView({
           <FitPoiMarkers userPos={origin || searchedLocation} pois={poiMarkers} />
           {poiMarkers.map((poi, idx) => {
             const isRestaurant = poi.category.toLowerCase() === "restaurant";
-            const icon = isRestaurant ? createRestaurantMarkerIcon() : createHospitalMarkerIcon();
+            const isPolice = poi.category === "Police Station";
+            const icon = isPolice ? createPoliceMarkerIcon() : isRestaurant ? createRestaurantMarkerIcon() : createHospitalMarkerIcon();
             return (
               <Marker
                 key={`poi-${poi.id}-${idx}`}
@@ -1082,7 +1109,7 @@ export default function MapView({
                   <div className="min-w-[210px] max-w-[260px] p-1 font-sans text-slate-900">
                     <div className="flex items-center justify-between gap-1.5">
                       <span className={`rounded-md px-1.5 py-0.5 text-[9px] font-extrabold ${isRestaurant ? "bg-orange-100 text-orange-800" : "bg-rose-100 text-rose-800"}`}>
-                        {isRestaurant ? "🍽️ Restaurant" : "🏥 Hospital"}
+                        {isPolice ? "Police station" : isRestaurant ? "🍽️ Restaurant" : "🏥 Hospital"}
                       </span>
                       {typeof poi.rating === "number" && poi.rating > 0 && (
                         <span className="flex items-center gap-0.5 rounded-md bg-amber-50 px-1.5 py-0.5 text-[9px] font-bold text-amber-700 border border-amber-200/60">
@@ -1452,6 +1479,7 @@ export default function MapView({
       <GestureZoomBridge onRegisterZoom={onRegisterZoom} onZoomDelta={onZoomDelta} />
       <ClickHandler onClick={onMapClick} />
       <Fit journey={journey} />
+      {children}
     </MapContainer>
     </div>
   );

@@ -4,7 +4,10 @@ const fs=require('node:fs');
 const path=require('node:path');
 const esbuild=require('esbuild');
 const {execFileSync}=require('node:child_process');
-const output=path.resolve('artifacts/test-bundles');fs.mkdirSync(output,{recursive:true});
+const bundleRoot=path.resolve('artifacts/test-bundles');fs.mkdirSync(bundleRoot,{recursive:true});
+// Windows may keep a previously loaded bundle memory-mapped across concurrent
+// tooling. Each test process owns its output and never overwrites another run.
+const output=fs.mkdtempSync(path.join(bundleRoot,'parity-'));
 function load(root,name){
   const outfile=path.join(output,name+'.cjs');
   esbuild.buildSync({stdin:{contents:"export * as routing from './lib/routing'; export * as nearby from './lib/nearby'; export * as ticketing from './lib/ticketing'; export * as timetable from './lib/busTimetableService';",resolveDir:path.resolve(root),sourcefile:'parity.ts'},outfile,bundle:true,platform:'node',format:'cjs',alias:{'@':path.resolve(root)},define:{'import.meta.env':'{}'},logLevel:'silent'});
@@ -37,7 +40,7 @@ test('original and embedded network, routes, nearby results and fare calculation
 });
 test('runtime contains no server-only environment values',()=>{
   const html=fs.readFileSync('assets/runtime.html','utf8');
-  const serverNames=['SMTP_PASS','SMTP_USER','SMTP_HOST','SMTP_FROM','RESEND_API_KEY'];
+  const serverNames=['SMTP_PASS','SMTP_USER','SMTP_HOST','SMTP_FROM','RESEND_API_KEY','VITE_ORS_API_KEY','ORS_API_KEY'];
   for(const line of fs.readFileSync('.env','utf8').split(/\r?\n/)){
     const i=line.indexOf('=');if(i<0)continue;
     const key=line.slice(0,i).trim(),value=line.slice(i+1).trim().replace(/^['"]|['"]$/g,'');

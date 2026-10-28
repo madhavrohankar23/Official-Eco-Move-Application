@@ -24,9 +24,10 @@ import { chatMemory, chatGeneration, clearChatMemory } from '../chatMemory';
 import { VoiceSession, type VoicePhase } from '../voiceSession';
 import { applyVoiceIntent } from '../applyVoiceIntent';
 import type { VoiceIntent } from '../voiceTypes';
-import { speechOptions, speechError } from '../voiceInput';
+import { speechOptions, speechError, extractSpokenRoute } from '../voiceInput';
 import { VoiceLanguagePicker } from '../components/VoiceLanguagePicker';
 import { buildSpeechContext, chooseSpeechTranscript } from '../speechAccuracy';
+import { useVoiceOutput } from '../voiceOutput';
 
 const clean = (s: string) => s.replace(/[*#_`>~]/g, '');
 
@@ -36,7 +37,7 @@ export function ChatScreen() {
   const [messages, setMessages] = useState([...chatMemory]);
   const [query, setQuery] = useState('');
   const [busy, setBusy] = useState(false);
-  const [speaking, setSpeaking] = useState(false);
+  const { speaking, speak, stop: stopSpeaking } = useVoiceOutput(!app.collapsed && !app.appSuspended, app.setNotice);
   const [voicePhase, setVoicePhase] = useState<VoicePhase>('idle');
   const current = useRef(app); current.current = app;
   const recognitionContext = useMemo(() => buildSpeechContext(app.data, [app.origin, app.destination], app.voiceLanguage), [app.data, app.origin, app.destination, app.voiceLanguage]);
@@ -62,6 +63,7 @@ export function ChatScreen() {
       if (!valid()) return;
       chatMemory.push({ role: 'assistant', text: result.message });
       setMessages([...chatMemory]);
+      if (result.intent === 'GENERAL_ANSWER' && current.current.assistantActive) speak(result.message, current.current.voiceLanguage);
       await applyVoiceIntent(result, current.current, valid);
     },
     error: message => { if (mounted.current) current.current.setError(message); },
@@ -76,15 +78,29 @@ export function ChatScreen() {
   useSpeechRecognitionEvent('error', e => session.error(speechError(e.error, e.message)));
   useEffect(() => {
     mounted.current = true;
-    return () => { mounted.current = false; session.stop(); Speech.stop(); };
-  }, [session]);
+    return () => { mounted.current = false; session.stop(); stopSpeaking(); };
+  }, [session, stopSpeaking]);
   useEffect(() => {
-    if (app.assistantActive && !busy) { Speech.stop(); void session.start(); }
+    if (app.assistantActive && !busy) { stopSpeaking(); void session.start(); }
     else session.stop();
-  }, [app.assistantActive, busy, session]);
+  }, [app.assistantActive, busy, session, stopSpeaking]);
+  useEffect(() => {
+    if (app.collapsed || app.appSuspended || !app.auth.user) {
+      session.stop();
+      stopSpeaking();
+    }
+  }, [app.collapsed, app.appSuspended, app.auth.user?.id, session, stopSpeaking]);
 
   const send = async (text = query) => {
-    if (!text.trim() || busy || app.assistantActive) return;
+    if (!text.trim() || busy || app.assistantActive || voicePhase !== 'idle') return;
+    app.setError('');
+    app.setNotice('');
+    if (extractSpokenRoute(text)) {
+      // Typed route fallback uses the same verified intent, station resolution
+      // and cancellation lifecycle as speech; general questions keep chat.
+      session.submit(text);
+      return;
+    }
     const generation = chatGeneration;
     setQuery('');
     const next = [...messages, { role: 'user' as const, text }];
@@ -141,7 +157,7 @@ export function ChatScreen() {
             'How do I book metro tickets?',
             'How to apply for MahaCard?',
           ].map(q => (
-            <Action key={q} label={q} quiet compact disabled={busy || app.assistantActive} onPress={() => send(q)} />
+            <Action key={q} label={q} quiet compact disabled={busy || app.assistantActive || voicePhase !== 'idle'} onPress={() => send(q)} />
           ))}
         </View>
       )}
@@ -187,16 +203,9 @@ export function ChatScreen() {
                       compact
                       onPress={() => {
                         if (speaking) {
-                          Speech.stop();
-                          setSpeaking(false);
+                          stopSpeaking();
                         } else {
-                          setSpeaking(true);
-                          Speech.speak(clean(m.text), {
-                            language: app.voiceLanguage,
-                            rate: 0.93,
-                            onDone: () => setSpeaking(false),
-                            onError: () => setSpeaking(false),
-                          });
+                          speak(m.text, app.voiceLanguage);
                         }
                       }}
                     />
@@ -218,11 +227,8 @@ export function ChatScreen() {
       )}
 
       {voicePhase === 'permission' && <Notice>Allow microphone and speech access to start voice input.</Notice>}
-      {voicePhase === 'listening' && <Notice>Listening… Speak your transit question. Shake again or tap Stop assistant to cancel.</Notice>}
+      {voicePhase === 'listening' && <Notice>Listening… Speak your transit question. Tap Stop assistant to cancel.</Notice>}
       {voicePhase === 'review' && <Notice>Please check the station names in the transcript below, then tap Use transcript. You can edit them first.</Notice>}
-      {app.shakeEnabled && app.motionStatus === 'permission' && (
-        <Action label="Enable shake shortcut" quiet compact onPress={() => app.setShakeEnabled(true)} />
-      )}
 
       <VoiceLanguagePicker disabled={busy || voicePhase !== 'idle'} />
 
@@ -239,8 +245,8 @@ export function ChatScreen() {
           label={voicePhase === 'review' ? 'Use transcript' : 'Send'}
           icon={Send}
           selected
-          loading={busy}
-          disabled={!query.trim() || app.assistantActive && voicePhase !== 'review'}
+          loading={busy || voicePhase === 'thinking'}
+          disabled={!query.trim() || busy || voicePhase === 'thinking' || app.assistantActive && voicePhase !== 'review'}
           style={{ flex: 1 }}
           onPress={() => voicePhase === 'review' ? session.confirm(query) : send()}
         />
@@ -249,7 +255,7 @@ export function ChatScreen() {
           icon={Mic}
           quiet
           compact
-          disabled={busy}
+          disabled={busy || voicePhase === 'thinking'}
           onPress={app.toggleAssistant}
         />
       </View>
@@ -262,7 +268,7 @@ export function ChatScreen() {
           compact
           onPress={() => {
             session.stop();app.setAssistantActive(false);
-            Speech.stop();
+            stopSpeaking();
             setMessages([]);
             clearChatMemory();
           }}

@@ -25,6 +25,14 @@ test('default and persisted appearance values resolve without changing other set
   assert.ok(materials[0].reflection > 0 && materials[1].reflection === 0 && materials[2].reflection === 0);
 });
 
+test('Light mode is matte white across saved materials, with grey boundaries and no reflective blur',()=>{
+  for(const appearance of ['liquid','matte','solid'])for(const level of [1,2,3,4]){
+    const m=glassMaterial(appearance,false,0,level);
+    assert.equal(m.opacity,1);assert.equal(m.blur,0);assert.equal(m.reflection,0);assert.equal(m.flowing,false);
+    assert.equal(m.edge,'#d3d9d5');assert.ok(m.shadowOpacity>=.10 && m.shadowOpacity<=.22);
+  }
+});
+
 test('material text retains WCAG normal-text contrast over bright, dark and colorful backgrounds', () => {
   let minimum = Infinity;
   for (const theme of glassChoices) for (const dark of [false,true]) for (const fallback of [false,true]) {

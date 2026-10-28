@@ -1,0 +1,25 @@
+{
+  "mode": "implement",
+  "objective": "Controlled migration from V:/Eco-Nagpur/Eco-Move_Nagpur into the existing mobile app on New-Changes",
+  "planning": "deep",
+  "context_depth": "dependency",
+  "verification_depth": "impact",
+  "delegation": "none",
+  "reason_codes": ["cross-framework-migration", "shared-services", "source-regressions-found"],
+  "allowed_write_scope": ["Eco-Move App/"],
+  "git_branch": "New-Changes",
+  "target_checkpoint": "da8b333",
+  "source_checkpoint": "0a8957b",
+  "acceptance_criteria": [
+    "Original root and source V project unchanged; unrelated root APK unstaged",
+    "Explicit migration manifest records every protected module change",
+    "Nearby output parity, route/fare/data invariants, voice and account isolation tests pass",
+    "New police, commuter and route-preview capabilities use existing UI and map",
+    "No visible map zoom buttons; camera remains opt-in",
+    "Typecheck, tests, production export, bundle measurements and service probes recorded",
+    "Keep all changes uncommitted and do not push, per the latest user instruction",
+    "Voice lifecycle, typed fallback, spoken responses and existing route-preview handoff verified with explicit device limitations"
+  ],
+  "non_goals": ["Production database mutation", "Importing unsupported safety guarantees", "Replacing the existing UI or routing engine"],
+  "risk": "high"
+}

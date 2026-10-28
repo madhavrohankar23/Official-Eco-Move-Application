@@ -1,0 +1,1878 @@
+{
+  "source": [
+    {
+      "path": ".agents/rules/graphify.md",
+      "bytes": 947,
+      "sha256": "fdc36079e3f0773cbd09fbc40068c0b4f0ee3f3d7270a6160dee85005bfa7937"
+    },
+    {
+      "path": ".agents/workflows/graphify.md",
+      "bytes": 239,
+      "sha256": "052a28c68432c0a1ae2a0edd4532808430e33fb9e6666a2f8e8339d8ab29529d"
+    },
+    {
+      "path": ".env",
+      "bytes": 2521,
+      "sha256": "698a74c9ae106996ce64e00c16204bdbf96f3360dba5d24c4a38a17c309996ee"
+    },
+    {
+      "path": ".env.example",
+      "bytes": 529,
+      "sha256": "2bf2ef5819bbcc866f854e9871e6d036f829fc0d99651124d997e3c84c866c29"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 784,
+      "sha256": "6ce1d29ceb5961881346d6842bd592d952b29919d1884f8bf4d33140994a5012"
+    },
+    {
+      "path": ".prettierignore",
+      "bytes": 100,
+      "sha256": "a0ab34b9cd9654dc9e1c96d95d129fe6748eb530bfaf271761098a08d429470a"
+    },
+    {
+      "path": ".prettierrc",
+      "bytes": 96,
+      "sha256": "5d5a35a48e29a64d5238282be6e588318229f3b897ef088c369a76dee283f5d4"
+    },
+    {
+      "path": "agent.json",
+      "bytes": 19556,
+      "sha256": "98c93658b87f6dc83a67c497e4deff5561811c18cdd2cad291300c2503066b51"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 15495,
+      "sha256": "97e34c7ed21c0cabdfe5c753c8f457f3054e5e43cf6f47dd1098554ca0696333"
+    },
+    {
+      "path": "components.json",
+      "bytes": 465,
+      "sha256": "4587d143275ee744003e8f9814dcc735c7fb8c56ea198db773fe2c27fdfcb53d"
+    },
+    {
+      "path": "eslint.config.js",
+      "bytes": 1290,
+      "sha256": "8dc219908ac50e457ad084979ce5396fe288343a856f6b6be9f56d175baf4825"
+    },
+    {
+      "path": "GEMINI.md",
+      "bytes": 739,
+      "sha256": "b0ccf4336ce07dedb00cd5a41be525bf76760a6bdadfd85b34028f9c705247dd"
+    },
+    {
+      "path": "graphify-out/graph.html",
+      "bytes": 1093484,
+      "sha256": "6c9e792f8e05aade888343dd28b3422b7fc8962fa6f0e7e8c6452b685f36c5fc"
+    },
+    {
+      "path": "graphify-out/graph.json",
+      "bytes": 1005788,
+      "sha256": "bfa6e353efa42dceac360387e029a3a16294a82753f799f74f256fbded1bb04b"
+    },
+    {
+      "path": "graphify-out/GRAPH_REPORT.md",
+      "bytes": 17677,
+      "sha256": "2e243c3654cbf09ecbff2fb165c3a1d520af8597684db53dc9ee378eb59e1d7b"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 253957,
+      "sha256": "1be0c3182f810c35c102925dd844680ea2dfdfc3f1e0a5bf31f2f79a12923672"
+    },
+    {
+      "path": "package.json",
+      "bytes": 3487,
+      "sha256": "f96cc3c66671b7fbe6ee7455186b461e5fd75e41cde463e3b158e754e2142fa8"
+    },
+    {
+      "path": "public/amazon_pay.svg",
+      "bytes": 8639,
+      "sha256": "299dcec9293e2f6e3bea6066ec6ce7e60984891898e1a61f39ce72bd4cc38e39"
+    },
+    {
+      "path": "public/android-chrome-192x192.png",
+      "bytes": 55971,
+      "sha256": "3bb35bc032eb048b6347b1c359a0255aa8941014821c4cc71f63cd0c4f30b085"
+    },
+    {
+      "path": "public/android-chrome-512x512.png",
+      "bytes": 313593,
+      "sha256": "b7e85600578d6440330484bf6772adb8e95e3ccd5b947525e8b13b9bde2a2111"
+    },
+    {
+      "path": "public/apple-touch-icon.png",
+      "bytes": 49891,
+      "sha256": "475aa936ab587da98178562cae9310c7d6d8a1020aa3c53ed3540f5431766f0d"
+    },
+    {
+      "path": "public/auth.png",
+      "bytes": 5762979,
+      "sha256": "70dab2f548223994938c53b43e042411f3c082d6d8248173d6c28b9bf0f3d81a"
+    },
+    {
+      "path": "public/background.mp4",
+      "bytes": 2474632,
+      "sha256": "185b135dfa40c7c3fffe1b59c1907fea6b6d2ffba77877810d1af9e38cadb49e"
+    },
+    {
+      "path": "public/bhim_logo.svg",
+      "bytes": 9586,
+      "sha256": "bb39d12bd6052b6bdc8b7bd9b3ba50513941a09120902b4240cd145cc3b80c28"
+    },
+    {
+      "path": "public/data/devRoutes.json",
+      "bytes": 23709550,
+      "sha256": "d4cd77b6d09254aad37c68407e8835f36931eeb878e0e5a2671f08cd708ed23a"
+    },
+    {
+      "path": "public/favicon-16x16.png",
+      "bytes": 920,
+      "sha256": "fc3fdf53c9534611ff2604e2d4a8f32207baf6be7430183c6f703d676b1c4641"
+    },
+    {
+      "path": "public/favicon-32x32.png",
+      "bytes": 2733,
+      "sha256": "398cf8e0da3f8ff7ac80c9cc4bd94d1544e56b05b420a3ca0a99abcd548a82d5"
+    },
+    {
+      "path": "public/favicon.ico",
+      "bytes": 15406,
+      "sha256": "55808be3990b156a5eef3834d9ddd4f6a1dc05b5aaf35af534aac01ef9d09110"
+    },
+    {
+      "path": "public/favicon.png",
+      "bytes": 313593,
+      "sha256": "b7e85600578d6440330484bf6772adb8e95e3ccd5b947525e8b13b9bde2a2111"
+    },
+    {
+      "path": "public/images/commute_bus_bleed.png",
+      "bytes": 156389,
+      "sha256": "fd35dd75bcc2e48a1c34c267ac261fb15e3f5be0d852064d704c8fefd8a7c54e"
+    },
+    {
+      "path": "public/images/commute_onboarding_bus.png",
+      "bytes": 128823,
+      "sha256": "ba0a0020a3f7483dc22215c527305ea3740db5a27eb579043070504dc0248a8d"
+    },
+    {
+      "path": "public/images/commute_sidebar_full.png",
+      "bytes": 283403,
+      "sha256": "b1ab2cb4f1977f46b7a1d83a42540ddec58ec6821ef23d1da85fb7142bdb4ec5"
+    },
+    {
+      "path": "public/safarbot-icon.svg",
+      "bytes": 11244,
+      "sha256": "92ec1e8ae0d22b4e3ed01d572ff9505c35666b4144ea67466d2d334ecab5f1b2"
+    },
+    {
+      "path": "README.md",
+      "bytes": 25130,
+      "sha256": "9e9f21d1d0d90cac5035b6c5e4cf4ad3c7228c726ffe10fbb39cdcda7f14cb26"
+    },
+    {
+      "path": "src/components/AiRouteExplainer.tsx",
+      "bytes": 10513,
+      "sha256": "79a685b9405518fd691c4375ccda41575504d92e23e2da03272a68269d9ddad0"
+    },
+    {
+      "path": "src/components/AiTransitChatbot.tsx",
+      "bytes": 39049,
+      "sha256": "b79b9c16d790f4731bd53604ac592608b37a78de09513fd65c30bf1ceb33f863"
+    },
+    {
+      "path": "src/components/BusTimetablePanel.tsx",
+      "bytes": 27513,
+      "sha256": "4acd428a6fa5024649efc7546f21d166a8848af7f540c9fafa87d0ea1e42bf0f"
+    },
+    {
+      "path": "src/components/CabOptions.tsx",
+      "bytes": 23932,
+      "sha256": "f3669e844689fbdfec1facf7bf930758d3140a3b0bf8805a86fbb981032ba881"
+    },
+    {
+      "path": "src/components/CommuterOnboardingModal.tsx",
+      "bytes": 122764,
+      "sha256": "891d34e7a57a8939a89221990f01f805e4ea3bcec24b0d197cdff644ff64bfcd"
+    },
+    {
+      "path": "src/components/CommuterSurveyLoadingOverlay.tsx",
+      "bytes": 8924,
+      "sha256": "1caadd5651eacd44039d11449527f370f692eabc46291c6ca905dc7c30624987"
+    },
+    {
+      "path": "src/components/DevBusRouteInspector.tsx",
+      "bytes": 12175,
+      "sha256": "163a0e476d431d778c1f93a5bdfdecb1f75065cc65ddc02cf8b48a49e9ad9cdf"
+    },
+    {
+      "path": "src/components/DigitalTicketPass.tsx",
+      "bytes": 33047,
+      "sha256": "690352933ecf4a10e572a7a27505a494fb601cdca07f07d5fc76534ba0dfcd45"
+    },
+    {
+      "path": "src/components/DummyPaymentModal.tsx",
+      "bytes": 38339,
+      "sha256": "ea1875788d8b1f31b824fd3954a31d3b257dbfdeca94fbf567769e3c29186973"
+    },
+    {
+      "path": "src/components/GoogleMapsLayersFAB.tsx",
+      "bytes": 13776,
+      "sha256": "324a5a603f981cc408822b98e09e8871d562d905d5d92541e2cb570592d56404"
+    },
+    {
+      "path": "src/components/GoogleMapsSearchBar.tsx",
+      "bytes": 41239,
+      "sha256": "0bb50515c317262a93f6af33256febc77651c9597f8d18d47c4ee2b350556e56"
+    },
+    {
+      "path": "src/components/GreenRewardsPanel.tsx",
+      "bytes": 27371,
+      "sha256": "7a83a1be6a02585c04bbefe2b0b7bf9baf8cbd2edeb26c98e23fb0e1d3be8b62"
+    },
+    {
+      "path": "src/components/Hero.tsx",
+      "bytes": 8324,
+      "sha256": "c9658b204d006c09d4570f92587284216a38a97701fac134870ff8d08bcd080e"
+    },
+    {
+      "path": "src/components/HowItWorks.tsx",
+      "bytes": 2617,
+      "sha256": "c0292c7c139d68e7706145f9a7b8390029b92f4426559bc5a175478538f10736"
+    },
+    {
+      "path": "src/components/LiveBusTracker.tsx",
+      "bytes": 30148,
+      "sha256": "80aaaee49bd8e7731accc57caa4fcc681ee1afa2204abae8ca833d2b0e3a5ff8"
+    },
+    {
+      "path": "src/components/MapView.tsx",
+      "bytes": 106865,
+      "sha256": "6ad0dda35a9e0996f6c8574271143414a511c2d323fc7989f2487e332e3608c3"
+    },
+    {
+      "path": "src/components/MaterialTimePicker.tsx",
+      "bytes": 16880,
+      "sha256": "ae508ef09207efdd40136784b05994b604447fa2458e87a160d99d2420a84b55"
+    },
+    {
+      "path": "src/components/Navbar.tsx",
+      "bytes": 3306,
+      "sha256": "6e3b973eb590914bf7fe6632319d8c9fdfd86c600daa1f80df3cd0c3f0e8ce23"
+    },
+    {
+      "path": "src/components/PlaceSearch.tsx",
+      "bytes": 15166,
+      "sha256": "9f2223577d3ac7f0c6436f2842869ca192aab2161334c33799c6b8f2b1509f7c"
+    },
+    {
+      "path": "src/components/ProtectedRoute.tsx",
+      "bytes": 2637,
+      "sha256": "5acf210436b0e0d3fa6461fb19b928adec79064cc804182b9d9e7b1b9295c284"
+    },
+    {
+      "path": "src/components/RouteFlyThroughController.tsx",
+      "bytes": 40052,
+      "sha256": "48d89cd79b5bfdde801c92941148c297d597120777d82d67fd371778401168a0"
+    },
+    {
+      "path": "src/components/RouteFlyThroughHUD.tsx",
+      "bytes": 16237,
+      "sha256": "657259093e217a245e22155080402ed39602e7646d66c7e5a57c32a1b1617f22"
+    },
+    {
+      "path": "src/components/SafeCorridorsLayer.tsx",
+      "bytes": 17857,
+      "sha256": "5768b060bcd1526c797e41c0773824a3e15c4b182b6073abbcca6f32c83acc97"
+    },
+    {
+      "path": "src/components/SideRouteAiExplainer.tsx",
+      "bytes": 65162,
+      "sha256": "c5776a0f3f808ae555a50feeedc55aaee9f244b08563577f1e2e6c94d0af2ad4"
+    },
+    {
+      "path": "src/components/ThemeToggle.tsx",
+      "bytes": 1627,
+      "sha256": "1e62a60c0fcc2287f5281ff2d6be97961c17369489f5c40727601ab463b28e15"
+    },
+    {
+      "path": "src/components/TicketBookingModal.tsx",
+      "bytes": 59939,
+      "sha256": "d0f01d26a049ab7c63c84c25fd970e6a14d76da86bff3d19325f864892524d83"
+    },
+    {
+      "path": "src/components/TicketWalletDrawer.tsx",
+      "bytes": 15156,
+      "sha256": "94c823438eeafcb19684aeb767c73de334140659281cbeb8ce51eb03926c43f1"
+    },
+    {
+      "path": "src/components/TurnByTurnNavPanel.tsx",
+      "bytes": 15280,
+      "sha256": "37445bd1b2e21de8c7f65815c662a7fff2428ef2c56231bb084c00702663727a"
+    },
+    {
+      "path": "src/components/ui/accordion.tsx",
+      "bytes": 2066,
+      "sha256": "0de02bb71ec1739e64a2fc2af0848458f204490719bad8e51c3fbe2bcb31d3a8"
+    },
+    {
+      "path": "src/components/ui/alert-dialog.tsx",
+      "bytes": 4298,
+      "sha256": "7b92eace677b37b106e83baeebc3be6ef396ed7ebce0b20967990ddb83271549"
+    },
+    {
+      "path": "src/components/ui/alert.tsx",
+      "bytes": 1638,
+      "sha256": "aef6ee0b3672f312e6906461273d8135f11f0f56e2f9b115d92262b7946dd6f9"
+    },
+    {
+      "path": "src/components/ui/aspect-ratio.tsx",
+      "bytes": 148,
+      "sha256": "67c60b91df6dc9fc729390742b04c02d40c19f51f7a2d4f79110911a061266bb"
+    },
+    {
+      "path": "src/components/ui/avatar.tsx",
+      "bytes": 1460,
+      "sha256": "a2077be3cb2702c55b3ff024e28a2d19e426bb5827e366d03a6bf756dbf8221c"
+    },
+    {
+      "path": "src/components/ui/badge.tsx",
+      "bytes": 1155,
+      "sha256": "c57030b62760166ab4c3a36a220a45c7699d375f10671dbd54d8156fec04fd1c"
+    },
+    {
+      "path": "src/components/ui/breadcrumb.tsx",
+      "bytes": 2850,
+      "sha256": "d70a97e46e4d0846be2d22b546632e55ab3335a3c82804c0160b45a7abdc760d"
+    },
+    {
+      "path": "src/components/ui/button.tsx",
+      "bytes": 1943,
+      "sha256": "2c8aae724f8effc35a91f833f9c0e8dee010f5cb0b8698441001dac93e8811bf"
+    },
+    {
+      "path": "src/components/ui/calendar.tsx",
+      "bytes": 7403,
+      "sha256": "ddb9eac5ba02b90c81e14baf906fa50dd6e8ae0e1367c4df0ff8f77e7a4bb6fe"
+    },
+    {
+      "path": "src/components/ui/card.tsx",
+      "bytes": 1872,
+      "sha256": "c6e182e038df4994615be337e682910a3835594f12d7bf61ab0909e6518477b2"
+    },
+    {
+      "path": "src/components/ui/carousel.tsx",
+      "bytes": 6440,
+      "sha256": "bdf6f1be424fa2d49cf82d09b219d6613d6bc83340df1105d88ddc328034ede2"
+    },
+    {
+      "path": "src/components/ui/chart.tsx",
+      "bytes": 10901,
+      "sha256": "d816f293d915c86968a16100f50df23fc20f9cd0bc6f5a1e8fcadea50a1d58f0"
+    },
+    {
+      "path": "src/components/ui/checkbox.tsx",
+      "bytes": 1069,
+      "sha256": "d2c880d1a7de1633a5eb6f4d09977f203d737de24fe3d7e8ba959b851fd18145"
+    },
+    {
+      "path": "src/components/ui/collapsible.tsx",
+      "bytes": 346,
+      "sha256": "0be1d5082be6ce6a06e0f67accb38ef50e981f111187e3954d0a1bca062f52e1"
+    },
+    {
+      "path": "src/components/ui/command.tsx",
+      "bytes": 5019,
+      "sha256": "5f15a9b4aeec3f848264322c65798e92f9af0cb3777ca075796bdfce56deaf54"
+    },
+    {
+      "path": "src/components/ui/context-menu.tsx",
+      "bytes": 7546,
+      "sha256": "aa47df69152c464a586878b1f35cc19442c4d3778eb58cc3e1d6fa9ba79df9b4"
+    },
+    {
+      "path": "src/components/ui/dialog.tsx",
+      "bytes": 3752,
+      "sha256": "a5b691c73830e0eab35b93a0ff08703cf7b1dd42a7acd435f1a4ebb9a2e232e9"
+    },
+    {
+      "path": "src/components/ui/drawer.tsx",
+      "bytes": 3071,
+      "sha256": "096c508d4ebbe9ed00647588e8077cd65970938b773c0e1d252723b903bd620e"
+    },
+    {
+      "path": "src/components/ui/dropdown-menu.tsx",
+      "bytes": 7752,
+      "sha256": "15f01555648d666df9e3f6ddc7474e85c815624d765adaf166e66329e69991d4"
+    },
+    {
+      "path": "src/components/ui/form.tsx",
+      "bytes": 4372,
+      "sha256": "e4da338bd60483f6facadf68cd22eac13bd1ae5f6417d6142f14930a614fc334"
+    },
+    {
+      "path": "src/components/ui/hover-card.tsx",
+      "bytes": 1273,
+      "sha256": "989e3074c71555f2f3a1e8ba3ff23652309dc44bef9ce17705d241aa1ccf5e2f"
+    },
+    {
+      "path": "src/components/ui/input-otp.tsx",
+      "bytes": 2305,
+      "sha256": "9fff71c84c444efe593891c0323cac7c4b3b59e58d02e32db1006f19b5f902c3"
+    },
+    {
+      "path": "src/components/ui/input.tsx",
+      "bytes": 798,
+      "sha256": "4ee1c239851691038ddef07a1cac8f3d348a35ff5816ecc296d20c9803b1c3de"
+    },
+    {
+      "path": "src/components/ui/label.tsx",
+      "bytes": 737,
+      "sha256": "c33a02e76ac4dfd8e328026ca068ec184aae5b00dc454955865edf5f90f403e0"
+    },
+    {
+      "path": "src/components/ui/menubar.tsx",
+      "bytes": 8743,
+      "sha256": "522d76827b02db048a67d991bce2975c734f295a062b13c77bc699e1f7154c76"
+    },
+    {
+      "path": "src/components/ui/navigation-menu.tsx",
+      "bytes": 5272,
+      "sha256": "e9cc8001c5444e4bca8abcaff2f9ed5e27fe40201127f6c170d149462c313362"
+    },
+    {
+      "path": "src/components/ui/pagination.tsx",
+      "bytes": 2837,
+      "sha256": "4ddeedce9ba3119fd105649f27502cdadd036966323c4cfb6bd6686656e7ddf8"
+    },
+    {
+      "path": "src/components/ui/popover.tsx",
+      "bytes": 1383,
+      "sha256": "5b57bee5769e87ab533a8326c6a25fc1940b5a8fbe1c5276f25ba89615cc7030"
+    },
+    {
+      "path": "src/components/ui/progress.tsx",
+      "bytes": 806,
+      "sha256": "61646ebf88d17e251bafd69784b40af978e4a5e8311a5651288b203410a9b107"
+    },
+    {
+      "path": "src/components/ui/radio-group.tsx",
+      "bytes": 1441,
+      "sha256": "2e71f118a77c7adf6c5cc35923576632d0db62c1db4a4aa2b16acad7a841a43d"
+    },
+    {
+      "path": "src/components/ui/resizable.tsx",
+      "bytes": 1589,
+      "sha256": "3c3fdec6f7cca80a152bc861a313758bf28703170cdd322ce4ec9da5f0b67a2f"
+    },
+    {
+      "path": "src/components/ui/scroll-area.tsx",
+      "bytes": 1679,
+      "sha256": "c9f69c09fada3c8653fb4122988a43f6bf49a0b71e8be5ffeeca94e0d87ca266"
+    },
+    {
+      "path": "src/components/ui/select.tsx",
+      "bytes": 5901,
+      "sha256": "27b85948433560e1d1792037dafac2fa4d0dc38e72977464271ceae1bac60a1d"
+    },
+    {
+      "path": "src/components/ui/separator.tsx",
+      "bytes": 747,
+      "sha256": "0f833b4b3a11bdb561f10b704902cb1533d2119bb0c2c7b81fbb47955b621224"
+    },
+    {
+      "path": "src/components/ui/sheet.tsx",
+      "bytes": 4370,
+      "sha256": "b78b82c5e0e83ac972ae96ff489ed1d5c0ae792c77c9cec67d201f0c76d3b098"
+    },
+    {
+      "path": "src/components/ui/sidebar.tsx",
+      "bytes": 24719,
+      "sha256": "09b6531101dd8ed24570c565e485b66b9749c49d903939c7d2780879a369c1f2"
+    },
+    {
+      "path": "src/components/ui/skeleton.tsx",
+      "bytes": 246,
+      "sha256": "020954b8c6a47e7584eefee6af278bf8ce482b8152585b70052cf196b6fd79a5"
+    },
+    {
+      "path": "src/components/ui/slider.tsx",
+      "bytes": 1048,
+      "sha256": "5ee4156c0e9a0bfb12fbbdd80a881e5b957e4e4801e7c9082b5d6f7062a7dbbf"
+    },
+    {
+      "path": "src/components/ui/sonner.tsx",
+      "bytes": 757,
+      "sha256": "be303e32fe6688cdf44ba42466aed162d4d6341eb279317d1fbeb3b4ae4cbe8b"
+    },
+    {
+      "path": "src/components/ui/switch.tsx",
+      "bytes": 1183,
+      "sha256": "194d3554933df8573ef1bf84584e1acb9b255f55e73b24b2076c36cca116c5e6"
+    },
+    {
+      "path": "src/components/ui/table.tsx",
+      "bytes": 2914,
+      "sha256": "14849bacd517394129565a2736f367a2dc218dee044e9dbc4c37ede9ae56e22b"
+    },
+    {
+      "path": "src/components/ui/tabs.tsx",
+      "bytes": 1987,
+      "sha256": "a33395479355fc3cb0127e8731359830ceb29cb137b4090b65a8a9818c2a093d"
+    },
+    {
+      "path": "src/components/ui/textarea.tsx",
+      "bytes": 698,
+      "sha256": "5af8d497b7b1c4f77399bf5b9f1861230d9950d0c2c5fe1bdbf8b3bdb6eab1e0"
+    },
+    {
+      "path": "src/components/ui/toggle-group.tsx",
+      "bytes": 1809,
+      "sha256": "868ca1dc957db5b9eb0b8784c170a5dc39e880234747e127a690bfd6628bcb53"
+    },
+    {
+      "path": "src/components/ui/toggle.tsx",
+      "bytes": 1576,
+      "sha256": "537f16e684e49fe17451d7cab1b7dbf60a594a4f7698b84277fe374f3aca1f59"
+    },
+    {
+      "path": "src/components/ui/tooltip.tsx",
+      "bytes": 1310,
+      "sha256": "657bfcea60e04adf0d5385ae4aabede6158b718206c4b8a91452a728acb9ad00"
+    },
+    {
+      "path": "src/components/WhyNagpurConnect.tsx",
+      "bytes": 2790,
+      "sha256": "f65a998e75b4ef85971ba1f0a0db8c6f43b1317cdf4e78b40b52bb22161bd550"
+    },
+    {
+      "path": "src/context/AuthContext.tsx",
+      "bytes": 14278,
+      "sha256": "ed2c2cf4d4920caee73bafc3bf4e52b9be04a7628db91f47278031443107fbc3"
+    },
+    {
+      "path": "src/data/bus_fares.json",
+      "bytes": 13178496,
+      "sha256": "440a50c2a62213c63bbce8d1ca7116bfc59f25b35acb0197e7d314d5fd681afe"
+    },
+    {
+      "path": "src/data/bus_schedules.json",
+      "bytes": 1012573,
+      "sha256": "1c56b50ecd8fbe97c8261a179abd1cb46a0fd9637aec89788c666efe20a75d85"
+    },
+    {
+      "path": "src/data/chalo_routes_index.json",
+      "bytes": 1288906,
+      "sha256": "f8fe2ac1c5af4ff4394a16b75431dc82555b58c232d32845094cacc371dd29fc"
+    },
+    {
+      "path": "src/data/lineGeometries.json",
+      "bytes": 18748854,
+      "sha256": "43b457ca2d2b3fb9c5048c3551bf9d2a1bb2b33afb24d66e184742f0a21da5d3"
+    },
+    {
+      "path": "src/data/metro_fares.json",
+      "bytes": 358039,
+      "sha256": "3233dfb8fe5e0e71e3c800b8e045cd2c9ef385dd527c1d603bd9a3157cc95e69"
+    },
+    {
+      "path": "src/data/nagpur_official_police_stations.json",
+      "bytes": 15934,
+      "sha256": "bdef5a5517785fbcd17ae5872cd0010e932166470a1fb14b2c8eb9e1492ace87"
+    },
+    {
+      "path": "src/data/nagpur_safe_corridors.json",
+      "bytes": 375003,
+      "sha256": "f24f25ca71c4161653ef856f65038620ed0ea631912866ebac8fd98193758d7b"
+    },
+    {
+      "path": "src/data/network.json",
+      "bytes": 8807138,
+      "sha256": "b71cfae1b6a69027a45e605e2bb3889340b24fb64125ef5f8ca0b45a8275992e"
+    },
+    {
+      "path": "src/hooks/use-mobile.tsx",
+      "bytes": 595,
+      "sha256": "f6f7a7643d4607721c57e2b8c4081a8f84aefbb0a240f4b9dd1fc20d8d7a61e6"
+    },
+    {
+      "path": "src/lib/busTimetableService.ts",
+      "bytes": 14611,
+      "sha256": "fa2bcf576f13da5cad912a27c94a60ac71929e2ffd35eda91150e0b480c03d0d"
+    },
+    {
+      "path": "src/lib/error-capture.ts",
+      "bytes": 2279,
+      "sha256": "ee30cb026b24340defd25b74cf077bc3cc9ed6abd6b046da42c833fd6c54f3df"
+    },
+    {
+      "path": "src/lib/error-page.ts",
+      "bytes": 1401,
+      "sha256": "b070f0586e5d17c818700024c9dff021b7e7ffb40cd8e7f7e7bc19ea82efd1b5"
+    },
+    {
+      "path": "src/lib/fares.ts",
+      "bytes": 14308,
+      "sha256": "3d1056f3e2216b2d54a76f527d0030b1ac7f4f088a03b716cb5d4d20b3edd8e7"
+    },
+    {
+      "path": "src/lib/frequencies.ts",
+      "bytes": 1322,
+      "sha256": "d8e0f49f11f2612ab12c0f2f28610f08ce5b59b9274299db68141f1ef967bd19"
+    },
+    {
+      "path": "src/lib/googleMapsStyles.ts",
+      "bytes": 5035,
+      "sha256": "9acc30b7b56b937231e119b822b91cb4e97a17ad1c7ac19807cd4f75d6514030"
+    },
+    {
+      "path": "src/lib/liveBus.ts",
+      "bytes": 23982,
+      "sha256": "d0aa3d25d3811e5e65a19754d39ef104022e2cffd5b59565daf35a42ceca60c8"
+    },
+    {
+      "path": "src/lib/n8nAiService.ts",
+      "bytes": 76128,
+      "sha256": "3782f8a20063ecc16432a00a8c5b63436b1c2d0724fd21040b9417d0d3ebb669"
+    },
+    {
+      "path": "src/lib/nagpurPlaces.ts",
+      "bytes": 48515,
+      "sha256": "2911964d0566ab73ec40e2de7770cc90f4032405e8634917287abe18e7abf473"
+    },
+    {
+      "path": "src/lib/nearby.ts",
+      "bytes": 4316,
+      "sha256": "a987e83729b864c6dca7870132fe234cc0df61cc4b9a8d0c91785dcfb505bcd8"
+    },
+    {
+      "path": "src/lib/network.ts",
+      "bytes": 7610,
+      "sha256": "3ac7a9ff81dacf22d9a4750f58eab906a9e474e0b0f46129e02b034103e0c4bf"
+    },
+    {
+      "path": "src/lib/ors.ts",
+      "bytes": 13981,
+      "sha256": "4cb2ca23e77377cd838a9f4eaf86da8c75d7d3684782042d611db77159bad1c0"
+    },
+    {
+      "path": "src/lib/placesSearch.ts",
+      "bytes": 23332,
+      "sha256": "5e42fcb96ba7ec9f415f48877e573a5bd12571c4f73faf805b9b5450dd4561d3"
+    },
+    {
+      "path": "src/lib/routing.ts",
+      "bytes": 58301,
+      "sha256": "a1ccd6bc8ad9bc7c883825193dc32306252e6068952b1f567e13277b9ec92540"
+    },
+    {
+      "path": "src/lib/safeRoutingService.ts",
+      "bytes": 42355,
+      "sha256": "3b73a7ca813cd9dd61c40016c628d57d8d69ffaa5ebb64d0911fb2d76d5f2d42"
+    },
+    {
+      "path": "src/lib/supabase-schema.sql",
+      "bytes": 8833,
+      "sha256": "58c6a10393fe3c6c3f9c037af4adbf977fb1ab9ec59f45514a98f92980c6871b"
+    },
+    {
+      "path": "src/lib/ticketExporter.ts",
+      "bytes": 3174,
+      "sha256": "1fe3f78166d5498f1535b8fb32b2f23c61ed722ce7e44e9acf769b4bf7c71175"
+    },
+    {
+      "path": "src/lib/ticketing.ts",
+      "bytes": 31123,
+      "sha256": "8db767eb48322582b5b445b95e124c90213b516f7a69a153f79d7017b1773f57"
+    },
+    {
+      "path": "src/lib/turnByTurn.ts",
+      "bytes": 21953,
+      "sha256": "7c865ae438d77a039a1be2c033da5e2e3f8b646d6bd97e8aa881983825b10433"
+    },
+    {
+      "path": "src/lib/uberApi.ts",
+      "bytes": 28107,
+      "sha256": "674b566eaf787da5894c5a851a2af644851fc5c99ebd56b19e030df9eaa4e3ea"
+    },
+    {
+      "path": "src/lib/utils.ts",
+      "bytes": 175,
+      "sha256": "c0adf27efbfa148d5abcf99e860f8e3e6c8fc77a1f99e023c08ef4f12e6ece29"
+    },
+    {
+      "path": "src/lib/wavRecorder.ts",
+      "bytes": 5497,
+      "sha256": "d63c171780f780a2ee31947600332240ebb1b04699c363d02fa8627ed1bc5663"
+    },
+    {
+      "path": "src/router.tsx",
+      "bytes": 410,
+      "sha256": "7e3481892de4073ba86e9a6c3a52f1cc6c0d8ab8668df1b14a3ce9f7658edc4a"
+    },
+    {
+      "path": "src/routes/app.tsx",
+      "bytes": 200574,
+      "sha256": "0795001aaeac0294f9dbdafc07c0bd4500f7ec07bbc4bb8fc2a11c6b0154da99"
+    },
+    {
+      "path": "src/routes/forgot-password.tsx",
+      "bytes": 6571,
+      "sha256": "d2888673ce6672b08c64bf225ce753c659e90e8aed049df3ea253425ff783623"
+    },
+    {
+      "path": "src/routes/index.tsx",
+      "bytes": 4347,
+      "sha256": "47b0adfa272812b5a6c917195779d38abfd35b2ead1ea864e44210c8d2b52ebc"
+    },
+    {
+      "path": "src/routes/login.tsx",
+      "bytes": 17108,
+      "sha256": "4e8b32bfa9f4a0aea4858ca70a02a7c4b6257e1bf6d79606ebe5da66d14f90aa"
+    },
+    {
+      "path": "src/routes/signup.tsx",
+      "bytes": 34073,
+      "sha256": "5cb5c02f8f4f3f4434d815b084f435a8acebd5083eaf29faf4cf448f9d8731ae"
+    },
+    {
+      "path": "src/routes/update-password.tsx",
+      "bytes": 10406,
+      "sha256": "27c758afd90753cabdd96d7e1f2d007c53945bebe2771001a44866a0b91fcbaa"
+    },
+    {
+      "path": "src/routes/__root.tsx",
+      "bytes": 4276,
+      "sha256": "1d1d5c0cbbfcb4682de97210c84b0184f190d6ce219e3eddb1bea310815542e3"
+    },
+    {
+      "path": "src/routeTree.gen.ts",
+      "bytes": 5216,
+      "sha256": "a1fef1d0ae4c14e80ef2b998751a04b6d8b1a6c2eed8aef69d22cf30f456d2c6"
+    },
+    {
+      "path": "src/server.ts",
+      "bytes": 1952,
+      "sha256": "94f208b8ea6f190f233791c884078b245df54d487e21a8f639b86a92e8bb8c86"
+    },
+    {
+      "path": "src/services/commuterProfileService.ts",
+      "bytes": 7177,
+      "sha256": "1f3e36da03505ecd3859480620cac763fc8676e56cd9a38812eb459693d61760"
+    },
+    {
+      "path": "src/services/dbTypes.ts",
+      "bytes": 1286,
+      "sha256": "9bb2ae192a0bb8880e3d6b2e88fd6b3002f802e7462a228c4125a72448db44fe"
+    },
+    {
+      "path": "src/services/ecoRewardsService.ts",
+      "bytes": 4161,
+      "sha256": "be4372a0e189424fcea8adc12fd5d6cc8ff57996ed33dc1ceb75c4d2d93c216c"
+    },
+    {
+      "path": "src/services/emailService.ts",
+      "bytes": 19398,
+      "sha256": "1251c5075a6a89133fe3e81fc5656c47f3dd049a08ad64b5a00bc084cda5f1e5"
+    },
+    {
+      "path": "src/services/profileService.ts",
+      "bytes": 3458,
+      "sha256": "64b584878d6316faa1c9844464f6a9b856ee02caea2c4944441338a0d2afd1e2"
+    },
+    {
+      "path": "src/services/recentJourneysService.ts",
+      "bytes": 3821,
+      "sha256": "fa7b824a1605ad5d27fcf77dcc54c382dcb9ec3e8efe3adfe6d348a3a885af15"
+    },
+    {
+      "path": "src/services/savedJourneysService.ts",
+      "bytes": 5414,
+      "sha256": "2b400af6d9ff5c053bb4b655756d88c2f3c6bb2e75dc865f6023ea49c7fe330d"
+    },
+    {
+      "path": "src/services/ticketService.ts",
+      "bytes": 7537,
+      "sha256": "02241271249e771af91c54b3ea78971fe967be6be7b08eefced6b8d2a82bc434"
+    },
+    {
+      "path": "src/start.ts",
+      "bytes": 785,
+      "sha256": "210431c6944e78cb4d968bf0b2e47fe65a508d046dea8a4f1cb8913959dba659"
+    },
+    {
+      "path": "src/styles.css",
+      "bytes": 20984,
+      "sha256": "fa45363d4ffa0fbff2fd7953031104d13fd3ab18304a1ae4897295e1aaa580a1"
+    },
+    {
+      "path": "src/supabaseClient.ts",
+      "bytes": 566,
+      "sha256": "44d3ebb8c1716c2632c0611ab5cc500f476b1589e677ce947386ba69e867778c"
+    },
+    {
+      "path": "tsconfig.json",
+      "bytes": 850,
+      "sha256": "953a0152bfc557bae1aaed3d5ada6b3895eb5499881e8c9796114a248bc54303"
+    },
+    {
+      "path": "vite.config.ts",
+      "bytes": 8160,
+      "sha256": "4bd9f46573286942fedba35e1b6be3b0d2f4ed8fb083dfa2a170e3e1982a89a3"
+    }
+  ],
+  "protected": [
+    {
+      "path": "agent.json",
+      "bytes": 19214,
+      "sha256": "0a206761e8d3a8b963da79d859197d61bc30a5afa32c4a02a73b025b68788fcb"
+    },
+    {
+      "path": "public/amazon_pay.svg",
+      "bytes": 8639,
+      "sha256": "299dcec9293e2f6e3bea6066ec6ce7e60984891898e1a61f39ce72bd4cc38e39"
+    },
+    {
+      "path": "public/android-chrome-192x192.png",
+      "bytes": 55971,
+      "sha256": "3bb35bc032eb048b6347b1c359a0255aa8941014821c4cc71f63cd0c4f30b085"
+    },
+    {
+      "path": "public/android-chrome-512x512.png",
+      "bytes": 313593,
+      "sha256": "b7e85600578d6440330484bf6772adb8e95e3ccd5b947525e8b13b9bde2a2111"
+    },
+    {
+      "path": "public/apple-touch-icon.png",
+      "bytes": 49891,
+      "sha256": "475aa936ab587da98178562cae9310c7d6d8a1020aa3c53ed3540f5431766f0d"
+    },
+    {
+      "path": "public/auth.png",
+      "bytes": 5762979,
+      "sha256": "70dab2f548223994938c53b43e042411f3c082d6d8248173d6c28b9bf0f3d81a"
+    },
+    {
+      "path": "public/background.mp4",
+      "bytes": 2474632,
+      "sha256": "185b135dfa40c7c3fffe1b59c1907fea6b6d2ffba77877810d1af9e38cadb49e"
+    },
+    {
+      "path": "public/bhim_logo.svg",
+      "bytes": 9586,
+      "sha256": "bb39d12bd6052b6bdc8b7bd9b3ba50513941a09120902b4240cd145cc3b80c28"
+    },
+    {
+      "path": "public/data/devRoutes.json",
+      "bytes": 22661442,
+      "sha256": "658d383919b1eecc8cc695c9a83c01450c225473f88b32548fcbebacc63979ba"
+    },
+    {
+      "path": "public/favicon-16x16.png",
+      "bytes": 920,
+      "sha256": "fc3fdf53c9534611ff2604e2d4a8f32207baf6be7430183c6f703d676b1c4641"
+    },
+    {
+      "path": "public/favicon-32x32.png",
+      "bytes": 2733,
+      "sha256": "398cf8e0da3f8ff7ac80c9cc4bd94d1544e56b05b420a3ca0a99abcd548a82d5"
+    },
+    {
+      "path": "public/favicon.ico",
+      "bytes": 15406,
+      "sha256": "55808be3990b156a5eef3834d9ddd4f6a1dc05b5aaf35af534aac01ef9d09110"
+    },
+    {
+      "path": "public/favicon.png",
+      "bytes": 313593,
+      "sha256": "b7e85600578d6440330484bf6772adb8e95e3ccd5b947525e8b13b9bde2a2111"
+    },
+    {
+      "path": "public/safarbot-icon.svg",
+      "bytes": 11230,
+      "sha256": "15e7896f496b72e4e8163ebfac5a31fa686bbcfeba9e9ebaaab19bd7e909f461"
+    },
+    {
+      "path": "src/components/AiRouteExplainer.tsx",
+      "bytes": 10255,
+      "sha256": "9d1f13a6ee70daf8cc3dd40c6c1febf4749325725c1e45aaaf84ed12ccca82fb"
+    },
+    {
+      "path": "src/components/AiTransitChatbot.tsx",
+      "bytes": 38448,
+      "sha256": "ad352ae6c5fd4af3024e6039dce38b16ce12c0bf237282a1584dfe90eda8add8"
+    },
+    {
+      "path": "src/components/BusTimetablePanel.tsx",
+      "bytes": 26936,
+      "sha256": "659180244989eb886a77db48b8f09746f7cfea489dd59e702f10bce026d837d5"
+    },
+    {
+      "path": "src/components/CabOptions.tsx",
+      "bytes": 23349,
+      "sha256": "1a9b6ded4b12c5eaa12a5b513f929deecabe0f4fe498fa87ebc70245c0e8afdf"
+    },
+    {
+      "path": "src/components/DevBusRouteInspector.tsx",
+      "bytes": 11882,
+      "sha256": "fcf423c71d8ce5584211dc8c10abf0a096a754358719d12eee68619ef3927415"
+    },
+    {
+      "path": "src/components/DigitalTicketPass.tsx",
+      "bytes": 30169,
+      "sha256": "b71bacc5c682c214a26533d408048b6105fc51ed0164f526de91ba994729a127"
+    },
+    {
+      "path": "src/components/DummyPaymentModal.tsx",
+      "bytes": 37881,
+      "sha256": "af5edc3265d00b487547ebc2c5915004d6a7477048181967daf3c17e63c5e4b5"
+    },
+    {
+      "path": "src/components/GoogleMapsLayersFAB.tsx",
+      "bytes": 13535,
+      "sha256": "06073033174395f6acfba47bf4c1e6de3d803f44f16c4029cf6e147869a7b857"
+    },
+    {
+      "path": "src/components/GoogleMapsSearchBar.tsx",
+      "bytes": 38855,
+      "sha256": "dbb30795e6449d7bb9949132e8ffd2b86b3bcce9be3740eed045671e04911969"
+    },
+    {
+      "path": "src/components/GreenRewardsPanel.tsx",
+      "bytes": 26682,
+      "sha256": "9702c923e765fbdaf373bcc1db811952bdc7ebde9b6a17414e1110648a1fa9e1"
+    },
+    {
+      "path": "src/components/Hero.tsx",
+      "bytes": 8157,
+      "sha256": "b8b875113270634ce6fe4e9eede233d7a654922f041b81df7110a5c7622b6a0d"
+    },
+    {
+      "path": "src/components/HowItWorks.tsx",
+      "bytes": 2559,
+      "sha256": "c03eea9542d1377ab959e69448b3fd393f54ac6d7700b8be8c4cf93a7b50fb27"
+    },
+    {
+      "path": "src/components/LiveBusTracker.tsx",
+      "bytes": 29518,
+      "sha256": "1c887706ae4e4f481119fc0094129468a949ce4dae0eb82ea6b39e52e480566a"
+    },
+    {
+      "path": "src/components/MapView.tsx",
+      "bytes": 63750,
+      "sha256": "37ec9deb61b280a32dff09ed11f8fb13716f617083a50292b84d0a4c5465c272"
+    },
+    {
+      "path": "src/components/MaterialTimePicker.tsx",
+      "bytes": 16475,
+      "sha256": "8a207a4b0cc29394c6008ac0bf81d2ce28ff37569221189c32daf8f37a674ff8"
+    },
+    {
+      "path": "src/components/Navbar.tsx",
+      "bytes": 1355,
+      "sha256": "67eaeb4b70a6eac70389eb1cf9a3f5200a97020cab8e7885f2d06f18c62d31a5"
+    },
+    {
+      "path": "src/components/PlaceSearch.tsx",
+      "bytes": 14750,
+      "sha256": "194385545c381410b981b7150910781e2d41bb37b0ab42cecd51bab9b03712ca"
+    },
+    {
+      "path": "src/components/ProtectedRoute.tsx",
+      "bytes": 2578,
+      "sha256": "4ffc30bbf3f0574edbd0ba456e3ab38ea1e80a470d0f2af8d0a5105456fe5c84"
+    },
+    {
+      "path": "src/components/SideRouteAiExplainer.tsx",
+      "bytes": 63776,
+      "sha256": "656bbc1c1367540b9e26032c7484665f6aeadf1506255282a3a74d9c693bf1da"
+    },
+    {
+      "path": "src/components/TicketBookingModal.tsx",
+      "bytes": 58109,
+      "sha256": "ddf92bd7ffcc2f9b57df671f40bdd5ec402f56d27f9abd79aa56eb18b6a4cbe3"
+    },
+    {
+      "path": "src/components/TicketWalletDrawer.tsx",
+      "bytes": 14411,
+      "sha256": "e0954975d5eecbcd373f1c878caf67486a6153206ea6b12fc41ea9738a52ad55"
+    },
+    {
+      "path": "src/components/ui/accordion.tsx",
+      "bytes": 2015,
+      "sha256": "0903efcd7b746eef0a10c954a541b0dfa7aa1172f3c380a1a88f4e19a317fda3"
+    },
+    {
+      "path": "src/components/ui/alert-dialog.tsx",
+      "bytes": 4183,
+      "sha256": "ee4d7f3341a1e5592787b7dac8e924bd226189492819f6704d8a7faf8fe64d20"
+    },
+    {
+      "path": "src/components/ui/alert.tsx",
+      "bytes": 1589,
+      "sha256": "e7f4c2e6f78c59270905b4152b7d3ef4d5c6b9e3b2d370daa7b301aa7cbd27b3"
+    },
+    {
+      "path": "src/components/ui/aspect-ratio.tsx",
+      "bytes": 143,
+      "sha256": "d72c73d629e37995a0a71647d851d68d6fdcd7ec120797f36ab83a8ee89f2cab"
+    },
+    {
+      "path": "src/components/ui/avatar.tsx",
+      "bytes": 1413,
+      "sha256": "0326c9041c5a0b1ba31ff29822c51950b6aeac485cd0985e7df714741a54e7f4"
+    },
+    {
+      "path": "src/components/ui/badge.tsx",
+      "bytes": 1123,
+      "sha256": "6519775252fe729f21c60b92c7c9feefd1fe7d0a8c2cf16d6f1c2fa7e153fe75"
+    },
+    {
+      "path": "src/components/ui/breadcrumb.tsx",
+      "bytes": 2749,
+      "sha256": "d5224e87344b3ac0f8b002e5dda6a71ff8fee296db8a5fbe6b034d06bd5c2ae1"
+    },
+    {
+      "path": "src/components/ui/button.tsx",
+      "bytes": 1894,
+      "sha256": "e39813b666ba434660ec088356a0349246b6803a4e99961295d0c82bab1ab862"
+    },
+    {
+      "path": "src/components/ui/calendar.tsx",
+      "bytes": 7226,
+      "sha256": "e883f2245873fdf360764f77fc8f391426bef5776c6397537012c46970ebd6ee"
+    },
+    {
+      "path": "src/components/ui/card.tsx",
+      "bytes": 1817,
+      "sha256": "f13878a0078a5ef9f3e92af29259fc1e93ea56ea80cb992e0c4dea4e35396459"
+    },
+    {
+      "path": "src/components/ui/carousel.tsx",
+      "bytes": 6200,
+      "sha256": "568e00e8edbfab8af67ee902ca9ef5ceb6d5ed6f3045e7f9b3c15b4f7ef9e974"
+    },
+    {
+      "path": "src/components/ui/chart.tsx",
+      "bytes": 10570,
+      "sha256": "81b1f692f9334ba3030213ff37eeaf2dd762b644e5d96e51ada7072109f07430"
+    },
+    {
+      "path": "src/components/ui/checkbox.tsx",
+      "bytes": 1043,
+      "sha256": "c44d02535d5c9c92807576804407dd63d01e7189dbde526e925b53885e645fd4"
+    },
+    {
+      "path": "src/components/ui/collapsible.tsx",
+      "bytes": 335,
+      "sha256": "5f0a45d8f6ca72d37ed10bf0a85306158b67d7cbc386319186ce013ead9bc0a6"
+    },
+    {
+      "path": "src/components/ui/command.tsx",
+      "bytes": 4876,
+      "sha256": "ba8c0f8b23044ce9a5066e66d7ab7be3a3c79bfc4a0ab7dfae6ffafe439145a3"
+    },
+    {
+      "path": "src/components/ui/context-menu.tsx",
+      "bytes": 7360,
+      "sha256": "b299f50a0a7840b136db5670f2b2e7eec6fc62b3c06bc2ad0015800959cc381b"
+    },
+    {
+      "path": "src/components/ui/dialog.tsx",
+      "bytes": 3648,
+      "sha256": "e3a6de153fb15597ea95be9c4549211a297c060267787915599e3d680d476bd9"
+    },
+    {
+      "path": "src/components/ui/drawer.tsx",
+      "bytes": 2973,
+      "sha256": "478c487f66245641d5fa0f0d1c53a07d68bd60c4b3c497ec4c41ce08b482e14b"
+    },
+    {
+      "path": "src/components/ui/dropdown-menu.tsx",
+      "bytes": 7565,
+      "sha256": "a6b87c89f5a806225b7f3a81f13a6577289c67e5787c2a56b5a22bd1edea02ce"
+    },
+    {
+      "path": "src/components/ui/form.tsx",
+      "bytes": 4201,
+      "sha256": "1ed53d4ab564a64708938643de590f2bef3718b0b2a309c1019c57e9c1fde23f"
+    },
+    {
+      "path": "src/components/ui/hover-card.tsx",
+      "bytes": 1246,
+      "sha256": "69dc172ece56ac77bf3a044a1cd60ed601b0041945d16b5da4c6cc4f42116988"
+    },
+    {
+      "path": "src/components/ui/input-otp.tsx",
+      "bytes": 2232,
+      "sha256": "45b7c4fd518616f76dd611b9da13bc60bece1352e050878bf943e1cc6a4ed678"
+    },
+    {
+      "path": "src/components/ui/input.tsx",
+      "bytes": 776,
+      "sha256": "92debb7d6d2d96d9e607a42d5ce8f37b2d63384ae5dd9ffbbf5f047b680ffb85"
+    },
+    {
+      "path": "src/components/ui/label.tsx",
+      "bytes": 716,
+      "sha256": "9f72e2ecf16206593aa9e3c4fbc14cd8e81aa8488d57d92d4a950b30935a9fa9"
+    },
+    {
+      "path": "src/components/ui/menubar.tsx",
+      "bytes": 8515,
+      "sha256": "5bd157c3a446ea1e451867e63724b2e87ad6bba6251c8b5f1b267d1df7bd4e0e"
+    },
+    {
+      "path": "src/components/ui/navigation-menu.tsx",
+      "bytes": 5152,
+      "sha256": "755aecc77b7911ab61159c9fbb9b25254009eb4c32c95b1430b6b5b7d37ed8f0"
+    },
+    {
+      "path": "src/components/ui/pagination.tsx",
+      "bytes": 2739,
+      "sha256": "cbe8559c578ee2d34c7daef5ee75dc3afeb795851e294b111dec375ba44a9a2d"
+    },
+    {
+      "path": "src/components/ui/popover.tsx",
+      "bytes": 1352,
+      "sha256": "861c18577ea5988c6f5ca00d1c677200319fd427cf8b424e59a5cca6ff24f830"
+    },
+    {
+      "path": "src/components/ui/progress.tsx",
+      "bytes": 781,
+      "sha256": "418f612946a520d1380b7a0d058185bb6a6d09846846dd6d6904a0016152dd4a"
+    },
+    {
+      "path": "src/components/ui/radio-group.tsx",
+      "bytes": 1405,
+      "sha256": "8c55aa0496b00a27fc4f609ca8b43a7e82c6802f6bf613998438b7632899fa96"
+    },
+    {
+      "path": "src/components/ui/resizable.tsx",
+      "bytes": 1552,
+      "sha256": "f0399fec7bc334f06433b41b6ebf34255942ce4916b99173898893fa7fcc8281"
+    },
+    {
+      "path": "src/components/ui/scroll-area.tsx",
+      "bytes": 1635,
+      "sha256": "b607f562455152a079d70a22538c95072b0267e0d59a1a1cf16a905a2e373a6f"
+    },
+    {
+      "path": "src/components/ui/select.tsx",
+      "bytes": 5749,
+      "sha256": "6d4deee18cf7ced0354eb719300833a83caf46400de6ee9c3d1942fa4c579ad4"
+    },
+    {
+      "path": "src/components/ui/separator.tsx",
+      "bytes": 723,
+      "sha256": "bf5838b692e5f74fde7083280b99492dd402bce6966e912e79f5e23f14bc98eb"
+    },
+    {
+      "path": "src/components/ui/sheet.tsx",
+      "bytes": 4248,
+      "sha256": "a82f9341962e766ee925a2fe883b0a9ab5d5dd8475c402ac8e491ee37dc95fde"
+    },
+    {
+      "path": "src/components/ui/sidebar.tsx",
+      "bytes": 23975,
+      "sha256": "9f44f4523271f965adec608ae1c3b8a2f350f2f45ba1401a2c7ee33bc5eda238"
+    },
+    {
+      "path": "src/components/ui/skeleton.tsx",
+      "bytes": 239,
+      "sha256": "f4c42257d73925b0b856a3500e2cbdd918fe6744fcd6be87ef28bb88e7eb7366"
+    },
+    {
+      "path": "src/components/ui/slider.tsx",
+      "bytes": 1025,
+      "sha256": "d307cf3ff05b54be4a04389ef4379f9e8b4dc49720197937991ce843a8d4b5ec"
+    },
+    {
+      "path": "src/components/ui/sonner.tsx",
+      "bytes": 734,
+      "sha256": "3ad40f66c339e799b1a57c00e10b4627294c7d580d99d8a48ae0d8d4c13cf931"
+    },
+    {
+      "path": "src/components/ui/switch.tsx",
+      "bytes": 1156,
+      "sha256": "c3c298df4ffb56695e4a8f0ff3e37eee08437dec542a677153ec16bed0820107"
+    },
+    {
+      "path": "src/components/ui/table.tsx",
+      "bytes": 2820,
+      "sha256": "1e945e564c2cc5ca3ef33019ba7da7a8b94cbc73feb3cbc2b7b33c36ea648d92"
+    },
+    {
+      "path": "src/components/ui/tabs.tsx",
+      "bytes": 1934,
+      "sha256": "e9b454d2f987c83b36cc8870bba47d9355db4e8f5c733b310dbc1119a7d27654"
+    },
+    {
+      "path": "src/components/ui/textarea.tsx",
+      "bytes": 677,
+      "sha256": "35617a2cf053e52c9e56983bde82d556861d38e462f9e578876c8e99a0432687"
+    },
+    {
+      "path": "src/components/ui/toggle-group.tsx",
+      "bytes": 1752,
+      "sha256": "d59cd3937c967a3e221fdfcfe4ea5cd57eb97cbe37e1ac98126664c9c7db49c1"
+    },
+    {
+      "path": "src/components/ui/toggle.tsx",
+      "bytes": 1534,
+      "sha256": "62e6e21993f1ab633b9f830cbbf0c181f3d161bae3a7792dbf2d842d42a2f09c"
+    },
+    {
+      "path": "src/components/ui/tooltip.tsx",
+      "bytes": 1278,
+      "sha256": "9682690fc3755d0f4b8684f2d7b1f77945876d41a45b723d0761b26804ad5010"
+    },
+    {
+      "path": "src/components/WhyNagpurConnect.tsx",
+      "bytes": 2722,
+      "sha256": "abc75a05345118c6e99184a4edc899ea0b0216d1a2192bfd0ed8184ee59fd117"
+    },
+    {
+      "path": "src/context/AuthContext.tsx",
+      "bytes": 13338,
+      "sha256": "a2b33ebd066dcfd94b639544fa2ab5ccb284a2596e92b7e804702be33d086287"
+    },
+    {
+      "path": "src/data/bus_fares.json",
+      "bytes": 12925329,
+      "sha256": "16342757c5e03f1cb0079dd59d1c08a63a71eed73e58ab61133e575e1c88e02c"
+    },
+    {
+      "path": "src/data/bus_schedules.json",
+      "bytes": 972074,
+      "sha256": "1635b3495265b02ff70290eb6ee99fe5bc3c3c60f7d4a70f3423c1fda4f78e89"
+    },
+    {
+      "path": "src/data/chalo_routes_index.json",
+      "bytes": 1245976,
+      "sha256": "38a405e2d30e5ba20f6a9c73b82748b03995f7499048fbb07e3f82f9b2241974"
+    },
+    {
+      "path": "src/data/lineGeometries.json",
+      "bytes": 17982319,
+      "sha256": "fedcc5b28270c2c774925d624ba3607a9f466eb5448321746927271b0ec56810"
+    },
+    {
+      "path": "src/data/metro_fares.json",
+      "bytes": 345042,
+      "sha256": "93339c9bca9442d080076574948d3d7e5048195471fae1b3a16af0b8e85c5f62"
+    },
+    {
+      "path": "src/data/network.json",
+      "bytes": 8573015,
+      "sha256": "0a7429a9da6894ecdcc0d4246a5426451f475818de4c94e10286dc947f3c9c53"
+    },
+    {
+      "path": "src/hooks/use-mobile.tsx",
+      "bytes": 576,
+      "sha256": "21eff740f9e5c965c7f0782925a7e8f67ddfcdf0f58b6613550f99c3e1c454e9"
+    },
+    {
+      "path": "src/lib/busTimetableService.ts",
+      "bytes": 14228,
+      "sha256": "a2e92a344cd06f0988b4b842eceeca7b72216bbff38c441a91b44b71842ed4c8"
+    },
+    {
+      "path": "src/lib/error-capture.ts",
+      "bytes": 2207,
+      "sha256": "779eabc931ad7a72b80802b69fc286d849e88d0b9298125042b6cc875931125c"
+    },
+    {
+      "path": "src/lib/error-page.ts",
+      "bytes": 1371,
+      "sha256": "635915886f5d44a18b6add2a53959dbe2e8ba1bb3f7e597fc714650e74157bb6"
+    },
+    {
+      "path": "src/lib/fares.ts",
+      "bytes": 13907,
+      "sha256": "042531fe4e143a6f4bcbb432ba9eac3f1734535439b7361bf83677463471cce9"
+    },
+    {
+      "path": "src/lib/frequencies.ts",
+      "bytes": 1288,
+      "sha256": "8bfd00e65cce910a49b4a9150824c455ab7aeef44729534387bf05cfc29c0199"
+    },
+    {
+      "path": "src/lib/liveBus.ts",
+      "bytes": 21055,
+      "sha256": "bca7b8857cf2ce46b16a4db81344dc3595dec7a3c3507e29dc65f500fd2b72f2"
+    },
+    {
+      "path": "src/lib/n8nAiService.ts",
+      "bytes": 72029,
+      "sha256": "83825bc999005020474d347c355b1b597a1c6aabf2a11c0ca864845e2a88184c"
+    },
+    {
+      "path": "src/lib/nagpurPlaces.ts",
+      "bytes": 45030,
+      "sha256": "3826ae9e617e8ead240235d35f8c07b2dfb982c8a8ba69fdc902767b9f9da4bf"
+    },
+    {
+      "path": "src/lib/nearby.ts",
+      "bytes": 3064,
+      "sha256": "eca1d79ac805c6ba7d0e103bdf4d17cd9a9fffe97d4278816a0ebf075686915b"
+    },
+    {
+      "path": "src/lib/network.ts",
+      "bytes": 7368,
+      "sha256": "40c4a9a5ec305cf6cca25ae5f822d381cf0bbc4f6745e7ea85c1ee21f7190adb"
+    },
+    {
+      "path": "src/lib/ors.ts",
+      "bytes": 9983,
+      "sha256": "8a80c0f18f9cb03d0c67e2cabf922384a06edf5ca58fbdd7379d14a786831e16"
+    },
+    {
+      "path": "src/lib/placesSearch.ts",
+      "bytes": 22685,
+      "sha256": "1095811d06b1e35717dd1a456612a55cc50bc509a162bfd403ff5160376f830e"
+    },
+    {
+      "path": "src/lib/routing.ts",
+      "bytes": 55698,
+      "sha256": "790d2eb36eb854fea4dcb4f55fc5d5c1b98fbcf7561927b53cf5679281d36369"
+    },
+    {
+      "path": "src/lib/supabase-schema.sql",
+      "bytes": 7317,
+      "sha256": "b746546e8d18999460bf8b26c4333764732f1f059f5dee8795c94184fd37fb5b"
+    },
+    {
+      "path": "src/lib/ticketExporter.ts",
+      "bytes": 3068,
+      "sha256": "0e26594f3e688f7b549069a2460e36e8caec8c9cde532d804a6d76aa7cde8190"
+    },
+    {
+      "path": "src/lib/ticketing.ts",
+      "bytes": 29084,
+      "sha256": "3609c924b8d8011e1e5f1042bb0dfa2244612ad5899ec68a4549bfb72ce76c0f"
+    },
+    {
+      "path": "src/lib/uberApi.ts",
+      "bytes": 27303,
+      "sha256": "642f8cf0fc060079b1696e1d89a8d22d8cd2c9bb2f76920141e7fbf6a524df19"
+    },
+    {
+      "path": "src/lib/utils.ts",
+      "bytes": 169,
+      "sha256": "d1f1e0d62cb8d8d1e04c26e14de842d8a151f75812d81b046c65b5d1fe8e4b27"
+    },
+    {
+      "path": "src/lib/wavRecorder.ts",
+      "bytes": 5335,
+      "sha256": "a579f8e712594d237a9ba598cf0183eccdff16cde51e79a6c398189335965f83"
+    },
+    {
+      "path": "src/router.tsx",
+      "bytes": 394,
+      "sha256": "72b68964d3f55ba4f7dcf2a04aad9d97d7c61fabad13aec1d298f1e39ee59fcc"
+    },
+    {
+      "path": "src/routes/app.tsx",
+      "bytes": 169471,
+      "sha256": "387bd036a37fe11194aeec8a11d9fa36ebd17c0e6a8d4c16b1a36aece1051a93"
+    },
+    {
+      "path": "src/routes/forgot-password.tsx",
+      "bytes": 6421,
+      "sha256": "680345820cf654460dc3e08d6e8eff9cc3c0e036f94be57ebc8b2c12315fa6b4"
+    },
+    {
+      "path": "src/routes/index.tsx",
+      "bytes": 4252,
+      "sha256": "004f3f82f44dd8e96165e04b9ea3878829d24df23172d23edcd89c251e68774e"
+    },
+    {
+      "path": "src/routes/login.tsx",
+      "bytes": 16723,
+      "sha256": "5f500c4bd5d26d6e5b942de7c1808fcf9a7c73e077d1d5fae259882f06b043c2"
+    },
+    {
+      "path": "src/routes/signup.tsx",
+      "bytes": 33311,
+      "sha256": "086698f4245c1a4b2f44d960febecccae51c6994e6c8892c6c608f62ee71692a"
+    },
+    {
+      "path": "src/routes/update-password.tsx",
+      "bytes": 10184,
+      "sha256": "81362cd473ee82ec64942b46c3aaea9d330d67c2e84957ccbb6d55fd9e244421"
+    },
+    {
+      "path": "src/routes/__root.tsx",
+      "bytes": 4148,
+      "sha256": "d40cfb3056d6f53bdc5ca8bdc575b6ffaaecfe9bcf6566bce6865cd693e4019e"
+    },
+    {
+      "path": "src/routeTree.gen.ts",
+      "bytes": 5038,
+      "sha256": "b7d9bf69f52b45430038314d22903338b152baf4c757125f3528f46f16725f70"
+    },
+    {
+      "path": "src/server.ts",
+      "bytes": 1892,
+      "sha256": "ca5af713cff12bf4bc555847ab1c94a03d31bed61ff75e413dc96444b49564ea"
+    },
+    {
+      "path": "src/services/dbTypes.ts",
+      "bytes": 1228,
+      "sha256": "019adfc7bc2e1e0b4f22d0d5ff13e5ee009c76fcae9483c614a356f9cbeffcb9"
+    },
+    {
+      "path": "src/services/ecoRewardsService.ts",
+      "bytes": 4015,
+      "sha256": "bcf407e52d0a28dee82a91fa4ebecaebbb7e46f5dbc274d5c05bf96064fe8622"
+    },
+    {
+      "path": "src/services/emailService.ts",
+      "bytes": 18867,
+      "sha256": "26f4e16f45314ce69efda28239e2f654358e525ef19cf7f22a2b5e450840edee"
+    },
+    {
+      "path": "src/services/profileService.ts",
+      "bytes": 2275,
+      "sha256": "1c64235fe89d5958578b7bc70cac150e6deec6fed1f65f6f3accf465de6e3509"
+    },
+    {
+      "path": "src/services/recentJourneysService.ts",
+      "bytes": 3678,
+      "sha256": "0e66fc217f634b4b336aa74004c77083f72f470077ef67bdb719e79fd0cba548"
+    },
+    {
+      "path": "src/services/savedJourneysService.ts",
+      "bytes": 5244,
+      "sha256": "5816c2b3910de717d8b466d5dfd02105c17f1d4e3b2461e28c10490cce81d212"
+    },
+    {
+      "path": "src/services/ticketService.ts",
+      "bytes": 5256,
+      "sha256": "e99643150442e9a569188a5f32c2932f99b8d7700fa7394401b803aed94692dc"
+    },
+    {
+      "path": "src/start.ts",
+      "bytes": 759,
+      "sha256": "b73ce7a01bfe824fb1ce6185e6eb0239f2c2b00d9dbde608587aa4f5ba08239d"
+    },
+    {
+      "path": "src/styles.css",
+      "bytes": 9544,
+      "sha256": "cb26c1d4d2f85c6a5963c903eb57a088e94983d5608093223ca97a3ff7583ce7"
+    },
+    {
+      "path": "src/supabaseClient.ts",
+      "bytes": 546,
+      "sha256": "f4065ce1d11ecc461099aed1421465cda02056dfd9d835fcbe57b6da0d850c09"
+    },
+    {
+      "path": "vite.config.ts",
+      "bytes": 7938,
+      "sha256": "8d8ca808e8cb084761c143a32266ab66d9220dc109c41eb4b565c0bb94fda06a"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "assets/083c22ceb50039d4b86bcff8186b132b",
+      "bytes": 21363163,
+      "sha256": "cca98fd60c1fbefa165dab41ccb9f558751b2a1c5f3047208a13e68947187f03"
+    },
+    {
+      "path": "assets/1f16e3773458977a1e74f08503c43646",
+      "bytes": 159725,
+      "sha256": "454fb97b35df8011598d5881b216edbd4ccdcdeb98f859de2f2fd7890c6d3e06"
+    },
+    {
+      "path": "assets/30996c522c82237e088fd6e671e0f3ff",
+      "bytes": 21406897,
+      "sha256": "a9f886f1ed24e2dbb1b98b249c4bb8b4ecf83dc849245741e42458f06a7af870"
+    },
+    {
+      "path": "assets/4adca23707c379e3327f96993bbdba51",
+      "bytes": 21407187,
+      "sha256": "521be609bd7b8e66c7183eea485a9dd170a039474a3dbd14a2d235d0d823e20c"
+    },
+    {
+      "path": "assets/58108026405521e9dedb139a4f620b12",
+      "bytes": 21396225,
+      "sha256": "1834cce4907edae51d41a627c006e77b5976ac08d37e3d794a382c24237432bf"
+    },
+    {
+      "path": "assets/71826ec497bb0dbf375012fd404c483a",
+      "bytes": 159613,
+      "sha256": "7fa2be73a28f0bbd8b9f384e01d98102c5f73e3d22c7804e4641d8aa9d3546ce"
+    },
+    {
+      "path": "assets/8a287b3f5f89a33b640f0e3124752b6b",
+      "bytes": 21363147,
+      "sha256": "8c549991e16e7a3e722fc1aa8e33d6ca9f02f75b69af5e20e54bf1b23b56bb50"
+    },
+    {
+      "path": "assets/95ee13d5367132da8741e924fd4acb31",
+      "bytes": 21406877,
+      "sha256": "541a7e9376f218400baeefaa28f4e275dee5004cfc2d57a63d82196d2f2799d3"
+    },
+    {
+      "path": "assets/a6a8ad9452f61dc3af796ba2b04efb9e",
+      "bytes": 21356335,
+      "sha256": "a4de5ac96b2c466b937bf14af481f872fb7a8495b7fc2338723446614f3b1b79"
+    },
+    {
+      "path": "assets/bba684a52325d00bd2eb045a74b29be6",
+      "bytes": 21399094,
+      "sha256": "e374723dd95e0a66236457a518f140e25080d3072fdee09fdbcfbd3732f58407"
+    },
+    {
+      "path": "assets/d0454b2836153662c98bf47150d1fe50",
+      "bytes": 21396116,
+      "sha256": "7dae65f965a4d68fa680ebc501e234de0d70c60970e91c5944ccea011aec2825"
+    },
+    {
+      "path": "assets/e48a70b98c97899b4e5c79628d843d46",
+      "bytes": 21362696,
+      "sha256": "3db04e111c848c790f0322c12b8ff8b36c1a6f79b21f2f9c239a04dca12d2ef3"
+    },
+    {
+      "path": "assets/f064ede8275ed19aea4008a058032aa2",
+      "bytes": 21393180,
+      "sha256": "32bc0e5bd168354d3dddc5cc527a69447247189117718dced9784fdfed18b76e"
+    },
+    {
+      "path": "camera-sample.png",
+      "bytes": 518585,
+      "sha256": "416ec2bb41b1c7f07124fa971683f1835056afdc21b81f986c9a6aba6b7da34e"
+    },
+    {
+      "path": "camera-validation.html",
+      "bytes": 139932,
+      "sha256": "4992755c27eeffd4232c5085caf6685e8c1b811ad981db043b5207ab9f219c67"
+    },
+    {
+      "path": "gesture/index.html",
+      "bytes": 159725,
+      "sha256": "454fb97b35df8011598d5881b216edbd4ccdcdeb98f859de2f2fd7890c6d3e06"
+    },
+    {
+      "path": "gesture/models/hand_landmarker.task",
+      "bytes": 7819105,
+      "sha256": "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1"
+    },
+    {
+      "path": "gesture/wasm/vision_wasm_internal.js",
+      "bytes": 209826,
+      "sha256": "9440cf0cc0cea21800e31581ec32aeedcc5fbf9df4509796bbc7d3f99e52ab9c"
+    },
+    {
+      "path": "gesture/wasm/vision_wasm_internal.wasm",
+      "bytes": 9423986,
+      "sha256": "f82a8e6c05e08a44cc9f9e7ec5f845935bcbb1b1500ebe8c2f4812fb4e2917dc"
+    },
+    {
+      "path": "gesture/wasm/vision_wasm_nosimd_internal.js",
+      "bytes": 209735,
+      "sha256": "abe9b6fbeaf86fcb53a5edce3926c82ccb0619e18fed4d9d9ce561ee7f55e054"
+    },
+    {
+      "path": "gesture/wasm/vision_wasm_nosimd_internal.wasm",
+      "bytes": 9294247,
+      "sha256": "38b61feab2fd7934e05cbe9f68baa308978a5e3b7f85c1913bb8ae89b8ef8b97"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1165,
+      "sha256": "09817f0d32e225e02757d0a8f50e0e379ba7d642d19263d0c18601ab8eec5616"
+    },
+    {
+      "path": "metadata.json",
+      "bytes": 502,
+      "sha256": "083461d564cca5931ef307c0da106366153eb297a5860c1c806f4e6afce5bf37"
+    },
+    {
+      "path": "runtime/index.html",
+      "bytes": 21407187,
+      "sha256": "521be609bd7b8e66c7183eea485a9dd170a039474a3dbd14a2d235d0d823e20c"
+    },
+    {
+      "path": "_expo/static/js/android/index-2072848d6ecfbe3b530343f79280fb2d.hbc",
+      "bytes": 3920717,
+      "sha256": "2259b4c922b0f48c1a0c0787005776ab967db17057ebea1c09bfc36d232e7fa4"
+    },
+    {
+      "path": "_expo/static/js/android/index-278ed7066d21545a287ef8993e78aa49.hbc",
+      "bytes": 3941404,
+      "sha256": "a95726dd339fc284f24b44e266e4141275660cf374711404cf5881fd465449e8"
+    },
+    {
+      "path": "_expo/static/js/android/index-31fca5690260d5b52b6c75c94baa69f5.hbc",
+      "bytes": 3734249,
+      "sha256": "a870c5e9f1b08df4d5490bde805db8618cac45394e93d615d1c501783acb9769"
+    },
+    {
+      "path": "_expo/static/js/android/index-333f05e522d835585e5e23215697ab07.hbc",
+      "bytes": 3727027,
+      "sha256": "a47612b0e6d0a983857ffbb18b6d7247386ee8462adf4945a21d17c654c12d78"
+    },
+    {
+      "path": "_expo/static/js/android/index-3f08295a5acf5839f39a21430128cd1e.hbc",
+      "bytes": 3920982,
+      "sha256": "38c92f6c2dcb1c729edfa361ff47844427287911d1be6fe2b0b10cf6fafd33fc"
+    },
+    {
+      "path": "_expo/static/js/android/index-60a6a41b0e851e7fcbe2f2e8d86b25a2.hbc",
+      "bytes": 3920597,
+      "sha256": "946b603bc262d670f3720a5bb6c06aa45d0d0c6b6d572ac8daeabfd071f34122"
+    },
+    {
+      "path": "_expo/static/js/android/index-6268ee901e44ffc6d3bd3ebee1ef02f4.hbc",
+      "bytes": 3727262,
+      "sha256": "f075aad32bcfbab80ca33f5ab96b63d6d6904630393d2f9cd0c9d146daf42753"
+    },
+    {
+      "path": "_expo/static/js/android/index-88167a536975f5765401825359603e4e.hbc",
+      "bytes": 3957126,
+      "sha256": "94fe81e41965183a77575d4e7a9fa7e96181e6c71b02b21341bc85c4f1df5a4e"
+    },
+    {
+      "path": "_expo/static/js/android/index-88767039b9abd929bdfa7c6f7915620b.hbc",
+      "bytes": 3941698,
+      "sha256": "2dee229a412269dbaa0d128f4a2f6d0520e66e2e42b31bebd399fcc526200a18"
+    },
+    {
+      "path": "_expo/static/js/android/index-8ea7ea553eb8c24929c237b37f294f59.hbc",
+      "bytes": 3734702,
+      "sha256": "a29394ccecddcaa9549fcff790fac97b3f4c3e029b9190c55006c420484a5354"
+    },
+    {
+      "path": "_expo/static/js/android/index-9df6e5b4f715bfa92fb1e624ce84a588.hbc",
+      "bytes": 3726983,
+      "sha256": "a1b4a669e133aaa91a976b6fd752ca1f27be477934a185369c4d1dc00dc79175"
+    },
+    {
+      "path": "_expo/static/js/android/index-a6d32b59decd8d220aa7f2e2154e3835.hbc",
+      "bytes": 3742735,
+      "sha256": "62f56fefb5df62fdec7ca9071eddf7c7b61bc894ce36f642f6a926f80327e1c5"
+    },
+    {
+      "path": "_expo/static/js/android/index-b337f0068274d477fa68e2097f4bb0f8.hbc",
+      "bytes": 3957394,
+      "sha256": "13b68d977187bbc85ac2e072e308901c2aaccae91bee2818065460a357764f05"
+    },
+    {
+      "path": "_expo/static/js/android/index-cbd7fa1fcfd4b2af690ef4312f6035b7.hbc",
+      "bytes": 3975068,
+      "sha256": "eede386fda8f714394a1733e6fd35e5707032e98f20caa14b3b1d53108379fb5"
+    },
+    {
+      "path": "_expo/static/js/android/index-cd6fc611737ac95702061e89c4813423.hbc",
+      "bytes": 3976210,
+      "sha256": "c1f533b35fdc69562236ebd7812991e46798aa80f6e5efe7b699b49da222ceef"
+    },
+    {
+      "path": "_expo/static/js/android/index-d23e4c0ed25603f72b3f65d133064ae1.hbc",
+      "bytes": 3734540,
+      "sha256": "33f48da2ccc2dd7357623f924153f629cbeeabdac22d827c55db0359effec953"
+    },
+    {
+      "path": "_expo/static/js/android/index-daa6ece52f3120efbdfe79ec376cfca9.hbc",
+      "bytes": 3975087,
+      "sha256": "b7277d33c80f18ec99bac9eb88ed677f06d03048af92a67170551170e0fc7ba7"
+    },
+    {
+      "path": "_expo/static/js/android/index-ea20f07782d4877a332d2824cab80aa8.hbc",
+      "bytes": 3920908,
+      "sha256": "c582c913dfdb84d2f037fd6623a4032420a39c7b004d93dff6fcd87d9527ea8e"
+    },
+    {
+      "path": "_expo/static/js/android/index-f22a72a610759c047c7d21170bfce72d.hbc",
+      "bytes": 3941545,
+      "sha256": "b303ff485c08cf570d6a28dae5368102095b9c655c4d98ad8627f973c0c7be55"
+    },
+    {
+      "path": "_expo/static/js/ios/index-015925a8019e731b4e2060e20a25a1ee.hbc",
+      "bytes": 3939782,
+      "sha256": "724d40d70e733f46c1118ebc7744837ff6da84685369ac797f316ed861c15303"
+    },
+    {
+      "path": "_expo/static/js/ios/index-23c2b0208f5af24998b1b5d7fed0de3c.hbc",
+      "bytes": 3902386,
+      "sha256": "d605fc6f11a3e786f893c68eeb2cffce0438d48bdaf4ae6ce94d19a1a3b96257"
+    },
+    {
+      "path": "_expo/static/js/ios/index-34fdda93817c2dfb6a8a0530c63dcc60.hbc",
+      "bytes": 3958803,
+      "sha256": "f66d471a3c6bbe4eb00202b800889e96b8afe32518f18aeffd009a435acda19e"
+    },
+    {
+      "path": "_expo/static/js/ios/index-3ddb5e14ae27bf89e91f8509516381cc.hbc",
+      "bytes": 3714918,
+      "sha256": "5c8cbc784ad3f2d5599f18852b7b5a76dc7c5980a8e6bdd3209eff578902b7d3"
+    },
+    {
+      "path": "_expo/static/js/ios/index-4b49f6b38d67ca37d04e4b2c60a7f19e.hbc",
+      "bytes": 3723562,
+      "sha256": "2ef2623f7bd142ebbf2ee74eef2ec58610ea81cfed5f14690a1d78aaae23077c"
+    },
+    {
+      "path": "_expo/static/js/ios/index-4d9b522d0b4948a761f4a009612c1a3e.hbc",
+      "bytes": 3708527,
+      "sha256": "0da289c87e7b9083d432b1014a6fef11d9872eb00c7debbf8316832b6034ee8b"
+    },
+    {
+      "path": "_expo/static/js/ios/index-5a85d3dc7a62151e702aa2de9870256f.hbc",
+      "bytes": 3708228,
+      "sha256": "d5f5c6576d590084c0f9996e1f66ebc78d3a1f145c03cd6f7fa2e699121863bf"
+    },
+    {
+      "path": "_expo/static/js/ios/index-5d8b094cf622e60def65e5b58d794749.hbc",
+      "bytes": 3902312,
+      "sha256": "840c560a0158a98fd6731908ec14d5ad369421ce9021ac520b7662a9146dcc7f"
+    },
+    {
+      "path": "_expo/static/js/ios/index-6209473e24aae5bb6e72da85a9f8c228.hbc",
+      "bytes": 3924163,
+      "sha256": "6d5613e58bab07386b9169a04ca71f4ff580f34987c7ba912239aba617be0eb7"
+    },
+    {
+      "path": "_expo/static/js/ios/index-67d41117627d04601e918dcadee47f48.hbc",
+      "bytes": 3715340,
+      "sha256": "010f05195bb8668e85472515df74dfaff5d76b2cbd241ad8ec8ecb111cc89e94"
+    },
+    {
+      "path": "_expo/static/js/ios/index-79d20559f94f307e9fd01259cf67d0bf.hbc",
+      "bytes": 3902092,
+      "sha256": "4e71468d5205c512b63cd80f98153d5225b180a661fe59b87b7cf07376c14312"
+    },
+    {
+      "path": "_expo/static/js/ios/index-7c596b8bff900ec0bd58de1b024c1942.hbc",
+      "bytes": 3924009,
+      "sha256": "c3eb67c141611886119fbcaada4f81109e654495cfe411517977b49950c2f7cc"
+    },
+    {
+      "path": "_expo/static/js/ios/index-831948114c4c573ab10703aea777d7b9.hbc",
+      "bytes": 3957703,
+      "sha256": "edc1698a37837bb6fb35088f9360a926fa2e22c93a7ec59d8b7c4270773f9a86"
+    },
+    {
+      "path": "_expo/static/js/ios/index-9b0975b0b7c0e30c08009e06070a1f0e.hbc",
+      "bytes": 3924290,
+      "sha256": "6a630ca7da84fabe007e329e39897ab108aa21337dc5c63d3b1ea42c749cf7bc"
+    },
+    {
+      "path": "_expo/static/js/ios/index-c1355851b0af1cb2f3a9badb83b8c006.hbc",
+      "bytes": 3715142,
+      "sha256": "c2e326b747d07fc5a155baf90ffb006761d18e13b8a2465c00f33b25e777dca8"
+    },
+    {
+      "path": "_expo/static/js/ios/index-d2b56b519e19f620b6b3462bfa08d46b.hbc",
+      "bytes": 3901962,
+      "sha256": "37f873789e42b8f4ad6ec97d267352281d7cd54496bb0d7a0f67d47c43f07878"
+    },
+    {
+      "path": "_expo/static/js/ios/index-f36310dea4d07c3850487417390564f6.hbc",
+      "bytes": 3708188,
+      "sha256": "20187a74e9a203a3f3ec97eadfc6ba65761c792e3e4c9e1a95a32061fc58ddd2"
+    },
+    {
+      "path": "_expo/static/js/ios/index-f4bd29da43cf7ebc7ced663acdd31cfe.hbc",
+      "bytes": 3940023,
+      "sha256": "b7fda41d8282dc8cd75023964f0e0114effb6dc91e06e51b0ccbfe5f2dc43b62"
+    },
+    {
+      "path": "_expo/static/js/ios/index-f941a43db22f04d554e44a7f29668a2f.hbc",
+      "bytes": 3957721,
+      "sha256": "82f9da608b520180dedd4566de08a16ca4055213de4693b0d2d82cccc24fb2e5"
+    },
+    {
+      "path": "_expo/static/js/web/index-16179fb460159c467ce64262861c293d.js",
+      "bytes": 2653980,
+      "sha256": "38c25b67fcea0c507fc184eae56c11ee8696402412253fe4cc7f5abe03709cea"
+    },
+    {
+      "path": "_expo/static/js/web/index-1695fbdfa4b37ccfcc8374feb82616cb.js",
+      "bytes": 2793126,
+      "sha256": "da23ac0c37ed3d3ce646c304f53e32a477f6f4c97c132629955203dd40631ab2"
+    },
+    {
+      "path": "_expo/static/js/web/index-1f0ceedd059147839cdbc03dd3bd8529.js",
+      "bytes": 2799348,
+      "sha256": "f00d656bd0d9a68a4bdf3ec515056a3917297b7bbaec587897ce86126aabf4ec"
+    },
+    {
+      "path": "_expo/static/js/web/index-247d4e2d1b45a1de6214eeacc54ecd65.js",
+      "bytes": 2662345,
+      "sha256": "c39edbee3372b115ee45e7dee95dacdb8d187cd5ede6167c6e457265004e04a3"
+    },
+    {
+      "path": "_expo/static/js/web/index-2a40240dd62114cb434aa9877a02d15a.js",
+      "bytes": 2651952,
+      "sha256": "5428bc222df1e3cbc4fcf414890a46c245bb057ecc22bbbb20dcfc4ab4004a75"
+    },
+    {
+      "path": "_expo/static/js/web/index-3735645a3e14e242a5b824252db12167.js",
+      "bytes": 2670767,
+      "sha256": "cc7723d72a58a35499b7260b159cefc7fac7e1ebed2b66f087ee0a4967415a5e"
+    },
+    {
+      "path": "_expo/static/js/web/index-53767bb34fb0cbfbba5fb399dc627075.js",
+      "bytes": 2792961,
+      "sha256": "69886b95f652765698e5cf4003ffcac0c9b22a9bd39ef0004a0b3fb854470766"
+    },
+    {
+      "path": "_expo/static/js/web/index-5cec52ecbe1272cbe2105de221c2d863.js",
+      "bytes": 2787562,
+      "sha256": "3730c7e3e5799d37ced32a063ed10bc406b9fee19bae59f0f8da509f14fd570e"
+    },
+    {
+      "path": "_expo/static/js/web/index-8a8c68260b2c0de76a4429dcdaeef700.js",
+      "bytes": 2790867,
+      "sha256": "8dc119eabe868c9247923d7db8dca16fa21ab3a981c0ce93c29ebca39e1b2b9e"
+    },
+    {
+      "path": "_expo/static/js/web/index-a5cc9edd911638919f0d0a24adc30c75.js",
+      "bytes": 2643984,
+      "sha256": "c90b20150341e5f379c673dbd2015bf6e0fb14e1f3b42df36141dd603bdd9d5d"
+    },
+    {
+      "path": "_expo/static/js/web/index-adbfe6fdb330f347a12d437e75bbeac1.js",
+      "bytes": 2654098,
+      "sha256": "1d31b5860397ee971ee3936d4463a17b2367d2ad81715c1869ab20289564f634"
+    },
+    {
+      "path": "_expo/static/js/web/index-cdaffe504fbcca4d2931199c10fde0fa.js",
+      "bytes": 2671159,
+      "sha256": "7648796d1e0aa3dca64e6875988961a64507039d335182f7f7c1f374de3ace13"
+    },
+    {
+      "path": "_expo/static/js/web/index-d02402c7264a6dcff32e61e2931112c1.js",
+      "bytes": 2644190,
+      "sha256": "0aa26ff25500fd73cab5bc1334ec7658b7594decb7ca36e61e23a4b94c70eb21"
+    },
+    {
+      "path": "_expo/static/js/web/index-d0abfd059aa14704a4273e362094940c.js",
+      "bytes": 2787459,
+      "sha256": "bf592f4b68714924bc5af7c44c3ce3fbcaac0ddd1b60eda3c044c72049dc39d0"
+    },
+    {
+      "path": "_expo/static/js/web/index-d850a1f6bff44cf4bb01e032e4699844.js",
+      "bytes": 2670785,
+      "sha256": "e8f287c9b80e70379fab3dcfbee1d4ae3227671cd255f3f7516a49d0e9dcf161"
+    },
+    {
+      "path": "_expo/static/js/web/index-df6bd0f6ffc29fdefdf2592af51afe8b.js",
+      "bytes": 2789479,
+      "sha256": "6fb6775fa94dd36717c0fb6ae3aa1f01792d495ea3a14318ab0edd4342a1fc93"
+    },
+    {
+      "path": "_expo/static/js/web/index-ec22d3cfbe4ba519f08fb58607c39631.js",
+      "bytes": 2660217,
+      "sha256": "93162db33ab12145487b4586fb81c9fa45c57b1eb3cb0b82a6f9700be40f60a4"
+    },
+    {
+      "path": "_expo/static/js/web/index-ee1fea8dd0f428aa6676245f04c7f2c4.js",
+      "bytes": 2644157,
+      "sha256": "e09a0ab4295d4b174820d78fedd291130de5b03dc2dcc6021af9bdc7ec314523"
+    }
+  ]
+}

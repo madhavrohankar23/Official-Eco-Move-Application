@@ -5,7 +5,7 @@ const ts = require('typescript');
 const app = path.resolve(__dirname, '..');
 const src = path.join(app, 'protected/src');
 const env = {};
-const allowed = new Set(['VITE_SUPABASE_URL','VITE_SUPABASE_ANON_KEY','VITE_SUPABASE_PUBLISHABLE_KEY','VITE_ORS_API_KEY','VITE_GOOGLE_MAPS_API_KEY','VITE_CARTO_API_KEY']);
+const allowed = new Set(['VITE_SUPABASE_URL','VITE_SUPABASE_ANON_KEY','VITE_SUPABASE_PUBLISHABLE_KEY','VITE_GOOGLE_MAPS_API_KEY','VITE_CARTO_API_KEY','VITE_N8N_WEBHOOK_URL','VITE_N8N_TEST_WEBHOOK_URL','VITE_N8N_CHATBOT_WEBHOOK_URL','VITE_N8N_CHATBOT_TEST_WEBHOOK_URL']);
 for (const line of fs.readFileSync(path.join(app,'.env'),'utf8').split(/\r?\n/)) {
   const m = line.match(/^\s*([^#=]+)=(.*)$/);
   if(m && allowed.has(m[1].trim())) env[m[1].trim()] = m[2].trim().replace(/^['"]|['"]$/g,'');
@@ -42,7 +42,9 @@ fs.writeFileSync(path.join(app,'runtime/source-issue.ts'),
 async function main(){
   require('./build-service-config.cjs')();
   await require('./build-gestures.cjs')();
-  const result=await esbuild.build({entryPoints:[path.join(app,'runtime/bootstrap.ts')],bundle:true,write:false,outdir:'out',minify:true,format:'iife',platform:'browser',target:'es2022',jsx:'automatic',alias:{'@':src},define:{'import.meta.env':JSON.stringify({...env,DEV:false}),'process.env.NODE_ENV':'"production"'},loader:{'.png':'dataurl'},logLevel:'warning'});
+  const fareDataPlugin={name:'lossless-fare-dictionary',setup(build){build.onLoad({filter:/bus_fares\.json$/},args=>({contents:require('./compact-fare-data.cjs').moduleSource(JSON.parse(fs.readFileSync(args.path,'utf8'))),loader:'js'}));}};
+  const result=await esbuild.build({entryPoints:[path.join(app,'runtime/bootstrap.ts')],bundle:true,write:false,outdir:'out',minify:true,format:'iife',platform:'browser',target:'es2022',jsx:'automatic',alias:{'@':src},plugins:[fareDataPlugin],metafile:true,define:{'import.meta.env':JSON.stringify({...env,DEV:false}),'process.env.NODE_ENV':'"production"'},loader:{'.png':'dataurl'},logLevel:'warning'});
+  fs.writeFileSync(path.join(app,'artifacts/runtime-metafile.json'),JSON.stringify(result.metafile));
   const js=result.outputFiles.find(f=>f.path.endsWith('.js')).text;
   const css=(result.outputFiles.find(f=>f.path.endsWith('.css'))?.text||'')+fs.readFileSync(path.join(app,'runtime/map.css'),'utf8');
   const html='<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Eco-Move map runtime</title><style>'+css+'</style></head><body><div id="root"></div><script>'+js.replace(/<\/script/gi,'<\\/script')+'</script></body></html>';

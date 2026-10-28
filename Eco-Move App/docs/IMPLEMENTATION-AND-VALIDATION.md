@@ -332,3 +332,8 @@ Real microphone transcription in these languages, installed recognition models, 
 - **78 tests passed, 0 failed** (`artifacts/accuracy-matte-final-tests.log`). Tests cover confidence/alternative selection, review confirmation/cancellation, all 37 station labels and their script spelling variants against the original coordinates, the 100-hint bound, all three language vocabularies and existing original/mobile functional parity. Station evidence: `artifacts/speech-station-validation.json`, `artifacts/speech-station-context.json`.
 - Computed minimum normal-text contrast across the tested themes, states, fallbacks and backgrounds is **4.60:1**. Strict TypeScript passed. Five live n8n transcript/action probes passed again after the abbreviation adapter (`artifacts/multilingual-live-validation.json`). These are not measurements of microphone word-error rate.
 - The earlier multilingual APK did build and verify successfully at 09:40 UTC on October 25 (55,108,345 bytes). It predates this accuracy/Matte follow-up. The new build status must be read from `artifacts/voice-release-status.json` before delivering an APK as containing this follow-up.
+
+### October 28 — matte Light and reference Night navigation
+
+See docs/UI-REFINEMENT-VALIDATION.md for the current UI changes and actual verification. Latest Night navigation matches the supplied smoky silver-to-black reference, with a pale selected lens. Latest TypeScript, 12 targeted tests and production web export passed; no new APK or physical-device verification is claimed. Work remains uncommitted on New-Changes.
+

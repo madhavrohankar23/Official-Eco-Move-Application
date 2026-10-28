@@ -31,6 +31,7 @@ export function Sheet({
   command = false,
   contentKey,
   footerInset = 0,
+  routeFocus = false,
 }: {
   title: string;
   subtitle?: string;
@@ -45,19 +46,20 @@ export function Sheet({
   command?: boolean;
   contentKey?: string;
   footerInset?: number;
+  routeFocus?: boolean;
 }) {
   const { width, height } = useWindowDimensions();
   const safe = useSafeAreaInsets();
   const { c, dark, reduceMotion } = useTheme();
-  const layout = panelLayout(width, height, safe.bottom, keyboard, expanded, collapsed, safe.top, footerInset);
-  const animatedHeight = useRef(new Animated.Value(layout.height)).current;
+  const layout = panelLayout(width, height, safe.bottom, keyboard, expanded, collapsed, safe.top, footerInset, routeFocus);
+  const baseBottom = layout.bottom - footerInset;
+  const prevBaseBottom = useRef(baseBottom);
+  const bottomShift = useRef(new Animated.Value(0)).current;
   const footerShift = useRef(new Animated.Value(footerInset)).current;
   useEffect(() => {
     const animation = Animated.timing(footerShift, { toValue: footerInset, duration: reduceMotion ? 0 : 260, easing: Easing.out(Easing.cubic), useNativeDriver: true, isInteraction: false });
     animation.start(); return () => animation.stop();
   }, [footerInset, reduceMotion, footerShift]);
-  const [renderHeight, setRenderHeight] = useState(layout.height);
-  const resizeEpoch = useRef(0);
   const closeEpoch = useRef(0);
   const closing = useRef(false);
   const presence = useRef(new Animated.Value(0)).current;
@@ -69,27 +71,31 @@ export function Sheet({
     const immediate = reduceMotion || previousViewport.current !== viewport;
     previousViewport.current = viewport;
     if (!collapsed) setBodyHidden(false);
-    const epoch = ++resizeEpoch.current;
-    animatedHeight.stopAnimation(current => {
-      if (epoch !== resizeEpoch.current) return;
-      if (immediate) { animatedHeight.setValue(layout.height); setRenderHeight(layout.height); return; }
-      // Layout changes only at the endpoints. The material scales from its bottom
-      // edge while text translates, retaining its actual glyph size throughout.
-      setRenderHeight(Math.max(current, layout.height));
-      Animated.timing(animatedHeight, {
-        toValue: layout.height, duration: contentKey === 'search' ? 300 : 260,
-        easing: Easing.bezier(.2, .82, .2, 1), useNativeDriver: true, isInteraction: false,
-      }).start(({ finished }) => {
-        if (finished && epoch === resizeEpoch.current) setRenderHeight(layout.height);
-      });
-    });
+
+    if (baseBottom !== prevBaseBottom.current) {
+      const diff = prevBaseBottom.current - baseBottom;
+      prevBaseBottom.current = baseBottom;
+      if (immediate || Math.abs(diff) < 0.5) {
+        bottomShift.setValue(0);
+      } else {
+        bottomShift.setValue(diff);
+        Animated.timing(bottomShift, {
+          toValue: 0,
+          duration: routeFocus ? 300 : 260,
+          easing: Easing.bezier(0.2, 0.82, 0.2, 1),
+          useNativeDriver: true,
+          isInteraction: false,
+        }).start();
+      }
+    }
+
     const body = Animated.timing(bodyOpacity, {
       toValue: collapsed ? 0 : 1, duration: reduceMotion ? 0 : collapsed ? 80 : 200,
       useNativeDriver: true, isInteraction: false,
     });
     body.start(({ finished }) => { if (finished && collapsed) setBodyHidden(true); });
-    return () => { resizeEpoch.current++; animatedHeight.stopAnimation(); body.stop(); };
-  }, [layout.height, viewport, collapsed, reduceMotion, animatedHeight, bodyOpacity]);
+    return () => { body.stop(); bottomShift.stopAnimation(); };
+  }, [baseBottom, viewport, collapsed, reduceMotion, routeFocus, bodyOpacity, bottomShift]);
   useLayoutEffect(() => {
     closeEpoch.current++; closing.current = false;
     presence.stopAnimation();
@@ -141,9 +147,9 @@ export function Sheet({
           left: layout.left,
           right: layout.right,
           width: layout.width,
-          bottom: layout.bottom - footerInset,
-          transform: [{ translateY: Animated.multiply(footerShift, -1) }],
-          height: renderHeight,
+          bottom: baseBottom,
+          transform: [{ translateY: Animated.multiply(Animated.add(bottomShift, footerShift), -1) }],
+          height: layout.height,
         },
       ]}
     >
@@ -159,13 +165,12 @@ export function Sheet({
           level={command ? 4 : 3}
           specular
           moving={!collapsed}
-          materialStyle={{ transformOrigin: 'bottom', transform: [{ scaleY: Animated.divide(animatedHeight, renderHeight) }] }}
           style={{
             flex: 1,
             borderRadius: glassGeometry.radius.sheet,
           }}
         >
-        <Animated.View style={{ flex: 1, minHeight: 0, transform: [{ translateY: Animated.subtract(renderHeight, animatedHeight) }] }}>
+        <View style={{ flex: 1, minHeight: 0 }}>
         {/* Sleek Apple-inspired grab handle */}
         <View {...pan.panHandlers} style={s.handleArea}>
           <View
@@ -197,7 +202,7 @@ export function Sheet({
             accessibilityRole="button"
             accessibilityLabel={collapsed ? 'Expand panel' : 'Collapse panel'}
             onPress={collapsed ? onExpand : onCollapse}
-            style={{ flex: 1, paddingVertical: 4, justifyContent: 'center' }}
+            style={{ flex: 1, minWidth: 0, paddingVertical: 4, justifyContent: 'center' }}
           >
             <Copy size={17} weight="600" numberOfLines={1} style={{ letterSpacing: -0.3 }}>
               {title}
@@ -257,7 +262,7 @@ export function Sheet({
           {children}
         </ScrollView>
         </Animated.View>
-        </Animated.View>
+        </View>
       </Glass>
       </Animated.View>
     </Animated.View>
@@ -290,6 +295,7 @@ const s = StyleSheet.create({
   },
   hit: {
     width: 44,
+    flexShrink: 0,
     height: 44,
     alignItems: 'center',
     justifyContent: 'center',

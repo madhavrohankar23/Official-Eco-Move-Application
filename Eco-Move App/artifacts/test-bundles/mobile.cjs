@@ -1041393,8 +1041393,6 @@ function buildNetwork(data = network_default) {
 }
 
 // protected/src/lib/ors.ts
-var import_meta = {};
-var ORS_BASE = "https://api.openrouteservice.org/v2/directions/foot-walking/geojson";
 var memoryCache = /* @__PURE__ */ new Map();
 var orsDisabledUntil = 0;
 function cacheKey(from, to) {
@@ -1041425,7 +1041423,7 @@ async function fetchOsmFootRoute(from, to) {
   for (const url of urls) {
     try {
       const res = await fetch(url, {
-        headers: { "User-Agent": "EcoMoveNagpur/1.0" }
+        signal: AbortSignal.timeout(4500)
       });
       if (!res.ok) continue;
       const data = await res.json();
@@ -1041462,10 +1041460,7 @@ async function walkRoute(from, to) {
     return cachedLocal;
   }
   if (Date.now() >= orsDisabledUntil) {
-    const envMeta = typeof import_meta !== "undefined" ? define_import_meta_env_default : void 0;
-    const envProc = typeof process !== "undefined" && process.env ? process.env : void 0;
-    const apiKey = envMeta?.["VITE_ORS_API_KEY"] || envProc?.["VITE_ORS_API_KEY"] || "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjU4ODhiYjRlNWFkODQzNjFiYTJkY2NkZDMxM2I3YzRjIiwiaCI6Im11cm11cjY0In0=";
-    if (apiKey && apiKey !== "your_ors_api_key_here") {
+    {
       const body = {
         coordinates: [
           [from.lon, from.lat],
@@ -1041476,13 +1041471,13 @@ async function walkRoute(from, to) {
         instructions: false
       };
       try {
-        const res = await fetch(ORS_BASE, {
+        const res = await fetch("/api/routing/walk", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            Authorization: apiKey
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
+          signal: AbortSignal.timeout(5e3)
         });
         if (res.status === 429 || res.status === 403) {
           orsDisabledUntil = Date.now() + 6e5;
@@ -1307748,9 +1307743,9 @@ var metro_fares_default = [
 ];
 
 // protected/src/lib/fares.ts
-var import_meta2 = {};
+var import_meta = {};
 var busFares = bus_fares_default;
-var isDev = typeof process !== "undefined" && process.env && process.env["NODE_ENV"] !== "production" || typeof import_meta2 !== "undefined" && Boolean(define_import_meta_env_default?.DEV);
+var isDev = typeof process !== "undefined" && process.env && process.env["NODE_ENV"] !== "production" || typeof import_meta !== "undefined" && Boolean(define_import_meta_env_default?.DEV);
 function normalizeStopName(name) {
   return (name || "").toLowerCase().replace(/[^a-z0-9]/g, " ").replace(/\s+/g, " ").trim();
 }
@@ -1309107,43 +1309102,72 @@ __export(nearby_exports, {
   fmtNearbyDist: () => fmtNearbyDist
 });
 var WALK_MPM = 80;
+var metroLineCache = null;
+function getMetroStationLine(s) {
+  if (!metroLineCache) {
+    metroLineCache = /* @__PURE__ */ new Map();
+    for (const stn of metroStations) {
+      const parentLine = allLines.find(
+        (l) => l.mode === "metro" && l.points.some(
+          (p) => Math.abs(p.lat - stn.lat) < 5e-4 && Math.abs(p.lon - stn.lon) < 5e-4
+        )
+      );
+      if (parentLine?.name) {
+        metroLineCache.set(stn.id, parentLine.name);
+      }
+    }
+  }
+  return metroLineCache.get(s.id);
+}
 function findNearby(anchor, searchRadiusM = 2500) {
   if (!anchor || typeof anchor.lat !== "number" || typeof anchor.lon !== "number") {
     return { busStops: [], metroStations: [] };
   }
   const maxBusM = searchRadiusM;
   const maxMetroM = searchRadiusM;
-  const resultBus = busStops.map((s) => {
+  const maxDLat = searchRadiusM / 111e3 * 1.1;
+  const cosLat = Math.cos(anchor.lat * Math.PI / 180);
+  const maxDLon = searchRadiusM / (111e3 * Math.max(0.1, cosLat)) * 1.1;
+  const resultBus = [];
+  for (let i = 0; i < busStops.length; i++) {
+    const s = busStops[i];
+    if (Math.abs(s.lat - anchor.lat) > maxDLat) continue;
+    if (Math.abs(s.lon - anchor.lon) > maxDLon) continue;
     const distM = Math.round(haversine(anchor.lat, anchor.lon, s.lat, s.lon));
-    return {
-      id: s.id,
-      name: s.name,
-      lat: s.lat,
-      lon: s.lon,
-      mode: "bus",
-      distM,
-      walkMin: Math.max(1, Math.ceil(distM / WALK_MPM))
-    };
-  }).filter((s) => s.distM <= maxBusM).sort((a, b) => a.distM - b.distM);
-  const resultMetro = metroStations.map((s) => {
+    if (distM <= maxBusM) {
+      resultBus.push({
+        id: s.id,
+        name: s.name,
+        lat: s.lat,
+        lon: s.lon,
+        mode: "bus",
+        distM,
+        walkMin: Math.max(1, Math.ceil(distM / WALK_MPM))
+      });
+    }
+  }
+  resultBus.sort((a, b) => a.distM - b.distM);
+  const resultMetro = [];
+  for (let i = 0; i < metroStations.length; i++) {
+    const s = metroStations[i];
+    if (Math.abs(s.lat - anchor.lat) > maxDLat) continue;
+    if (Math.abs(s.lon - anchor.lon) > maxDLon) continue;
     const distM = Math.round(haversine(anchor.lat, anchor.lon, s.lat, s.lon));
-    const parentLine = allLines.find(
-      (l) => l.mode === "metro" && l.points.some(
-        (p) => Math.abs(p.lat - s.lat) < 5e-4 && Math.abs(p.lon - s.lon) < 5e-4
-      )
-    );
-    const lineName = parentLine?.name;
-    return {
-      id: s.id,
-      name: s.name,
-      lat: s.lat,
-      lon: s.lon,
-      mode: "metro",
-      ...lineName ? { lineName } : {},
-      distM,
-      walkMin: Math.max(1, Math.ceil(distM / WALK_MPM))
-    };
-  }).filter((s) => s.distM <= maxMetroM).sort((a, b) => a.distM - b.distM);
+    if (distM <= maxMetroM) {
+      const lineName = getMetroStationLine(s);
+      resultMetro.push({
+        id: s.id,
+        name: s.name,
+        lat: s.lat,
+        lon: s.lon,
+        mode: "metro",
+        ...lineName ? { lineName } : {},
+        distM,
+        walkMin: Math.max(1, Math.ceil(distM / WALK_MPM))
+      });
+    }
+  }
+  resultMetro.sort((a, b) => a.distM - b.distM);
   return {
     busStops: resultBus,
     metroStations: resultMetro

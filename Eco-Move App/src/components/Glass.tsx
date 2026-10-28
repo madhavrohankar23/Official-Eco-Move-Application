@@ -15,6 +15,7 @@ import {
 import { BlurView } from 'expo-blur';
 import { GlassView, isLiquidGlassAvailable } from 'expo-glass-effect';
 import { LinearGradient } from 'expo-linear-gradient';
+import { X } from 'lucide-react-native';
 import { useTheme } from '../theme';
 import { glassGeometry, glassMaterial } from '../glassTokens';
 import { MotionPressable as Pressable } from './MotionPressable';
@@ -66,7 +67,7 @@ export function Glass({
     (CSS.supports('backdrop-filter', 'blur(1px)') || CSS.supports('-webkit-backdrop-filter', 'blur(1px)')));
   const material = glassMaterial(t.appearance, t.dark, t.contrastLevel, level, nested, webBlur && Platform.OS !== 'android');
   const backdrop = samplesBackdrop && material.blur > 0 && webBlur && Platform.OS !== 'android';
-  const nativeGlass = Platform.OS === 'ios' && t.appearance === 'liquid' && isLiquidGlassAvailable() && contrastRatio < .25;
+  const nativeGlass = Platform.OS === 'ios' && t.dark && t.appearance === 'liquid' && isLiquidGlassAvailable() && contrastRatio < .25;
   const illumination = useRef(new Animated.Value(state === 'focused' ? 1 : state === 'hover' ? .65 : state === 'pressed' ? 0 : .2)).current;
   const initialMaterial = useRef(true);
   const selection = useRef(new Animated.Value(['active', 'selected', 'success'].includes(state) ? 1 : 0)).current;
@@ -118,7 +119,7 @@ export function Glass({
   return (
     <View
       style={[
-        samplesBackdrop && level > 1 && !materialStyle ? s.shadow : null,
+        samplesBackdrop && (level > 1 || !t.dark) && !materialStyle ? s.shadow : null,
         {
           borderRadius: flatRadius,
           shadowOpacity: !samplesBackdrop || materialStyle ? 0 : material.shadowOpacity,
@@ -129,6 +130,10 @@ export function Glass({
         style,
       ]}
     >
+      {/* Sheet material scales independently of its content. Keep its shadow
+          outside the clipping layer and attached to the same silhouette. */}
+      {!t.dark && samplesBackdrop && materialStyle && <Animated.View pointerEvents="none"
+        style={[StyleSheet.absoluteFill,{borderRadius:flatRadius,boxShadow:'0px 7px 22px rgba(7, 29, 20, 0.22)'},materialStyle]}/>}
       <View
         testID={`glass-${t.appearance}-${level}`}
         style={[
@@ -152,8 +157,8 @@ export function Glass({
             />
           ) : Platform.OS === 'web' ? (
             <View pointerEvents="none" style={[StyleSheet.absoluteFill, {
-              backdropFilter: `blur(${material.blur * .24}px) saturate(${material.saturation})`,
-              WebkitBackdropFilter: `blur(${material.blur * .24}px) saturate(${material.saturation})`,
+              backdropFilter: `blur(${material.blur}px) saturate(${material.saturation})`,
+              WebkitBackdropFilter: `blur(${material.blur}px) saturate(${material.saturation})`,
             } as any]} />
           ) : (
             <BlurView
@@ -198,7 +203,7 @@ export function Glass({
           <LinearGradient colors={['transparent', `rgba(230,255,240,${material.reflection * .35})`, 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0.6 }} style={StyleSheet.absoluteFill}/>
           <LinearGradient colors={['transparent', `rgba(230,255,240,${material.reflection * 5})`, 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1.5 }}/>
         </Animated.View>}
-        {contrastRatio < 0.85 && <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, { opacity: illumination, backgroundColor: t.dark ? '#ffffff09' : '#ffffff20' }]}/>}
+        {t.dark && contrastRatio < 0.85 && <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, { opacity: illumination, backgroundColor: '#ffffff09' }]}/>}
         <View pointerEvents="none" style={[StyleSheet.absoluteFill, { borderRadius: flatRadius, borderWidth: focused ? 1.5 : 1, borderColor: edge, borderTopColor: focused || state === 'error' ? edge : material.topEdge }, transition]}/>
         </Animated.View>
         <MaterialParent.Provider value={nested || samplesBackdrop}>{children}</MaterialParent.Provider>
@@ -230,6 +235,8 @@ export function Copy({
           letterSpacing: size >= 24 ? -0.6 : size <= 11 ? 0.3 : -0.1,
           backgroundColor: 'transparent',
           includeFontPadding: false,
+          flexShrink: 1,
+          minWidth: 0,
         },
         style,
       ]}
@@ -322,7 +329,7 @@ export function Action({
             <Copy
               weight={selected ? '600' : '500'}
               size={compact ? 12.5 : 15}
-              numberOfLines={compact ? 2 : 1}
+              numberOfLines={2}
               ellipsizeMode="tail"
               style={{
                 color: danger ? c.error : selected ? c.accent : c.ink,
@@ -371,41 +378,65 @@ export function IconButton({
   );
 }
 
-export function Field({ label, style, inputRef, ...props }: TextInputProps & { label: string; inputRef?: React.Ref<any> }) {
+export function Field({ label, style, inputRef, onClear, ...props }: TextInputProps & { label: string; inputRef?: React.Ref<any>; onClear?: () => void }) {
   const [focus, setFocus] = useState(false);
   const { c } = useTheme();
+  const hasValue = Boolean(props.value && String(props.value).length > 0);
   return (
     <View style={{ gap: 5 }}>
       <Copy size={11} weight="600" muted style={{ letterSpacing: 0.6, textTransform: 'uppercase' }}>
         {label}
       </Copy>
       <Glass level={1} state={focus ? 'focused' : 'default'} blur={false} style={{ borderRadius: 18 }}>
-        <TextInput
-          {...props}
-          ref={inputRef}
-          accessibilityLabel={label}
-          placeholderTextColor={c.muted}
-          underlineColorAndroid="transparent"
-          onFocus={e => {
-            setFocus(true);
-            props.onFocus?.(e);
-          }}
-          onBlur={e => {
-            setFocus(false);
-            props.onBlur?.(e);
-          }}
-          style={[
-            {
-              color: c.ink,
-              minHeight: 48,
-              paddingHorizontal: 15,
-              paddingVertical: 11,
-              fontSize: 15,
-              backgroundColor: 'transparent',
-            },
-            style,
-          ]}
-        />
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <TextInput
+            {...props}
+            ref={inputRef}
+            accessibilityLabel={label}
+            placeholderTextColor={c.muted}
+            underlineColorAndroid="transparent"
+            onFocus={e => {
+              setFocus(true);
+              props.onFocus?.(e);
+            }}
+            onBlur={e => {
+              setFocus(false);
+              props.onBlur?.(e);
+            }}
+            style={[
+              {
+                flex: 1,
+                color: c.ink,
+                minHeight: 48,
+                paddingHorizontal: 15,
+                paddingVertical: 11,
+                fontSize: 15,
+                backgroundColor: 'transparent',
+              },
+              style,
+            ]}
+          />
+          {hasValue && onClear && (
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={`Clear ${label.toLowerCase()}`}
+              testID="field-clear"
+              onPress={onClear}
+              style={{
+                width: 44,
+                height: 48,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {({ pressed }) => (
+                <View style={{ opacity: pressed ? 0.6 : 1 }}>
+                  <X size={17} color={c.muted} strokeWidth={2} />
+                </View>
+              )}
+            </Pressable>
+          )}
+        </View>
       </Glass>
     </View>
   );

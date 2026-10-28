@@ -11,8 +11,7 @@
       "bundleIdentifier": "in.ecomove.nagpur",
       "supportsTablet": true,
       "infoPlist": {
-        "NSCameraUsageDescription": "Use the front camera to zoom the map with thumb and index finger gestures. Video stays on your device.",
-        "NSMotionUsageDescription": "Detect a deliberate phone shake to toggle the Eco-Move voice assistant."
+        "NSCameraUsageDescription": "Use the front camera to zoom the map with thumb and index finger gestures. Video stays on your device."
       }
     },
     "android": {
@@ -61,7 +60,7 @@
       [
         "expo-sensors",
         {
-          "motionPermission": "Detect a deliberate phone shake to toggle the Eco-Move voice assistant."
+          "motionPermission": false
         }
       ]
     ]

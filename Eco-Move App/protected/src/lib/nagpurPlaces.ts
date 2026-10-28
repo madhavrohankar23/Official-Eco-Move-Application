@@ -3,6 +3,9 @@
  * Malls, Colleges, Hospitals, Resorts, Lakes, and Major Localities.
  */
 
+
+import officialPoliceStations from "@/data/nagpur_official_police_stations.json";
+
 export interface NagpurPOI {
   id: string;
   name: string;
@@ -12,6 +15,7 @@ export interface NagpurPOI {
     | "Lake"
     | "College"
     | "Hospital"
+    | "Police Station"
     | "Temple"
     | "Monument"
     | "Transit"
@@ -1179,16 +1183,25 @@ export const NAGPUR_POIS: NagpurPOI[] = [
   },
 ];
 
+export type PoiCategory = "Restaurant" | "Hospital" | "Police Station";
+
 export interface NearbyPoiResult {
   id: string;
   name: string;
-  category: "Restaurant" | "Hospital" | string;
+  category: PoiCategory | string;
   subtitle: string;
   lat: number;
   lon: number;
   distM: number;
   rating?: number | undefined;
   userRatingCount?: number | undefined;
+  // Official police station fields from nagpurpolice.gov.in
+  nameMr?: string | undefined;
+  location?: string | undefined;
+  phone?: string | undefined;
+  email?: string | undefined;
+  officerInCharge?: string | undefined;
+  mapUrl?: string | undefined;
 }
 
 /**
@@ -1209,14 +1222,14 @@ export function calcDistanceM(lat1: number, lon1: number, lat2: number, lon2: nu
 }
 
 /**
- * Finds the nearest POIs (restaurants or hospitals) from a given reference lat/lon (local static index).
+ * Finds the nearest POIs (restaurants, hospitals, or official police stations) from a given reference lat/lon.
  * Returns sorted list by straight-line distance.
  */
 export function findNearestPOIs(
   refLat: number,
   refLon: number,
-  category: "Restaurant" | "Hospital",
-  limit = 20
+  category: PoiCategory,
+  limit = 40
 ): NearbyPoiResult[] {
   if (typeof refLat !== "number" || isNaN(refLat) || typeof refLon !== "number" || isNaN(refLon)) {
     // Default to Nagpur central coordinate if invalid
@@ -1226,6 +1239,33 @@ export function findNearestPOIs(
 
   const matches: NearbyPoiResult[] = [];
   const seenIds = new Set<string>();
+
+  // If Police Station, load strictly and ONLY the official stations from nagpurpolice.gov.in
+  if (category === "Police Station") {
+    for (const ps of officialPoliceStations) {
+      if (!seenIds.has(ps.id)) {
+        seenIds.add(ps.id);
+        const distM = calcDistanceM(refLat, refLon, ps.lat, ps.lon);
+        matches.push({
+          id: ps.id,
+          name: ps.name,
+          nameMr: ps.nameMr,
+          category: "Police Station",
+          subtitle: [ps.location, ps.phone ? `Phone: ${ps.phone}` : null].filter(Boolean).join(" · "),
+          lat: ps.lat,
+          lon: ps.lon,
+          distM,
+          location: ps.location,
+          phone: ps.phone,
+          email: ps.email,
+          officerInCharge: ps.officerInCharge,
+          mapUrl: ps.mapUrl,
+        });
+      }
+    }
+    matches.sort((a, b) => a.distM - b.distM);
+    return matches.slice(0, limit);
+  }
 
   for (const poi of NAGPUR_POIS) {
     if (poi.category.toLowerCase() === category.toLowerCase() && !seenIds.has(poi.id)) {
@@ -1250,18 +1290,23 @@ export function findNearestPOIs(
 }
 
 /**
- * Fetches accurate, live, real-world Restaurants and Hospitals across Nagpur using Google Places API (New).
+ * Fetches accurate, live, real-world Restaurants, Hospitals, and Police Stations across Nagpur using Google Places API (New).
  * Falls back cleanly to local curated index if API is unavailable or offline.
  */
 export async function fetchLiveNearbyPOIs(
   refLat: number,
   refLon: number,
-  category: "Restaurant" | "Hospital",
+  category: PoiCategory,
   limit = 20,
   signal?: AbortSignal
 ): Promise<NearbyPoiResult[]> {
   const safeLat = typeof refLat === "number" && !isNaN(refLat) ? refLat : 21.1458;
   const safeLon = typeof refLon === "number" && !isNaN(refLon) ? refLon : 79.0882;
+
+  // For Police Stations, commuter strictly wants the 37 official police stations from nagpurpolice.gov.in
+  if (category === "Police Station") {
+    return findNearestPOIs(safeLat, safeLon, "Police Station", limit);
+  }
 
   const apiKey = (import.meta as any).env?.VITE_GOOGLE_MAPS_API_KEY;
   if (!apiKey || typeof apiKey !== "string" || !apiKey.trim()) {
@@ -1271,6 +1316,7 @@ export async function fetchLiveNearbyPOIs(
   const typeMap: Record<string, string[]> = {
     Restaurant: ["restaurant", "fast_food_restaurant", "cafe", "bakery", "indian_restaurant"],
     Hospital: ["hospital", "medical_clinic", "doctor", "pharmacy"],
+    "Police Station": ["police"],
   };
 
   const includedTypes = typeMap[category] || ["restaurant"];
@@ -1334,7 +1380,7 @@ export async function fetchLiveNearbyPOIs(
       const distM = calcDistanceM(safeLat, safeLon, lat, lon);
       results.push({
         id,
-        name: p.displayName?.text || (category === "Restaurant" ? "Restaurant" : "Hospital"),
+        name: p.displayName?.text || (category === "Restaurant" ? "Restaurant" : category === "Hospital" ? "Hospital" : "Police Station"),
         category,
         subtitle: p.formattedAddress || "Nagpur, Maharashtra",
         lat,
@@ -1359,17 +1405,22 @@ export async function fetchLiveNearbyPOIs(
 }
 
 /**
- * Fetches 40–60+ Restaurants or Hospitals across all of Nagpur (Multi-Zone Grid Search).
- * Simultaneously covers Central, West, East, South, and North Nagpur in parallel.
+ * Fetches 40–60+ Restaurants, Hospitals, or Police Stations across all of Nagpur (Multi-Zone Grid Search).
+ * Simultaneously covers Central, West, East, South, and North Nagpur in parallel block-by-block.
  */
 export async function fetchNagpurWidePOIs(
   refLat: number,
   refLon: number,
-  category: "Restaurant" | "Hospital",
+  category: PoiCategory,
   signal?: AbortSignal
 ): Promise<NearbyPoiResult[]> {
   const safeLat = typeof refLat === "number" && !isNaN(refLat) ? refLat : 21.1458;
   const safeLon = typeof refLon === "number" && !isNaN(refLon) ? refLon : 79.0882;
+
+  // For Police Stations, commuter strictly wants the 37 official police stations from nagpurpolice.gov.in
+  if (category === "Police Station") {
+    return findNearestPOIs(safeLat, safeLon, "Police Station", 50);
+  }
 
   const apiKey = (import.meta as any).env?.VITE_GOOGLE_MAPS_API_KEY;
   if (!apiKey || typeof apiKey !== "string" || !apiKey.trim()) {
@@ -1379,6 +1430,7 @@ export async function fetchNagpurWidePOIs(
   const typeMap: Record<string, string[]> = {
     Restaurant: ["restaurant", "fast_food_restaurant", "cafe", "bakery", "indian_restaurant"],
     Hospital: ["hospital", "medical_clinic", "doctor", "pharmacy"],
+    "Police Station": ["police"],
   };
 
   const includedTypes = typeMap[category] || ["restaurant"];
@@ -1459,7 +1511,7 @@ export async function fetchNagpurWidePOIs(
         const distM = calcDistanceM(safeLat, safeLon, lat, lon);
         combined.push({
           id,
-          name: p.displayName?.text || (category === "Restaurant" ? "Restaurant" : "Hospital"),
+          name: p.displayName?.text || (category === "Restaurant" ? "Restaurant" : category === "Hospital" ? "Hospital" : "Police Station"),
           category,
           subtitle: p.formattedAddress || "Nagpur, Maharashtra",
           lat,

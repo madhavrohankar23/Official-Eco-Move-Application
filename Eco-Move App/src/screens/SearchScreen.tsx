@@ -31,10 +31,20 @@ import { buildSpeechContext, chooseSpeechTranscript } from '../speechAccuracy';
 export function SearchScreen() {
   const app = useApp();
   const { c, dark, reduceMotion } = useTheme();
-  const [query, setQuery] = useState('');
+  const currentTargetName = useMemo(() => {
+    if (app.searchTarget === 'origin') return app.origin?.name || '';
+    if (app.searchTarget === 'destination') return app.destination?.name || '';
+    if (app.searchTarget === 'cab_origin') return app.cabOrigin?.name || '';
+    if (app.searchTarget === 'cab_destination') return app.cabDestination?.name || '';
+    if (app.searchTarget === 'anchor') return app.anchor?.name || '';
+    if (app.searchTarget === 'place') return app.searchedPlace?.name || '';
+    return '';
+  }, [app.searchTarget, app.origin, app.destination, app.cabOrigin, app.cabDestination, app.anchor, app.searchedPlace]);
+  const [query, setQuery] = useState(currentTargetName);
   const [local, setLocal] = useState<any[]>([]);
   const [online, setOnline] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [voiceOptions, setVoiceOptions] = useState(false);
   const [voicePhase, setVoicePhase] = useState<VoicePhase>('idle');
   const commandLoading = voicePhase === 'thinking';
   const listening = voicePhase === 'listening' || voicePhase === 'permission';
@@ -102,6 +112,7 @@ export function SearchScreen() {
 
   useEffect(() => {
     const id = ++generation.current;
+    setLocal([]);
     setOnline([]);
     app.rpc<any[]>('searchLocal', { query }).then(r => {
       if (id === generation.current) setLocal(r);
@@ -149,6 +160,20 @@ export function SearchScreen() {
     session.submit(query);
   };
 
+  const handleClear = () => {
+    session.stop();
+    setQuery('');
+    if (app.searchTarget === 'origin') app.setOrigin(null);
+    else if (app.searchTarget === 'destination') app.setDestination(null);
+    else if (app.searchTarget === 'cab_origin') app.setCabOrigin(null);
+    else if (app.searchTarget === 'cab_destination') app.setCabDestination(null);
+    else if (app.searchTarget === 'anchor') app.setAnchor(null);
+    else if (app.searchTarget === 'place') app.setSearchedPlace(null);
+    app.dismissRouteResults();
+    app.setSearchedPlace(null);
+    input.current?.focus();
+  };
+
   return (
     <>
       <Field
@@ -163,11 +188,12 @@ export function SearchScreen() {
           }[app.searchTarget]
         }
         value={query}
+        onClear={handleClear}
         onChangeText={text => { session.stop(); setQuery(text); }}
         placeholder="Place, station or coordinates"
         inputRef={input}
         returnKeyType="search"
-        onSubmitEditing={() => results[0] && app.choosePlace(results[0])}
+        onSubmitEditing={() => Keyboard.dismiss()}
       />
 
       <View style={{ flexDirection: 'row', gap: 8 }}>
@@ -190,6 +216,8 @@ export function SearchScreen() {
         />
       </View>
 
+      <Action label={voiceOptions?'Hide voice options':'Voice options'} icon={Mic} quiet compact onPress={()=>{if(voiceOptions)session.stop();setVoiceOptions(value=>!value)}}/>
+      {(voiceOptions || voicePhase !== 'idle') && <>
       <VoiceLanguagePicker disabled={voicePhase !== 'idle'} />
       {listening && <Notice>{voicePhase === 'permission' ? 'Allow microphone and speech access to start.' : 'Listening… Say your Source and Destination.'}</Notice>}
       {voicePhase === 'review' && <Notice>Please check the station names in the transcript above, then tap Use transcript. You can edit them first.</Notice>}
@@ -214,6 +242,8 @@ export function SearchScreen() {
           onPress={command}
         />
       </View>
+
+      </>}
 
       <View style={{ minHeight: 28 }} accessibilityLiveRegion="polite">
       {(loading || commandLoading) && (

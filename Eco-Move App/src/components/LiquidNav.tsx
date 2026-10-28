@@ -3,6 +3,7 @@ import { Animated, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { Home, Route, Compass, Ticket, UserRound } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Glass } from './Glass';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../theme';
 import { navbarLayout, TABS } from '../layout';
 import type { Tab } from '../types';
@@ -25,7 +26,6 @@ export function LiquidNav({
   const { width } = useWindowDimensions();
   const safe = useSafeAreaInsets();
   const { c, dark, reduceMotion } = useTheme();
-  const [focused, setFocused] = useState<Tab | null>(null);
   const [hovered, setHovered] = useState<Tab | null>(null);
   const [pressedTab, setPressedTab] = useState<Tab | null>(null);
   const layout = navbarLayout(width, safe.bottom, footerInset);
@@ -95,6 +95,10 @@ export function LiquidNav({
       ]}
     >
       <Glass level={2} moving={!hidden} specular style={{ height: layout.height, borderRadius: layout.height / 2 }}>
+        {dark && <LinearGradient pointerEvents="none"
+          colors={['rgba(75,83,81,.96)', 'rgba(27,35,34,.97)', 'rgba(7,14,15,.98)']}
+          locations={[0,.48,1]}
+          start={{x:0,y:0}} end={{x:1,y:.55}} style={StyleSheet.absoluteFill}/>}
         {/* Smoothly moving active liquid lens */}
         <Animated.View
           pointerEvents="none"
@@ -107,7 +111,11 @@ export function LiquidNav({
             transform: [{ translateX: x }],
           }}
         >
-          <Glass
+          {dark ? <LinearGradient
+            colors={['#f2f6f3','#d2dbd6']}
+            start={{x:0,y:0}} end={{x:1,y:1}}
+            style={{flex:1,borderRadius:26,borderWidth:1,borderColor:'#ffffffc9',opacity:pressedTab===tab?.85:1,shadowColor:'#061c14',shadowOpacity:.16,shadowRadius:5,shadowOffset:{width:0,height:2}}}
+          /> : <Glass
             level={3}
             state={pressedTab === tab ? 'pressed' : 'selected'}
             specular
@@ -116,7 +124,7 @@ export function LiquidNav({
               flex: 1,
               borderRadius: 26,
             }}
-          />
+          />}
         </Animated.View>
 
         {/* Five icon-only touch targets */}
@@ -135,8 +143,6 @@ export function LiquidNav({
                 onPress={() => onSelect(item)}
                 onPressIn={() => setPressedTab(item)}
                 onPressOut={() => setPressedTab(null)}
-                onFocus={() => setFocused(item)}
-                onBlur={() => setFocused(null)}
                 onHoverIn={() => setHovered(item)}
                 onHoverOut={() => setHovered(null)}
                 style={{
@@ -152,14 +158,12 @@ export function LiquidNav({
                       width: 44, height: 44, borderRadius: 22,
                       alignItems: 'center', justifyContent: 'center',
                       backgroundColor: hovered === item || pressed ? (dark ? '#ffffff0c' : '#ffffff45') : 'transparent',
-                      borderWidth: focused === item ? 1.5 : 0,
-                      borderColor: c.accent,
-                      opacity: isSelected ? 1 : 0.80,
+                      opacity: 1,
                     }}
                   >
                     <Icon
                       size={22}
-                      color={isSelected ? c.accent : c.ink}
+                      color={dark ? (isSelected ? '#1c4c3b' : '#e0e9e5') : isSelected ? c.accent : c.ink}
                       strokeWidth={isSelected ? 2 : 1.8}
                     />
                   </View>

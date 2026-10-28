@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-10-27T20:01:50.077Z",
+  "protectedChanges": 0,
+  "authSubmitUnchanged": true,
+  "changedFiles": [
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\AppContext.tsx",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\glassTokens.ts",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\theme.tsx",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\Glass.tsx",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\GlassAppearance.tsx",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\LiquidNav.tsx",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\Sheet.tsx",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\screens\\AccountScreens.tsx",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\screens\\AuthScreen.tsx",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\index.tsx",
+    "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\map.css"
+  ]
+}

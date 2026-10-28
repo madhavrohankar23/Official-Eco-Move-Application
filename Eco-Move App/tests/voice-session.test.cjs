@@ -13,6 +13,16 @@ test('voice submits only the final transcript once, returns the real answer and 
   h.session.result('How do I use metro?',true);h.session.result('How do I use metro?',true);h.session.end();await tick();
   assert.equal(h.requests.length,1);assert.equal(h.replies[0].message,'Use the metro.');assert.equal(h.finishes,1);assert.equal(h.states.at(-1),'idle');
 });
+
+test('final speech releases the microphone before network processing and ignores synchronous abort events',async()=>{
+  const pending=deferred();let h;
+  const order=[];
+  h=harness({abort:()=>{order.push('abort');h.session.error('aborted');h.session.end()},request:async()=>{order.push('request');return pending.promise}});
+  await h.session.start();h.session.result('Plan route from Sitabuldi to Airport',true);
+  assert.deepEqual(order,['abort','request']);assert.equal(h.states.at(-1),'thinking');assert.equal(h.errors.length,0);
+  pending.resolve({intent:'GENERAL_ANSWER',message:'Ready'});await tick();
+  assert.equal(h.replies.length,1);assert.equal(h.states.at(-1),'idle');
+});
 test('switching off while microphone permission is pending cannot start a late microphone',async()=>{
   const p=deferred(),h=harness({permission:()=>p.promise});const starting=h.session.start();h.session.stop();p.resolve({granted:true});await starting;assert.equal(h.starts,0);assert.equal(h.states.at(-1),'idle');
 });

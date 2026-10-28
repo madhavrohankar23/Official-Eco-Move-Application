@@ -38,7 +38,9 @@ export function satelliteController(map: L.Map, key: string, notify: (state: Sat
   const remove = (restoreBase = true) => {
     clearTimeout(moveTimer); clearTimeout(renewalTimer);
     lifetime?.abort(); viewportRequest?.abort(); viewportSequence++;
-    layer?.off(); layer?.remove(); layer = undefined;
+    // Leaflet's `remove` listener detaches its map/zoom subscriptions. Keep it
+    // until removal completes, or subsequent zooms target a detached tile layer.
+    layer?.remove(); layer?.off(); layer = undefined;
     attribution?.remove(); attribution = undefined; sources = undefined;
     if (restoreBase) for (const base of baseLayers) if (!map.hasLayer(base)) base.addTo(map);
     baseLayers = [];

@@ -66,7 +66,7 @@ async function fetchOsmFootRoute(
   for (const url of urls) {
     try {
       const res = await fetch(url, {
-        headers: { "User-Agent": "EcoMoveNagpur/1.0" },
+        signal: AbortSignal.timeout(4500),
       });
       if (!res.ok) continue;
       const data = await res.json();
@@ -121,14 +121,8 @@ export async function walkRoute(
 
   // 3. Try ORS if not in quota cooldown
   if (Date.now() >= orsDisabledUntil) {
-    const envMeta = typeof import.meta !== "undefined" ? (import.meta.env as Record<string, string | undefined>) : undefined;
-    const envProc = typeof process !== "undefined" && process.env ? (process.env as Record<string, string | undefined>) : undefined;
-    const apiKey =
-      envMeta?.["VITE_ORS_API_KEY"] ||
-      envProc?.["VITE_ORS_API_KEY"] ||
-      "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjU4ODhiYjRlNWFkODQzNjFiYTJkY2NkZDMxM2I3YzRjIiwiaCI6Im11cm11cjY0In0=";
-
-    if (apiKey && apiKey !== "your_ors_api_key_here") {
+    // ORS credentials stay on the existing backend; retain the pedestrian fallback.
+    {
       const body = {
         coordinates: [
           [from.lon, from.lat],
@@ -140,13 +134,14 @@ export async function walkRoute(
       };
 
       try {
-        const res = await fetch(ORS_BASE, {
+        const res = await fetch("/api/routing/walk", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: apiKey,
+
           },
           body: JSON.stringify(body),
+          signal: AbortSignal.timeout(5000),
         });
 
         if (res.status === 429 || res.status === 403) {

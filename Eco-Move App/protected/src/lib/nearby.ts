@@ -30,9 +30,32 @@ export interface NearbyResult {
 /** Walking speed estimate: 4.8 km/h = 80 metres per minute */
 const WALK_MPM = 80;
 
+// Lazy pre-computed metro station parent line cache
+let metroLineCache: Map<string, string> | null = null;
+function getMetroStationLine(s: { id: string; lat: number; lon: number }): string | undefined {
+  if (!metroLineCache) {
+    metroLineCache = new Map();
+    for (const stn of metroStations) {
+      const parentLine = allLines.find(
+        (l) =>
+          l.mode === "metro" &&
+          l.points.some(
+            (p: { lat: number; lon: number }) =>
+              Math.abs(p.lat - stn.lat) < 0.0005 && Math.abs(p.lon - stn.lon) < 0.0005,
+          ),
+      );
+      if (parentLine?.name) {
+        metroLineCache.set(stn.id, parentLine.name);
+      }
+    }
+  }
+  return metroLineCache.get(s.id);
+}
+
 /**
  * Returns the nearest bus stops and metro stations from a given anchor point,
  * sorted by distance ascending within the specified search radius (in metres).
+ * Uses bounding-box pre-filtering for sub-millisecond query performance.
  */
 export function findNearby(
   anchor: { lat: number; lon: number },
@@ -45,11 +68,21 @@ export function findNearby(
   const maxBusM = searchRadiusM;
   const maxMetroM = searchRadiusM;
 
-  // Calculate distances to all bus stops and filter strictly within search radius
-  const resultBus: NearbyStop[] = busStops
-    .map((s) => {
-      const distM = Math.round(haversine(anchor.lat, anchor.lon, s.lat, s.lon));
-      return {
+  // Fast bounding-box pre-filter: 1 deg lat ≈ 111,000m. 10% safety margin.
+  const maxDLat = (searchRadiusM / 111000) * 1.1;
+  const cosLat = Math.cos((anchor.lat * Math.PI) / 180);
+  const maxDLon = (searchRadiusM / (111000 * Math.max(0.1, cosLat))) * 1.1;
+
+  // 1. Calculate distances to candidate bus stops within bounding box
+  const resultBus: NearbyStop[] = [];
+  for (let i = 0; i < busStops.length; i++) {
+    const s = busStops[i]!;
+    if (Math.abs(s.lat - anchor.lat) > maxDLat) continue;
+    if (Math.abs(s.lon - anchor.lon) > maxDLon) continue;
+
+    const distM = Math.round(haversine(anchor.lat, anchor.lon, s.lat, s.lon));
+    if (distM <= maxBusM) {
+      resultBus.push({
         id: s.id,
         name: s.name,
         lat: s.lat,
@@ -57,25 +90,22 @@ export function findNearby(
         mode: "bus" as const,
         distM,
         walkMin: Math.max(1, Math.ceil(distM / WALK_MPM)),
-      };
-    })
-    .filter((s) => s.distM <= maxBusM)
-    .sort((a, b) => a.distM - b.distM);
+      });
+    }
+  }
+  resultBus.sort((a, b) => a.distM - b.distM);
 
-  // Calculate distances to all metro stations and filter strictly within search radius
-  const resultMetro: NearbyStop[] = metroStations
-    .map((s) => {
-      const distM = Math.round(haversine(anchor.lat, anchor.lon, s.lat, s.lon));
-      const parentLine = allLines.find(
-        (l) =>
-          l.mode === "metro" &&
-          l.points.some(
-            (p: { lat: number; lon: number }) =>
-              Math.abs(p.lat - s.lat) < 0.0005 && Math.abs(p.lon - s.lon) < 0.0005,
-          ),
-      );
-      const lineName = parentLine?.name;
-      return {
+  // 2. Calculate distances to candidate metro stations within bounding box
+  const resultMetro: NearbyStop[] = [];
+  for (let i = 0; i < metroStations.length; i++) {
+    const s = metroStations[i]!;
+    if (Math.abs(s.lat - anchor.lat) > maxDLat) continue;
+    if (Math.abs(s.lon - anchor.lon) > maxDLon) continue;
+
+    const distM = Math.round(haversine(anchor.lat, anchor.lon, s.lat, s.lon));
+    if (distM <= maxMetroM) {
+      const lineName = getMetroStationLine(s);
+      resultMetro.push({
         id: s.id,
         name: s.name,
         lat: s.lat,
@@ -84,10 +114,10 @@ export function findNearby(
         ...(lineName ? { lineName } : {}),
         distM,
         walkMin: Math.max(1, Math.ceil(distM / WALK_MPM)),
-      };
-    })
-    .filter((s) => s.distM <= maxMetroM)
-    .sort((a, b) => a.distM - b.distM);
+      });
+    }
+  }
+  resultMetro.sort((a, b) => a.distM - b.distM);
 
   return {
     busStops: resultBus,

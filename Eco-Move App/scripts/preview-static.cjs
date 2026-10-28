@@ -4,7 +4,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '../artifacts/final-export');
 const mime = {'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css','.png':'image/png','.svg':'image/svg+xml','.json':'application/json','.wasm':'application/wasm','.task':'application/octet-stream'};
-http.createServer((request,response)=>{
+http.createServer(async (request,response)=>{
+  if(await require('./routing-proxy.cjs').routingProxy(request,response))return;
   let file;
   try { file = path.resolve(root, '.' + decodeURIComponent(new URL(request.url,'http://localhost').pathname)); }
   catch { response.writeHead(400).end(); return; }

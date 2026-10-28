@@ -1,5 +1,6 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),esbuild=require('esbuild');
-const outfile=path.resolve('artifacts/test-bundles/voice-stations.cjs');fs.mkdirSync(path.dirname(outfile),{recursive:true});
+const bundleRoot=path.resolve('artifacts/test-bundles');fs.mkdirSync(bundleRoot,{recursive:true});
+const outfile=path.join(fs.mkdtempSync(path.join(bundleRoot,'stations-')),'voice-stations.cjs');
 esbuild.buildSync({stdin:{contents:"export {searchVoicePlaces} from './runtime/voicePlaces'; export {STATION_SPEECH_SPELLINGS,normalizeSpokenPlace,selectVoicePlace,voiceStationKey} from './src/voiceInput'; export {buildSpeechContext} from './src/speechAccuracy'; export {metroStations} from './protected/src/lib/routing'; export {NAGPUR_METRO_LINES,getAvailableBusRoutes} from './protected/src/lib/ticketing';",resolveDir:process.cwd(),loader:'ts'},bundle:true,platform:'node',format:'cjs',outfile,alias:{'@':path.resolve('protected/src')},define:{'import.meta.env':'{}'},logLevel:'silent'});
 const x=require(outfile);
 test('all 37 original station labels and their Hindi/Marathi spelling variants resolve using existing locations',()=>{

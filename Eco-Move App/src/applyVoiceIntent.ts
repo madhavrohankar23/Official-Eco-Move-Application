@@ -24,14 +24,24 @@ export async function applyVoiceIntent(intent:VoiceIntent,app:VoiceActions,isCur
     const from=!intent.origin||/^(your|my|current) location$/i.test(intent.origin)?app.origin:await resolve(intent.origin);
     const to=await resolve(intent.destination);
     if(!isCurrent())return;
-    if(!to){app.setNotice('Please choose a destination in the route planner.');app.navigate('plan');return}
+    if(!to){
+      app.setNotice(intent.destination ? `I could not identify destination “${intent.destination}” reliably. Please choose a destination in the route planner.` : 'Please choose a destination in the route planner.');
+      app.navigate('plan');
+      return;
+    }
     if(!from&&intent.origin&&!/^(your|my|current) location$/i.test(intent.origin)){
       app.navigate('plan');app.setNotice(`I could not identify Source “${intent.origin}” reliably. Please select it in the route planner. Your previous trip was kept.`);return;
     }
     app.setDestination(to);if(from)app.setOrigin(from);
     app.navigate('plan');
-    if(from)await app.plan(from,to,intent.preference||app.preference,intent.departureTime||app.departure);
-    else app.setNotice('Choose a Source or use current location to complete these directions.');
+    const isSpokenPair = Boolean(intent.origin && !/^(your|my|current) location$/i.test(intent.origin));
+    if(isSpokenPair){
+      app.setNotice(`Route set from ${from?.name || intent.origin} to ${to.name}. Review and confirm to find routes.`);
+    }else if(from){
+      await app.plan(from,to,intent.preference||app.preference,intent.departureTime||app.departure);
+    }else{
+      app.setNotice('Choose a Source or use current location to complete these directions.');
+    }
   }else if(intent.intent==='FIND_NEARBY'){
     const place=await resolve(intent.nearbyLocation);if(!isCurrent())return;
     if(place||app.origin)app.setAnchor(place||app.origin!);

@@ -30,6 +30,11 @@ test('system accessibility overrides material without reviving the removed contr
   listeners.reduceTransparencyChanged(false);assert.equal(render().contrastLevel,0);
   t.setAppearance('liquid');listeners.change('background');for(let i=0;i<5;i++)await Promise.resolve();
   assert.equal(writes.at(-1).value,'liquid');assert.equal(writes.length,1);
+  // The existing appearance control now persists independently of material and profile.
+  assert.equal(render().dark,false);
+  render().setDark(true);listeners.change('background');for(let i=0;i<5;i++)await Promise.resolve();
+  assert.equal(render().dark,true);
+  assert.deepEqual(writes.at(-1),{key:'@eco.theme.night_mode',value:'true'});
   cleanup.forEach(fn=>fn?.());assert.equal(Object.keys(listeners).length,0);
 });
 test('increasing contrast never dims dark text or lightens light-mode text',()=>{
@@ -65,11 +70,11 @@ function harness(fetcher) {
     once(name,fn){this.events[name]=fn;return this}
     on(name,fn){this.events[name]=fn;return this}
     off(){this.events={};return this}
-    addTo(map){this.map=map;map.layers.add(this);return this}
-    remove(){this.map?.layers.delete(this);return this}
+    addTo(map){this.map=map;map.layers.add(this);map.zoomSubscribers.add(this);this.once('remove',()=>map.zoomSubscribers.delete(this));return this}
+    remove(){this.events.remove?.();this.map?.layers.delete(this);this.map=null;return this}
   }
   class Control { addTo(map){this.el=this.onAdd();map.controls.add(this);this.map=map;return this}remove(){this.map?.controls.delete(this)} }
-  const map={layers:new Set(),controls:new Set(),events:{},createPane:element,on(n,f){this.events[n]=f},off(n){delete this.events[n]},getBounds(){return {getNorth:()=>21.2,getSouth:()=>21.1,getEast:()=>79.2,getWest:()=>79.1}},getZoom:()=>13,eachLayer(fn){this.layers.forEach(fn)},hasLayer(l){return this.layers.has(l)},removeLayer(l){this.layers.delete(l)}};
+  const map={layers:new Set(),zoomSubscribers:new Set(),controls:new Set(),events:{},createPane:element,on(n,f){this.events[n]=f},off(n){delete this.events[n]},getBounds(){return {getNorth:()=>21.2,getSouth:()=>21.1,getEast:()=>79.2,getWest:()=>79.1}},getZoom:()=>13,eachLayer(fn){this.layers.forEach(fn)},hasLayer(l){return this.layers.has(l)},removeLayer(l){l.remove()}};
   const tiles=[];const L={TileLayer:Layer,Control,tileLayer:(u,o)=>{const l=new Layer(u,o);tiles.push(l);return l},DomUtil:{create:(_,__,parent)=>{const e=element();parent?.appendChild(e);return e}},DomEvent:{disableClickPropagation(){},disableScrollPropagation(){}}};
   const {satelliteController}=load('runtime/satellite.ts',{require:()=>L,document:{createElement:element},fetch:fetcher});
   const base=new Layer('original').addTo(map),states=[];
@@ -97,6 +102,7 @@ test('satellite preserves overlays, carries attribution, restores the original b
   h.tiles[0].events.load(); assert.equal(h.states.at(-1).status,'ready');
   assert.ok(h.map.hasLayer(marker));assert.ok(!h.map.hasLayer(h.base));
   await h.controller.select(false);assert.ok(h.map.hasLayer(h.base));assert.ok(h.map.hasLayer(marker));assert.equal(h.map.controls.size,0);
+  assert.ok(!h.map.zoomSubscribers.has(h.tiles[0]),'Removed satellite layer must not receive future map zoom events');
   h.controller.destroy();assert.equal(Object.keys(h.map.events).length,0);
 });
 test('switching away during satellite authorization aborts work and prevents late tiles or attribution', async () => {

@@ -8,6 +8,7 @@ import {
   Clock,
   Compass,
   Hospital,
+  Shield,
   Layers,
   LocateFixed,
   MapPin,
@@ -53,7 +54,7 @@ export function NearbyScreen() {
       {/* Segmented radius selector */}
       <View style={{ gap: 6 }}>
         <Copy size={11} muted weight="600" style={{ letterSpacing: 1, textTransform: 'uppercase' }}>
-          Radius
+          Transit radius
         </Copy>
         <View style={{ flexDirection: 'row', gap: 6 }}>
           {[500, 1000, 2500, 5000].map(r => (
@@ -81,6 +82,7 @@ export function NearbyScreen() {
             { id: 'buses', label: 'Live buses', icon: Bus },
             { id: 'Restaurant', label: 'Food', icon: Utensils },
             { id: 'Hospital', label: 'Hospitals', icon: Hospital },
+            { id: 'Police Station', label: 'Police', icon: Shield },
           ].map(t => (
             <Action
               key={t.id}
@@ -91,7 +93,7 @@ export function NearbyScreen() {
               selected={app.nearbyTab === t.id}
               onPress={() => {
                 app.setNearbyTab(t.id);
-                app.setPoiCategory(t.id === 'Restaurant' || t.id === 'Hospital' ? t.id : null);
+                app.setPoiCategory(t.id === 'Restaurant' || t.id === 'Hospital' || t.id === 'Police Station' ? t.id : null);
               }}
               style={{ flex: 1, minWidth: '46%' }}
             />
@@ -104,7 +106,7 @@ export function NearbyScreen() {
       ) : (
         <>
           <Copy size={12} muted weight="500">
-            {distance(app.radius)} around {app.anchor.name}
+            {app.poiCategory ? 'Nearest places to' : `${distance(app.radius)} around`} {app.anchor.name}
           </Copy>
 
           {/* Transit Stops */}
@@ -181,7 +183,7 @@ export function NearbyScreen() {
                         <Copy weight="600" size={16}>
                           Bus {b.routeName}
                         </Copy>
-                        <Badge label={b.nextStopEta < 45 ? 'Arriving' : `${Math.ceil(b.nextStopEta / 60)} min`} />
+                        <Badge label={b.nextStopEta > 0 ? (b.nextStopEta < 45 ? 'Arriving' : `${Math.ceil(b.nextStopEta / 60)} min`) : 'ETA unavailable'} />
                       </View>
                       <Copy muted size={13}>
                         {b.fromName} → {b.toName}
@@ -237,6 +239,7 @@ export function NearbyScreen() {
                   )
                 }
               />
+              {app.poiCategory === 'Police Station' && <Notice>Static station directory supplied with the updated project. Addresses and contact details may change.</Notice>}
               {app.pois.map(p => (
                 <Glass level={1} blur={false} key={p.id} style={{ borderRadius: 22 }}>
                   <View style={{ padding: 16, gap: 8 }}>

@@ -1,0 +1,28 @@
+{
+  "mode": "implement",
+  "objective": "Matte-white light appearance, responsive UI fixes, Light/Night controls, optional Source shake reusing GPS and sensor adapters",
+  "planning": "compact",
+  "context_depth": "dependency",
+  "verification_depth": "impact",
+  "delegation": "none",
+  "reason_codes": [
+    "shared-materials",
+    "existing-preferences",
+    "presentation-only"
+  ],
+  "allowed_write_scope": [
+    "Eco-Move App/"
+  ],
+  "git_branch": "New-Changes",
+  "non_goals": [
+    "Service/auth/routing changes",
+    "Commit or push"
+  ],
+  "acceptance_criteria": [
+    "Night design and services unchanged",
+    "Light is readable matte white",
+    "Light/Night controls persist without overwriting saved material",
+    "Source shake is opt-in, permission-aware, debounced and never dispatches Voice simultaneously",
+    "Responsive checks, regressions, typecheck and production export recorded"
+  ]
+}

@@ -1,0 +1,882 @@
+[
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\AppContext.tsx",
+    "sha256": "3BD030BC75171938327D0E154B0F20E9BC3230DE3D0E5B028F7DE3A060BAE248"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\applyVoiceIntent.ts",
+    "sha256": "7CED19C2E184B572B6AD6A89FC580E73BA715E3DE01E43DE6DA0C76669F9A6A9"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\chatMemory.ts",
+    "sha256": "4FC3A23498E112278C02A2ED3502531A1B57391C31083E6AD02DB81E51F43EC7"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\glassTokens.ts",
+    "sha256": "8AE990742FA9034211794281FDB10C60015A696CEFB71ACB08FA85F0D0BFDA0D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\layout.ts",
+    "sha256": "A30C3292DAE4A956E76CD9157330CB825D561FB9EED77B92CCF5AA86D8826469"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\mapPresentation.ts",
+    "sha256": "7454350CCA6A8499B03A24F6D17C58994FE9EE736FA2B48E9F8E7A91E3A8533A"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\materialMotion.ts",
+    "sha256": "4895936D7A9A626233BC7C11B7CA2447617A5092EF60F7548A79B0658D0B8407"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\preferenceWriter.ts",
+    "sha256": "696C9880F75229F71CCF13FD8A1CC053A5A7ECEF549372C0DB48D6CCBAEFA6A5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\speechAccuracy.ts",
+    "sha256": "20264A1E1D7B3A54E958C49AF4E431DE5372819E5DA313AE2248D9BB3FFDFB21"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\theme.tsx",
+    "sha256": "A9397A0BE4115A46D47AF7CBD5D1785CE6DE405939051714210AF1CC7C6C1939"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\types.ts",
+    "sha256": "A0954D5BD781B8BB4575A14676D669118D678127D9FF0F19A6B68856B81561DB"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\useRuntime.ts",
+    "sha256": "CEAFD4140FDB33DE961DA14A6B6BFB1F5570EB1F33227C03CE6DA6A16B153250"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\voiceInput.ts",
+    "sha256": "F549D50C13CC2952F25E03E19E158D441D7AAB2EF26C8D901ACE19166E2A2328"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\voiceOutput.ts",
+    "sha256": "DDA6DA186EA7678F7DFAE089DA11D747397A565DD36F9A022ED2C216B0B618D3"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\voiceSession.ts",
+    "sha256": "253A9043B1E0386233A673A3B0AF274F495AC547B516B372AF124009EE44D387"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\voiceTypes.ts",
+    "sha256": "FEF46DA029BC9D6AC7B3D12AF588F3005A63D6786F222AC8E7DDF2F82DD9FEEE"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\Choice.tsx",
+    "sha256": "FE2A19306C3861BE67F3191898BEB3FC5657E1413D2430FC2D9CEFCCE4885697"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\Glass.tsx",
+    "sha256": "E9EF044BBC24A09A2A21D8CDBB7787A045DD8B46C5A5F41FC0876E66B251175F"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\GlassAppearance.tsx",
+    "sha256": "D69E1ADDB31F60D2C469072F6B1EBAC27B44CB87F98D44D33EE144EE5DA4413F"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\LiquidNav.tsx",
+    "sha256": "43E6884E2EE570428BDB30F96EA35AA8489078B3FB2C1A3BB30B92779A03108E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\Loading.tsx",
+    "sha256": "393F146C2C7626160B8E23CD9E822802CC12967591F094675ACA5F7579015EE5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\MotionPressable.tsx",
+    "sha256": "BBB681880076D2691D796EE2BFC4587D1E1313A30BF25EF86AD5145DF9E66CAE"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\SearchGlass.tsx",
+    "sha256": "98AB5A3AA879B6A5E215D0F9CEAF8DD14213F8BE79899E33F99E755DD1440351"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\Sheet.tsx",
+    "sha256": "C8793CFE7C079E48D594F8259268742A1F52B00B65FAB93EF244C69F9520AC22"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\TouchlessControl.tsx",
+    "sha256": "26CDF1BA2F9350C6D69F40E15DD3B2553EECB2EAAF958F1B25B8E2138BD3B46E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\components\\VoiceLanguagePicker.tsx",
+    "sha256": "E0B67D958FAA0765504C02CB0A4F1F6C79B2DFA2EA2680151130FE11061AA8A9"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\gestures\\gestureBridge.ts",
+    "sha256": "0AF43C152315862444C21A051DCD44D1B6908D333E2DBDD2C3DD807213122279"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\gestures\\gestureSettings.ts",
+    "sha256": "5F71CD09E7B36F467DC2A8FFCC6EF900125C51DC02A430944EDD145F8EE90056"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\gestures\\gestureTypes.ts",
+    "sha256": "BA4EE3E09217A81883A3403B07DC3185CE28F058141F2572B1EEBA4463677B67"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\gestures\\gestureUtils.ts",
+    "sha256": "CC81FCCABA7C86564CDA54F93E63114B4330AE708E01783E1C5A9076C57322B5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\gestures\\handDetection.ts",
+    "sha256": "8C202DE561C922C6646CB913B7E1A52CEE625C48ECBA3610FA5991D2F3B61C3D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\gestures\\useHandGesture.ts",
+    "sha256": "9E868E91366C97192F78142141A7EE4BA9FB5D336BC46CEC86C46C52C2B00F2C"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\profile\\commuteHubs.ts",
+    "sha256": "79E1D16D36FB688AA83299C8139331DB92A28A8EA9C3778B08ECB20772E17CA5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\profile\\CommuterProfileScreen.tsx",
+    "sha256": "26778E8EF5C07255A52E31DDB38EE1D9CC23B28486AA31D82B07277BF96C5A89"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\profile\\commuterTypes.ts",
+    "sha256": "9148F47CD8EB1BC22A767856B6B95E259C27CBA6ECD4B3A43D0E09139C47BA41"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\routing\\previewTypes.ts",
+    "sha256": "C46596286D15E1CB7929652388B5F0471F1C1D3A7D64A04E8A7B8E801F71D547"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\features\\routing\\RoutePreviewScreen.tsx",
+    "sha256": "FBC1300026F6FA75BECB535BA260ABFE834DA035A818BD520623A30A1F68054E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\generated\\serviceConfig.ts",
+    "sha256": "B1F668C114FD024BCE1FBA7936CC668BF8756CDF130891D79931D9154D672F25"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\GestureCamera.tsx",
+    "sha256": "B4293D1B336A19AFBDF6E14E4E7AFBC045AA0CA1C91F60496C16CA3C67E0DA70"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\GestureCamera.web.tsx",
+    "sha256": "30C9CCB426E90F279951F994DC8DE67F52DD82FB912FB06FBA9755958A8188C6"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\http.ts",
+    "sha256": "56444231E002D52A4CB108DBA8B8FA3A5EDD25EF14E1F2C798A997CC37E58F65"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\RuntimeMap.tsx",
+    "sha256": "0DD3EF8BECE5539E12B84F9D09994A8B3CC46D744387B27CC900C450193579DD"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\RuntimeMap.web.tsx",
+    "sha256": "EF3D8D3CA4135944370B95F5D7FBE973481F82DEAC7883E587C4BD44A7816C86"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\shake.ts",
+    "sha256": "6564C9E91FA721BE03F51D30B912203E87C976A52AA969D1F27C536752E569FD"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\shakeRecognizer.ts",
+    "sha256": "54AD3B1D65464DFD15FF7286902F08307369A5663D8A05CB54128C348BDABF5D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\sourceLocation.ts",
+    "sha256": "95F02779939D096374A84A456B211F377172C6AB1EC46905810003845F0C3D7D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\speechRecognition.ts",
+    "sha256": "C0462CF1565CC783A68035D0AF08F3E6F0292FC031058D1DF419ED37B3AADE96"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\speechRecognition.web.ts",
+    "sha256": "CE3A4C4BA98B6004C1F5463092BEA281F83131947D7CA9FB77A67E9154EAB493"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\storage.ts",
+    "sha256": "1FB0604ADEE9347666DDD361F4514A60A9690EEF8C80F7051811D729C0045334"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\platform\\voiceTransport.ts",
+    "sha256": "9794A049E56DC999227C5090B61F1305793D5E599E8068F0A51F20D2FAF4EB6D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\screens\\AccountScreens.tsx",
+    "sha256": "421B608C73C5EA4CAAA0FFBF47614679CAF82694427F9EBAFC3017B2777AE812"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\screens\\AiScreens.tsx",
+    "sha256": "3A1FB5DD8E28529060729110FBFFF9F2653BD14192711D8B4218602F8C405D82"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\screens\\AuthScreen.tsx",
+    "sha256": "8280F5B9684E0DA18FF7A686413C65E5D81B632FBB2A4558A8A5D2B9437866A4"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\screens\\DiscoverScreens.tsx",
+    "sha256": "9363076475E8910F18C91F67EB5911FEB41C046F304D605BB98C9C8B5E17A76F"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\screens\\HomePlan.tsx",
+    "sha256": "BB95E922F1089E5A1BB806E3295B23B48918C77C1D486F0244D1027108607B3D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\screens\\SearchScreen.tsx",
+    "sha256": "74DBF59E60362DCFBCE9EE2D60C62C6697D04CDA7D7A1BF01D17EA810E27710C"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\src\\screens\\TicketScreens.tsx",
+    "sha256": "A0F0A5FC4E9F25173B26205D77FBEA32E458C68EE2531B3E5BC167BDE81E55CB"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\bootstrap.ts",
+    "sha256": "3124742F4540FF880C6D33B48D0BEB9422205A9DEB2FC537222BBEF63E3E8537"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\gesture.ts",
+    "sha256": "F1979DA0C41C4E3E6C317A291D0D3151DC6693F0DACB8A49F9C4BB3136C3D086"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\index.tsx",
+    "sha256": "D58C0F77031048150C9920483B96EBED0ED91053A2B7F1CBAEC29A0988171B6E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\map.css",
+    "sha256": "76BB2BCD56E6EA427B41A2E159012D9DA03B1DE2BFA399A704B795C68665E0D0"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\satellite.ts",
+    "sha256": "3D7E4F71F0535AD33C927382F60FDEEAD3A844B854A2D9EC202156836855EFAF"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\source-constants.ts",
+    "sha256": "29DE7925BB3AFB45670F5A963870FEE0AC2301A3A808FFE81B76BC80CB616DDC"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\source-issue.ts",
+    "sha256": "DE966C7DFB3F7C590340E4D99A7071EB57B81371F44781D4D4298F5F28C677CB"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\voice.ts",
+    "sha256": "586FBDFA13065A13ACB259F6C25020AEFB3ED7BEBE5C8C22198CDC358765A2FD"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\voicePlaces.ts",
+    "sha256": "1FC583F47F7CC230BDF89A5AA8261924FB6BE2394AE6D1E8EF44EFA9DCEA5FA4"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\features\\maps\\RoutePreviewController.tsx",
+    "sha256": "CB9BFF248CF9AA85AD824D874B8379FE78F8631DB40A457E424F90C8174D8D8C"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\features\\maps\\useProgressiveStops.ts",
+    "sha256": "7795F268CB4163A955B27830C5979CA5A4E784E9A30548B5FD37FFD712DA7C41"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\features\\maps\\useRoutePreview.tsx",
+    "sha256": "1028FBAEAABBB24F7B93A358DC3978FFC4D6E1E3394422832654E4F5EFC196F5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\runtime\\services\\boundedRequests.ts",
+    "sha256": "F34B6E932854D5B48E8576F17CEB02D36B89FBA3B322391D5CD8D18C4B4E9FAF"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\agent.json",
+    "sha256": "0A206761E8D3A8B963DA79D859197D61BC30A5AFA32C4A02A73B025B68788FCB"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\vite.config.ts",
+    "sha256": "8D8CA808E8CB084761C143A32266AB66D9220DC109C41EB4B565C0BB94FDA06A"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\amazon_pay.svg",
+    "sha256": "299DCEC9293E2F6E3BEA6066EC6CE7E60984891898E1A61F39CE72BD4CC38E39"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\android-chrome-192x192.png",
+    "sha256": "3BB35BC032EB048B6347B1C359A0255AA8941014821C4CC71F63CD0C4F30B085"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\android-chrome-512x512.png",
+    "sha256": "B7E85600578D6440330484BF6772ADB8E95E3CCD5B947525E8B13B9BDE2A2111"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\apple-touch-icon.png",
+    "sha256": "475AA936AB587DA98178562CAE9310C7D6D8A1020AA3C53ED3540F5431766F0D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\auth.png",
+    "sha256": "70DAB2F548223994938C53B43E042411F3C082D6D8248173D6C28B9BF0F3D81A"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\background.mp4",
+    "sha256": "185B135DFA40C7C3FFFE1B59C1907FEA6B6D2FFBA77877810D1AF9E38CADB49E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\bhim_logo.svg",
+    "sha256": "BB39D12BD6052B6BDC8B7BD9B3BA50513941A09120902B4240CD145CC3B80C28"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\favicon-16x16.png",
+    "sha256": "FC3FDF53C9534611FF2604E2D4A8F32207BAF6BE7430183C6F703D676B1C4641"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\favicon-32x32.png",
+    "sha256": "398CF8E0DA3F8FF7AC80C9CC4BD94D1544E56B05B420A3CA0A99ABCD548A82D5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\favicon.ico",
+    "sha256": "55808BE3990B156A5EEF3834D9DDD4F6A1DC05B5AAF35AF534AAC01EF9D09110"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\favicon.png",
+    "sha256": "B7E85600578D6440330484BF6772ADB8E95E3CCD5B947525E8B13B9BDE2A2111"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\safarbot-icon.svg",
+    "sha256": "15E7896F496B72E4E8163EBFAC5A31FA686BBCFEBA9E9EBAAAB19BD7E909F461"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\public\\data\\devRoutes.json",
+    "sha256": "658D383919B1EECC8CC695C9A83C01450C225473F88B32548FCBEBACC63979BA"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\router.tsx",
+    "sha256": "72B68964D3F55BA4F7DCF2A04AAD9D97D7C61FABAD13AEC1D298F1E39EE59FCC"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\routeTree.gen.ts",
+    "sha256": "B7D9BF69F52B45430038314D22903338B152BAF4C757125F3528F46F16725F70"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\server.ts",
+    "sha256": "CA5AF713CFF12BF4BC555847AB1C94A03D31BED61FF75E413DC96444B49564EA"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\start.ts",
+    "sha256": "B73CE7A01BFE824FB1CE6185E6EB0239F2C2B00D9DBDE608587AA4F5BA08239D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\styles.css",
+    "sha256": "CB26C1D4D2F85C6A5963C903EB57A088E94983D5608093223CA97A3FF7583CE7"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\supabaseClient.ts",
+    "sha256": "F4065CE1D11ECC461099AED1421465CDA02056DFD9D835FCBE57B6DA0D850C09"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\AiRouteExplainer.tsx",
+    "sha256": "9D1F13A6EE70DAF8CC3DD40C6C1FEBF4749325725C1E45AAAF84ED12CCCA82FB"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\AiTransitChatbot.tsx",
+    "sha256": "AD352AE6C5FD4AF3024E6039DCE38B16CE12C0BF237282A1584DFE90EDA8ADD8"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\BusTimetablePanel.tsx",
+    "sha256": "659180244989EB886A77DB48B8F09746F7CFEA489DD59E702F10BCE026D837D5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\CabOptions.tsx",
+    "sha256": "1A9B6DED4B12C5EAA12A5B513F929DEECABE0F4FE498FA87EBC70245C0E8AFDF"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\DevBusRouteInspector.tsx",
+    "sha256": "FCF423C71D8CE5584211DC8C10ABF0A096A754358719D12EEE68619EF3927415"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\DigitalTicketPass.tsx",
+    "sha256": "B71BACC5C682C214A26533D408048B6105FC51ED0164F526DE91BA994729A127"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\DummyPaymentModal.tsx",
+    "sha256": "AF5EDC3265D00B487547EBC2C5915004D6A7477048181967DAF3C17E63C5E4B5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\GoogleMapsLayersFAB.tsx",
+    "sha256": "06073033174395F6ACFBA47BF4C1E6DE3D803F44F16C4029CF6E147869A7B857"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\GoogleMapsSearchBar.tsx",
+    "sha256": "DBB30795E6449D7BB9949132E8FFD2B86B3BCCE9BE3740EED045671E04911969"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\GreenRewardsPanel.tsx",
+    "sha256": "9702C923E765FBDAF373BCC1DB811952BDC7EBDE9B6A17414E1110648A1FA9E1"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\Hero.tsx",
+    "sha256": "B8B875113270634CE6FE4E9EEDE233D7A654922F041B81DF7110A5C7622B6A0D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\HowItWorks.tsx",
+    "sha256": "C03EEA9542D1377AB959E69448B3FD393F54AC6D7700B8BE8C4CF93A7B50FB27"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\LiveBusTracker.tsx",
+    "sha256": "1C887706AE4E4F481119FC0094129468A949CE4DAE0EB82EA6B39E52E480566A"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\MapView.tsx",
+    "sha256": "890416DCDDA416D71A4FE2345EDFCD66E4DAE52412D8550A804FE5E4CC145AE6"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\MaterialTimePicker.tsx",
+    "sha256": "8A207A4B0CC29394C6008AC0BF81D2CE28FF37569221189C32DAF8F37A674FF8"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\Navbar.tsx",
+    "sha256": "67EAEB4B70A6EAC70389EB1CF9A3F5200A97020CAB8E7885F2D06F18C62D31A5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\PlaceSearch.tsx",
+    "sha256": "194385545C381410B981B7150910781E2D41BB37B0AB42CECD51BAB9B03712CA"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ProtectedRoute.tsx",
+    "sha256": "4FFC30BBF3F0574EDBD0BA456E3AB38EA1E80A470D0F2AF8D0A5105456FE5C84"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\SideRouteAiExplainer.tsx",
+    "sha256": "656BBC1C1367540B9E26032C7484665F6AEADF1506255282A3A74D9C693BF1DA"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\TicketBookingModal.tsx",
+    "sha256": "DDF92BD7FFCC2F9B57DF671F40BDD5EC402F56D27F9ABD79AA56EB18B6A4CBE3"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\TicketWalletDrawer.tsx",
+    "sha256": "E0954975D5EECBCD373F1C878CAF67486A6153206EA6B12FC41EA9738A52AD55"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\WhyNagpurConnect.tsx",
+    "sha256": "ABC75A05345118C6E99184A4EDC899EA0B0216D1A2192BFD0ED8184EE59FD117"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\accordion.tsx",
+    "sha256": "0903EFCD7B746EEF0A10C954A541B0DFA7AA1172F3C380A1A88F4E19A317FDA3"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\alert-dialog.tsx",
+    "sha256": "EE4D7F3341A1E5592787B7DAC8E924BD226189492819F6704D8A7FAF8FE64D20"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\alert.tsx",
+    "sha256": "E7F4C2E6F78C59270905B4152B7D3EF4D5C6B9E3B2D370DAA7B301AA7CBD27B3"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\aspect-ratio.tsx",
+    "sha256": "D72C73D629E37995A0A71647D851D68D6FDCD7EC120797F36AB83A8EE89F2CAB"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\avatar.tsx",
+    "sha256": "0326C9041C5A0B1BA31FF29822C51950B6AEAC485CD0985E7DF714741A54E7F4"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\badge.tsx",
+    "sha256": "6519775252FE729F21C60B92C7C9FEEFD1FE7D0A8C2CF16D6F1C2FA7E153FE75"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\breadcrumb.tsx",
+    "sha256": "D5224E87344B3AC0F8B002E5DDA6A71FF8FEE296DB8A5FBE6B034D06BD5C2AE1"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\button.tsx",
+    "sha256": "E39813B666BA434660EC088356A0349246B6803A4E99961295D0C82BAB1AB862"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\calendar.tsx",
+    "sha256": "E883F2245873FDF360764F77FC8F391426BEF5776C6397537012C46970EBD6EE"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\card.tsx",
+    "sha256": "F13878A0078A5EF9F3E92AF29259FC1E93EA56EA80CB992E0C4DEA4E35396459"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\carousel.tsx",
+    "sha256": "568E00E8EDBFAB8AF67EE902CA9EF5CEB6D5ED6F3045E7F9B3C15B4F7EF9E974"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\chart.tsx",
+    "sha256": "81B1F692F9334BA3030213FF37EEAF2DD762B644E5D96E51ADA7072109F07430"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\checkbox.tsx",
+    "sha256": "C44D02535D5C9C92807576804407DD63D01E7189DBDE526E925B53885E645FD4"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\collapsible.tsx",
+    "sha256": "5F0A45D8F6CA72D37ED10BF0A85306158B67D7CBC386319186CE013EAD9BC0A6"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\command.tsx",
+    "sha256": "BA8C0F8B23044CE9A5066E66D7AB7BE3A3C79BFC4A0AB7DFAE6FFAFE439145A3"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\context-menu.tsx",
+    "sha256": "B299F50A0A7840B136DB5670F2B2E7EEC6FC62B3C06BC2AD0015800959CC381B"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\dialog.tsx",
+    "sha256": "E3A6DE153FB15597EA95BE9C4549211A297C060267787915599E3D680D476BD9"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\drawer.tsx",
+    "sha256": "478C487F66245641D5FA0F0D1C53A07D68BD60C4B3C497EC4C41CE08B482E14B"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\dropdown-menu.tsx",
+    "sha256": "A6B87C89F5A806225B7F3A81F13A6577289C67E5787C2A56B5A22BD1EDEA02CE"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\form.tsx",
+    "sha256": "1ED53D4AB564A64708938643DE590F2BEF3718B0B2A309C1019C57E9C1FDE23F"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\hover-card.tsx",
+    "sha256": "69DC172ECE56AC77BF3A044A1CD60ED601B0041945D16B5DA4C6CC4F42116988"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\input-otp.tsx",
+    "sha256": "45B7C4FD518616F76DD611B9DA13BC60BECE1352E050878BF943E1CC6A4ED678"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\input.tsx",
+    "sha256": "92DEBB7D6D2D96D9E607A42D5CE8F37B2D63384AE5DD9FFBBF5F047B680FFB85"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\label.tsx",
+    "sha256": "9F72E2ECF16206593AA9E3C4FBC14CD8E81AA8488D57D92D4A950B30935A9FA9"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\menubar.tsx",
+    "sha256": "5BD157C3A446EA1E451867E63724B2E87AD6BBA6251C8B5F1B267D1DF7BD4E0E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\navigation-menu.tsx",
+    "sha256": "755AECC77B7911AB61159C9FBB9B25254009EB4C32C95B1430B6B5B7D37ED8F0"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\pagination.tsx",
+    "sha256": "CBE8559C578EE2D34C7DAEF5EE75DC3AFEB795851E294B111DEC375BA44A9A2D"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\popover.tsx",
+    "sha256": "861C18577EA5988C6F5CA00D1C677200319FD427CF8B424E59A5CCA6FF24F830"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\progress.tsx",
+    "sha256": "418F612946A520D1380B7A0D058185BB6A6D09846846DD6D6904A0016152DD4A"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\radio-group.tsx",
+    "sha256": "8C55AA0496B00A27FC4F609CA8B43A7E82C6802F6BF613998438B7632899FA96"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\resizable.tsx",
+    "sha256": "F0399FEC7BC334F06433B41B6EBF34255942CE4916B99173898893FA7FCC8281"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\scroll-area.tsx",
+    "sha256": "B607F562455152A079D70A22538C95072B0267E0D59A1A1CF16A905A2E373A6F"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\select.tsx",
+    "sha256": "6D4DEEE18CF7CED0354EB719300833A83CAF46400DE6EE9C3D1942FA4C579AD4"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\separator.tsx",
+    "sha256": "BF5838B692E5F74FDE7083280B99492DD402BCE6966E912E79F5E23F14BC98EB"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\sheet.tsx",
+    "sha256": "A82F9341962E766EE925A2FE883B0A9AB5D5DD8475C402AC8E491EE37DC95FDE"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\sidebar.tsx",
+    "sha256": "9F44F4523271F965ADEC608AE1C3B8A2F350F2F45BA1401A2C7EE33BC5EDA238"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\skeleton.tsx",
+    "sha256": "F4C42257D73925B0B856A3500E2CBDD918FE6744FCD6BE87EF28BB88E7EB7366"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\slider.tsx",
+    "sha256": "D307CF3FF05B54BE4A04389EF4379F9E8B4DC49720197937991CE843A8D4B5EC"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\sonner.tsx",
+    "sha256": "3AD40F66C339E799B1A57C00E10B4627294C7D580D99D8A48AE0D8D4C13CF931"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\switch.tsx",
+    "sha256": "C3C298DF4FFB56695E4A8F0FF3E37EEE08437DEC542A677153EC16BED0820107"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\table.tsx",
+    "sha256": "1E945E564C2CC5CA3EF33019BA7DA7A8B94CBC73FEB3CBC2B7B33C36EA648D92"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\tabs.tsx",
+    "sha256": "E9B454D2F987C83B36CC8870BBA47D9355DB4E8F5C733B310DBC1119A7D27654"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\textarea.tsx",
+    "sha256": "35617A2CF053E52C9E56983BDE82D556861D38E462F9E578876C8E99A0432687"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\toggle-group.tsx",
+    "sha256": "D59CD3937C967A3E221FDFCFE4EA5CD57EB97CBE37E1AC98126664C9C7DB49C1"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\toggle.tsx",
+    "sha256": "62E6E21993F1AB633B9F830CBBF0C181F3D161BAE3A7792DBF2D842D42A2F09C"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\components\\ui\\tooltip.tsx",
+    "sha256": "9682690FC3755D0F4B8684F2D7B1F77945876D41A45B723D0761B26804AD5010"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\context\\AuthContext.tsx",
+    "sha256": "A2B33EBD066DCFD94B639544FA2AB5CCB284A2596E92B7E804702BE33D086287"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\data\\bus_fares.json",
+    "sha256": "16342757C5E03F1CB0079DD59D1C08A63A71EED73E58AB61133E575E1C88E02C"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\data\\bus_schedules.json",
+    "sha256": "1635B3495265B02FF70290EB6EE99FE5BC3C3C60F7D4A70F3423C1FDA4F78E89"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\data\\chalo_routes_index.json",
+    "sha256": "38A405E2D30E5BA20F6A9C73B82748B03995F7499048FBB07E3F82F9B2241974"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\data\\lineGeometries.json",
+    "sha256": "FEDCC5B28270C2C774925D624BA3607A9F466EB5448321746927271B0EC56810"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\data\\metro_fares.json",
+    "sha256": "93339C9BCA9442D080076574948D3D7E5048195471FAE1B3A16AF0B8E85C5F62"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\data\\nagpur_official_police_stations.json",
+    "sha256": "BDEF5A5517785FBCD17AE5872CD0010E932166470A1FB14B2C8EB9E1492ACE87"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\data\\network.json",
+    "sha256": "0A7429A9DA6894ECDCC0D4246A5426451F475818DE4C94E10286DC947F3C9C53"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\hooks\\use-mobile.tsx",
+    "sha256": "21EFF740F9E5C965C7F0782925A7E8F67DDFCDF0F58B6613550F99C3E1C454E9"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\busTimetableService.ts",
+    "sha256": "A2E92A344CD06F0988B4B842ECEECA7B72216BBFF38C441A91B44B71842ED4C8"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\error-capture.ts",
+    "sha256": "779EABC931AD7A72B80802B69FC286D849E88D0B9298125042B6CC875931125C"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\error-page.ts",
+    "sha256": "635915886F5D44A18B6ADD2A53959DBE2E8BA1BB3F7E597FC714650E74157BB6"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\fares.ts",
+    "sha256": "042531FE4E143A6F4BCBB432BA9EAC3F1734535439B7361BF83677463471CCE9"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\frequencies.ts",
+    "sha256": "8BFD00E65CCE910A49B4A9150824C455AB7AEEF44729534387BF05CFC29C0199"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\liveBus.ts",
+    "sha256": "CCA6CE06D8D46614F4EF2CCDB35B44465757256586C2BD19B41BB3D16AC82D20"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\n8nAiService.ts",
+    "sha256": "3CE6210BB707E5B97F438FD3D03945D61CE4F565B6372183B79561491F2A2A42"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\nagpurPlaces.ts",
+    "sha256": "5C918695031E80B09E30A0B86B007437085D7220FF936C440F204738A17CFF57"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\nearby.ts",
+    "sha256": "A987E83729B864C6DCA7870132FE234CC0DF61CC4B9A8D0C91785DCFB505BCD8"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\network.ts",
+    "sha256": "40C4A9A5EC305CF6CCA25AE5F822D381CF0BBC4F6745E7EA85C1EE21F7190ADB"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\ors.ts",
+    "sha256": "208F678080B7636509C919DC0F72F5C3ADE23FDB5E3A4E255135D768CAE9FBEF"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\placesSearch.ts",
+    "sha256": "1095811D06B1E35717DD1A456612A55CC50BC509A162BFD403FF5160376F830E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\routing.ts",
+    "sha256": "790D2EB36EB854FEA4DCB4F55FC5D5C1B98FBCF7561927B53CF5679281D36369"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\supabase-schema.sql",
+    "sha256": "B746546E8D18999460BF8B26C4333764732F1F059F5DEE8795C94184FD37FB5B"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\ticketExporter.ts",
+    "sha256": "0E26594F3E688F7B549069A2460E36E8CAEC8C9CDE532D804A6D76AA7CDE8190"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\ticketing.ts",
+    "sha256": "3609C924B8D8011E1E5F1042BB0DFA2244612AD5899EC68A4549BFB72CE76C0F"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\turnByTurn.ts",
+    "sha256": "86999161FC1A418A1E9E3F2BE31190C4FB649AA59959D085CFA09904232D0C3E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\uberApi.ts",
+    "sha256": "642F8CF0FC060079B1696E1D89A8D22D8CD2C9BB2F76920141E7FBF6A524DF19"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\utils.ts",
+    "sha256": "D1F1E0D62CB8D8D1E04C26E14DE842D8A151F75812D81B046C65B5D1FE8E4B27"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\lib\\wavRecorder.ts",
+    "sha256": "A579F8E712594D237A9BA598CF0183ECCDFF16CDE51E79A6C398189335965F83"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\routes\\__root.tsx",
+    "sha256": "D40CFB3056D6F53BDC5CA8BDC575B6FFAAECFE9BCF6566BCE6865CD693E4019E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\routes\\app.tsx",
+    "sha256": "387BD036A37FE11194AEEC8A11D9FA36EBD17C0E6A8D4C16B1A36AECE1051A93"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\routes\\forgot-password.tsx",
+    "sha256": "680345820CF654460DC3E08D6E8EFF9CC3C0E036F94BE57EBC8B2C12315FA6B4"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\routes\\index.tsx",
+    "sha256": "004F3F82F44DD8E96165E04B9EA3878829D24DF23172D23EDCD89C251E68774E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\routes\\login.tsx",
+    "sha256": "5F500C4BD5D26D6E5B942DE7C1808FCF9A7C73E077D1D5FAE259882F06B043C2"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\routes\\signup.tsx",
+    "sha256": "086698F4245C1A4B2F44D960FEBECCCAE51C6994E6C8892C6C608F62EE71692A"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\routes\\update-password.tsx",
+    "sha256": "81362CD473EE82EC64942B46C3AAEA9D330D67C2E84957CCBB6D55FD9E244421"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\services\\commuterProfileService.ts",
+    "sha256": "C0EB18E963C89CC77DC496C338521128B3F54762A948530C012055F295D955BB"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\services\\dbTypes.ts",
+    "sha256": "019ADFC7BC2E1E0B4F22D0D5FF13E5EE009C76FCAE9483C614A356F9CBEFFCB9"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\services\\ecoRewardsService.ts",
+    "sha256": "BCF407E52D0A28DEE82A91FA4EBECAEBBB7E46F5DBC274D5C05BF96064FE8622"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\services\\emailService.ts",
+    "sha256": "26F4E16F45314CE69EFDA28239E2F654358E525EF19CF7F22A2B5E450840EDEE"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\services\\profileService.ts",
+    "sha256": "2096BFBBD9EDFF77A0F727C3EA41F531B6284CA5D4AE46A7C38F9B8867DC56AC"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\services\\recentJourneysService.ts",
+    "sha256": "0E66FC217F634B4B336AA74004C77083F72F470077EF67BDB719E79FD0CBA548"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\services\\savedJourneysService.ts",
+    "sha256": "5816C2B3910DE717D8B466D5DFD02105C17F1D4E3B2461E28C10490CCE81D212"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\protected\\src\\services\\ticketService.ts",
+    "sha256": "E99643150442E9A569188A5F32C2932F99B8D7700FA7394401B803AED94692DC"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\audit-source.cjs",
+    "sha256": "BA96E7D136FA7F1CA7BF72BC146F1B296AEADE966917C280452DA8FF7343BF87"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\build-android.ps1",
+    "sha256": "2BF19402DFC277A61CA19837B7F5345B23523A7F89D533B2600F9AC9E101480A"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\build-gestures.cjs",
+    "sha256": "3FCC88CC8F4B856127A43845E9F3883E79AAEA2F8E002A613DCE7E8CA3AF0C23"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\build-runtime.cjs",
+    "sha256": "B56E0509A77E8277AAF615354247106CA288FCE12437114BD7DAA67C050F3CB6"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\build-service-config.cjs",
+    "sha256": "D9B7E65C65C2BC90442BC0D3827915BC93435797DC90C697FB773F8E5D70A416"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\compact-fare-data.cjs",
+    "sha256": "4C81EBEDC1F903FB441AC2CB1C466BE32B6BFF2B1B4EC3F1FE4067E7B768409F"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\email-server.cjs",
+    "sha256": "FD28220BA45E4DDF3F0BE1BFAF7012CF2191BDDDCEEDDDA291FEF3A2824B911F"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\measure-migration.cjs",
+    "sha256": "7FF2E2A38C098A22BDBB1F6914B5A13B27F547D684171D7B35E23A8F1D34F8DD"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\preview-static.cjs",
+    "sha256": "A492449D3F76C8B37E7142BF55B1529D48D88220BD90B6B8558431430997200E"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\routing-proxy.cjs",
+    "sha256": "6450E42C2970A8E22ADC3B23F5D88803244A3CC06E769B3AEF4150DE6AEF97CA"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\start-emulator.ps1",
+    "sha256": "0991318BC8A42EF30D741A6B8E93B902CD431355F5C8812CF05C1827AC36F5A5"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\validate-voice-release.ps1",
+    "sha256": "D664035FCE2ED55CFFEFB2132A6A92DBCCA301ED28500725EBE3F06345DF8695"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\verify-apk.ps1",
+    "sha256": "AAC10BA34488D03E01AE20BE4D5E511C8A0EE558752E088391A827F897A3B43B"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\verify-migration-services.cjs",
+    "sha256": "C0BCC876A6655F4CA9C764AA9402887DA6DFB9B2EB8196AE6197F8310F1324CD"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\verify-multilingual-voice.cjs",
+    "sha256": "F2170302B23F2261CCE4CFEBD2F8A4F9C8E593A58AE4B45E341723C5801EF473"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\verify-source.cjs",
+    "sha256": "2052698033EB272AF8007307B44E278FFE3DDA8AF21BCD1B262E1DAF513B5E94"
+  },
+  {
+    "path": "C:\\Users\\LENOVO\\Documents\\Eco-Move_Nagpur-main\\Eco-Move App\\scripts\\verify-voice-workflow.cjs",
+    "sha256": "78DFA24375E17C61CBA8C40B771260A54D2103D5883F86CE678F09BB8961AE50"
+  }
+]

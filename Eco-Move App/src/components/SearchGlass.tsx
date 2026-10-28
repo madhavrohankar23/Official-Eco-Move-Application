@@ -44,7 +44,7 @@ export function SearchGlass({ label, onPress, style }: {
         <Glass level={2} specular state={pressed ? 'pressed' : focused ? 'focused' : hovered ? 'hover' : 'default'} style={{ borderRadius: 26 }}>
           <View style={{ height, flexDirection: 'row', alignItems: 'center', gap: 11, paddingHorizontal: 17 }}>
             <Search size={19} color={t.c.muted} strokeWidth={1.7}/>
-            <Copy muted size={15} style={{ flex: 1 }} numberOfLines={1}>{label}</Copy>
+            <Copy muted size={15} style={{ flex: 1 }} numberOfLines={1}>{width > 0 && width < 310 && label === 'Where would you like to go?' ? 'Where to?' : label}</Copy>
             <Sparkles size={18} color={t.c.accent}/>
           </View>
         </Glass>

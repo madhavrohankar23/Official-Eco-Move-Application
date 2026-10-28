@@ -1,3 +1,4 @@
+import {boundedMap} from '../../../runtime/services/boundedRequests';
 /**
  * Live Bus Tracking Module (Powered by Official Chalo Nagpur API)
  * Completely isolated from the main route-planning algorithm.
@@ -546,103 +547,147 @@ function calcDistanceMetres(lat1: number, lon1: number, lat2: number, lon2: numb
 
 /**
  * Fetches real-time live buses around a geographic location (lat, lon) within radiusMeters.
- * 100% genuine live telemetry fetched directly from Chalo Nagpur API.
+ * Provider telemetry fetched from Chalo; timestamps reflect the provider response.
+ * Uses adaptive multi-point spatial grid sampling for large radii (2.5 km, 5 km)
+ * to improve coverage where a provider response is capped. Coverage is not guaranteed.
  */
+interface NearbyTelemetryRecord {
+  session?: {_vehicleId?:string;_routeId?:string;_agency?:string;_fromName?:string;_toName?:string;_routeName?:string;_streamId?:string;_operatorId?:string;_mode?:string};
+  parameters?: {lat?:number;lon?:number;time?:number;bearing?:number;nextStopId?:string;nextStopName?:string;nextStopEta?:number};
+}
 export async function fetchNearbyLiveBuses(
   anchorLat: number,
   anchorLon: number,
   radiusMeters = 2500,
 ): Promise<NearbyLiveBusItem[]> {
   try {
-    const payload = {
-      metaData: {
-        source: "web",
-      },
-      requiredFields: {
-        nearbyBuses: {
-          lat: anchorLat.toFixed(4),
-          lng: anchorLon.toFixed(4),
-          radius: radiusMeters.toFixed(1),
-        },
-        cardsInfo: {},
-      },
-    };
+    // 1. Build sampling points: Center + Cardinal/Diagonal sub-centers for wide radii
+    const samplePoints: Array<{ lat: number; lng: number; radius: number }> = [
+      { lat: anchorLat, lng: anchorLon, radius: Math.min(3000, radiusMeters) },
+    ];
 
-    const res = await fetch("https://chalo.com/app/api/nearbybus/v2/city/NAGPUR", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(payload),
-    });
+    if (radiusMeters > 1500) {
+      const step = radiusMeters * 0.55;
+      const dLat = step / 111000;
+      const dLng = step / (111000 * Math.cos((anchorLat * Math.PI) / 180));
 
-    if (!res.ok) {
-      console.warn(`Chalo nearbybus API returned HTTP ${res.status}`);
-      return [];
+      // 4 Cardinal points (North, South, East, West)
+      samplePoints.push(
+        { lat: anchorLat + dLat, lng: anchorLon, radius: 2500 },
+        { lat: anchorLat - dLat, lng: anchorLon, radius: 2500 },
+        { lat: anchorLat, lng: anchorLon + dLng, radius: 2500 },
+        { lat: anchorLat, lng: anchorLon - dLng, radius: 2500 },
+      );
+
+      // If radius is large (>= 4000m / 5km), add 4 diagonal points for complete coverage
+      if (radiusMeters >= 4000) {
+        const diagStep = radiusMeters * 0.65 * 0.7071;
+        const diagLat = diagStep / 111000;
+        const diagLng = diagStep / (111000 * Math.cos((anchorLat * Math.PI) / 180));
+        samplePoints.push(
+          { lat: anchorLat + diagLat, lng: anchorLon + diagLng, radius: 2500 },
+          { lat: anchorLat + diagLat, lng: anchorLon - diagLng, radius: 2500 },
+          { lat: anchorLat - diagLat, lng: anchorLon + diagLng, radius: 2500 },
+          { lat: anchorLat - diagLat, lng: anchorLon - diagLng, radius: 2500 },
+        );
+      }
     }
 
-    const data = (await res.json()) as {
-      buses?: Array<{
-        session?: {
-          _routeId?: string;
-          _agency?: string;
-          _vehicleId?: string;
-          _fromName?: string;
-          _toName?: string;
-          _routeName?: string;
-          _streamId?: string;
-          _operatorId?: string;
-          _mode?: string;
+    // 2. Query all sampling points concurrently in parallel
+    const responses = await boundedMap(samplePoints, 3, async (pt) => {
+        const payload = {
+          metaData: { source: "web" },
+          requiredFields: {
+            nearbyBuses: {
+              lat: pt.lat.toFixed(4),
+              lng: pt.lng.toFixed(4),
+              radius: pt.radius.toFixed(1),
+            },
+            cardsInfo: {},
+          },
         };
-        parameters?: {
-          bearing?: number;
-          nextStopId?: string;
-          lon?: number;
-          lat?: number;
-          time?: number;
-          nextStopName?: string;
-          nextStopEta?: number;
-        };
-      }>;
-    };
 
-    if (!data.buses || !Array.isArray(data.buses) || data.buses.length === 0) {
-      return [];
-    }
+        try {
+          const res = await fetch("https://chalo.com/app/api/nearbybus/v2/city/NAGPUR", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(payload),
+            signal: AbortSignal.timeout(8000),
+          });
 
-    const parsedList: NearbyLiveBusItem[] = data.buses
-      .filter((b) => b.parameters && typeof b.parameters.lat === "number" && typeof b.parameters.lon === "number")
-      .map((b) => {
-        const sess = b.session || {};
-        const param = b.parameters || {};
-        const lat = param.lat as number;
-        const lon = param.lon as number;
-        const distM = calcDistanceMetres(anchorLat, anchorLon, lat, lon);
-        const walkMin = Math.max(1, Math.ceil(distM / 80));
-
-        return {
-          id: sess._vehicleId || `${sess._routeId || "bus"}_${param.time || Date.now()}`,
-          routeId: sess._routeId || "",
-          agency: sess._agency || "nmpl",
-          vehicleId: sess._vehicleId || "Aapli Bus",
-          fromName: sess._fromName || "Start Terminal",
-          toName: sess._toName || "End Terminal",
-          routeName: sess._routeName || "Bus",
-          streamId: sess._streamId,
-          operatorId: sess._operatorId || "805",
-          mode: sess._mode || "BUS",
-          bearing: typeof param.bearing === "number" ? param.bearing : 0,
-          nextStopId: param.nextStopId || "",
-          lon,
-          lat,
-          time: param.time || Date.now(),
-          nextStopName: param.nextStopName || "Next Stop",
-          nextStopEta: typeof param.nextStopEta === "number" ? param.nextStopEta : 0,
-          distM,
-          walkMin,
-        };
+          if (!res.ok) return [];
+          const data = (await res.json()) as { buses?: NearbyTelemetryRecord[] };
+          return Array.isArray(data.buses) ? data.buses : [];
+        } catch {
+          return [];
+        }
       });
+
+    // 3. Deduplicate buses by unique Vehicle Registration / Stream ID
+    const uniqueRawBuses = new Map<string, NearbyTelemetryRecord>();
+    for (const list of responses) {
+      for (const b of list) {
+        const sess = b.session || {};
+        const vId = sess._vehicleId || sess._streamId;
+        if (vId && (!uniqueRawBuses.has(vId) || (b.parameters?.time || 0) > (uniqueRawBuses.get(vId)?.parameters?.time || 0))) {
+          uniqueRawBuses.set(vId, b);
+        }
+      }
+    }
+
+    if (uniqueRawBuses.size === 0) {
+      return [];
+    }
+
+    // 4. Parse, calculate true Haversine distance from user's anchor, and filter strictly within radius
+    const parsedList: NearbyLiveBusItem[] = [];
+
+    for (const b of uniqueRawBuses.values()) {
+      const sess = b.session || {};
+      const param = b.parameters || {};
+      if (typeof param.lat !== "number" || typeof param.lon !== "number" || !Number.isFinite(param.lat) || !Number.isFinite(param.lon) || Math.abs(param.lat) > 90 || Math.abs(param.lon) > 180) {
+        continue;
+      }
+
+      const lat = param.lat as number;
+      const lon = param.lon as number;
+      const distM = calcDistanceMetres(anchorLat, anchorLon, lat, lon);
+
+      // Only include buses that are strictly inside the user's selected search radius circle
+      if (distM > radiusMeters) {
+        continue;
+      }
+
+      const walkMin = Math.max(1, Math.ceil(distM / 80));
+      const routeName = String(sess._routeName || "Bus").trim();
+      const rawNextStop = param.nextStopName ? String(param.nextStopName).trim() : "";
+      const toName = String(sess._toName || "End Terminal").trim();
+
+      parsedList.push({
+        id: sess._vehicleId || sess._streamId!,
+        routeId: sess._routeId || "",
+        agency: sess._agency || "nmpl",
+        vehicleId: sess._vehicleId || "Aapli Bus",
+        fromName: sess._fromName || "Start Terminal",
+        toName,
+        routeName,
+        streamId: sess._streamId,
+        operatorId: sess._operatorId || "805",
+        mode: sess._mode || "BUS",
+        bearing: typeof param.bearing === "number" ? param.bearing : 0,
+        nextStopId: param.nextStopId || "",
+        lon,
+        lat,
+        time: param.time || 0,
+        nextStopName: rawNextStop && rawNextStop.toLowerCase() !== "null" ? rawNextStop : `Towards ${toName}`,
+        nextStopEta: typeof param.nextStopEta === "number" ? param.nextStopEta : 0,
+        distM,
+        walkMin,
+      });
+    }
 
     return parsedList.sort((a, b) => a.distM - b.distM);
   } catch (err) {

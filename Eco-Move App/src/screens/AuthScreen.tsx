@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { isRunningInExpoGo } from 'expo';
 import {
   ActivityIndicator,
@@ -9,18 +9,19 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import { ArrowLeft, ArrowUpRight, Leaf, Mail, Phone, ShieldCheck } from 'lucide-react-native';
+import { ArrowLeft, ArrowRight, Leaf, Mail, Phone, ShieldCheck, UserRound, UserRoundPlus } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useApp } from '../AppContext';
+import { MotionPressable } from '../components/MotionPressable';
 import { useTheme } from '../theme';
 import { Action, Badge, Copy, Field, Glass, IconButton, Notice } from '../components/Glass';
+import { AuthEntrance, AuthLoading } from '../components/AuthMotion';
 
 export function AuthScreen() {
   const app = useApp();
   const { c, dark } = useTheme();
   const safe = useSafeAreaInsets();
-  const { height } = useWindowDimensions();
 
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -30,8 +31,20 @@ export function AuthScreen() {
   const [code, setCode] = useState('');
   const [method, setMethod] = useState<'email' | 'phone'>('email');
   const [busy, setBusy] = useState(false);
+  const [demoBusy, setDemoBusy] = useState(false);
+  const demoPending = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const [message, setMessage] = useState('');
   const mode = app.authMode;
+
+  async function enterDemo() {
+    if (demoPending.current || busy || !app.ready) return;
+    demoPending.current = true;
+    setDemoBusy(true);
+    try { await app.guard(() => app.rpc('demo')); }
+    finally { demoPending.current = false; if (mounted.current) setDemoBusy(false); }
+  }
 
   async function submit() {
     setBusy(true);
@@ -84,8 +97,25 @@ export function AuthScreen() {
     }
   }
 
+  // Present loading while the existing provider restores a session, avoiding a
+  // misleading sign-in flash for returning users. Authentication stays unchanged.
+  if (app.auth.loading && !app.runtimeError) return <AuthLoading label="Preparing your city…"/>;
+  if (app.auth.loading) return <View style={[StyleSheet.absoluteFill,{alignItems:'center',justifyContent:'center',padding:24}]}>
+    <Glass level={4} style={{width:'100%',maxWidth:320}}>
+      <View style={{padding:24,gap:16,alignItems:'center'}}>
+        {app.runtimeError ? <><Notice error>{app.runtimeError}</Notice><Action label="Retry map startup" onPress={app.retryRuntime}/></> : <><ActivityIndicator color={c.accent}/><Copy weight="600">Preparing your city…</Copy></>}
+      </View>
+    </Glass>
+  </View>;
+  if (mode === 'welcome') return <AuthEntrance key="welcome">
+    <View style={StyleSheet.absoluteFill} pointerEvents={demoBusy ? 'none' : 'auto'} accessibilityElementsHidden={demoBusy} importantForAccessibility={demoBusy ? 'no-hide-descendants' : 'auto'} aria-hidden={demoBusy}>
+      <WelcomeScreen onDemo={enterDemo} busy={demoBusy}/>
+    </View>
+    {demoBusy && <AuthLoading label="Opening your demo…"/>}
+  </AuthEntrance>;
+
   return (
-    <View style={StyleSheet.absoluteFill}>
+    <AuthEntrance key={mode}>
       <LinearGradient
         colors={
           dark
@@ -95,6 +125,10 @@ export function AuthScreen() {
         style={StyleSheet.absoluteFill}
       />
       <KeyboardAvoidingView
+        pointerEvents={busy || demoBusy ? 'none' : 'auto'}
+        accessibilityElementsHidden={busy || demoBusy}
+        importantForAccessibility={busy || demoBusy ? 'no-hide-descendants' : 'auto'}
+        aria-hidden={busy || demoBusy}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={{ flex: 1 }}
       >
@@ -105,7 +139,7 @@ export function AuthScreen() {
             paddingTop: safe.top + 24,
             paddingBottom: safe.bottom + 28,
             paddingHorizontal: 24,
-            justifyContent: mode === 'welcome' ? 'flex-end' : 'center',
+            justifyContent: 'center',
           }}
         >
           <View style={{ maxWidth: 440, width: '100%', alignSelf: 'center', gap: 20 }}>
@@ -120,52 +154,6 @@ export function AuthScreen() {
               </Copy>
             </View>
 
-            {mode === 'welcome' ? (
-              <>
-                <View style={{ gap: 10, paddingTop: height > 700 ? 55 : 15 }}>
-                  <Copy size={40} weight="600" style={{ lineHeight: 44, letterSpacing: -1.4 }}>
-                    Your city.{'\n'}A lighter footprint.
-                  </Copy>
-                  <Copy muted size={15} style={{ maxWidth: 320, lineHeight: 22 }}>
-                    One thoughtful journey across Aapli Bus, Nagpur Metro, and the walk in between.
-                  </Copy>
-                </View>
-
-                <Glass level={2} style={{ borderRadius: 30, marginTop: 10 }}>
-                  <View style={{ padding: 22, gap: 15 }}>
-                    <Copy weight="600" size={18}>
-                      Move through Nagpur, naturally.
-                    </Copy>
-                    <Copy muted size={13}>
-                      Your routes, real-time bus telemetry, and digital travel passes, together in one place.
-                    </Copy>
-                    <Action
-                      label="Sign in"
-                      icon={ArrowUpRight}
-                      selected
-                      onPress={() => app.setAuthMode('login')}
-                    />
-                    <Action
-                      label="Create an account"
-                      onPress={() => app.setAuthMode('signup')}
-                      quiet
-                    />
-                    <Action
-                      label={app.ready ? 'Explore with demo account' : 'Preparing your city…'}
-                      testID="demo-login"
-                      icon={Leaf}
-                      disabled={!app.ready}
-                      onPress={() => app.guard(() => app.rpc('demo'))}
-                      compact
-                      quiet
-                    />
-                  </View>
-                </Glass>
-                <Copy size={11} muted style={{ textAlign: 'center' }}>
-                  Built for Nagpur. Made for the sustainable journey.
-                </Copy>
-              </>
-            ) : (
               <Glass level={4} style={{ borderRadius: 32 }}>
                 <View style={{ padding: 24, gap: 16 }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
@@ -314,7 +302,8 @@ export function AuthScreen() {
                           quiet
                           compact
                           style={{ flex: 1 }}
-                          onPress={() => app.guard(() => app.rpc('demo'))}
+                          disabled={busy || demoBusy || !app.ready}
+                          onPress={enterDemo}
                         />
                       </View>
                     </View>
@@ -338,16 +327,67 @@ export function AuthScreen() {
                   )}
                 </View>
               </Glass>
-            )}
 
-            {mode === 'welcome' && app.error ? <Notice error>{app.error}</Notice> : null}
             {app.runtimeError ? <><Notice error>{app.runtimeError}</Notice><Action label="Retry map startup" onPress={app.retryRuntime}/></> : null}
             {!app.ready && <ActivityIndicator color={c.accent} />}
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </View>
+      {(busy || demoBusy) && <AuthLoading label={demoBusy ? 'Opening your demo…' : mode === 'login' ? 'Signing you in…' : 'One moment…'}/>}
+    </AuthEntrance>
   );
+}
+
+/** Landing presentation over the same interactive Nagpur map. */
+function WelcomeScreen({ onDemo, busy }: { onDemo: () => void; busy: boolean }) {
+  const app = useApp();
+  const safe = useSafeAreaInsets();
+  const { width, height } = useWindowDimensions();
+  const compact = height < 680;
+  return <View style={StyleSheet.absoluteFill}>
+    <LinearGradient pointerEvents="none" colors={['rgba(8,37,29,.94)', 'rgba(8,37,29,.64)', 'rgba(8,37,29,0)']}
+      locations={[0, .55, 1]} style={{position:'absolute',top:0,left:0,right:0,height:Math.min(height*.57,430)}} />
+    <ScrollView contentContainerStyle={{flexGrow:1,justifyContent:'space-between',paddingTop:safe.top+24}}
+      keyboardShouldPersistTaps="handled">
+      <View style={{paddingHorizontal:26,gap:compact?16:25,maxWidth:540,width:'100%',alignSelf:'center',paddingBottom:compact?26:80}}>
+        <View style={{flexDirection:'row',alignItems:'center',gap:10}}>
+          <Leaf color="#9cd4b2" size={32} strokeWidth={1.6}/>
+          <View><Copy style={{color:'#ffffff',letterSpacing:-.7}} size={25} weight="700">Eco-Move</Copy>
+            <Copy size={10} weight="600" style={{color:'#dbeae1',letterSpacing:4}}>NAGPUR</Copy></View>
+        </View>
+        <View style={{gap:12}}>
+          <Copy size={width<350?32:38} weight="700" style={{color:'#ffffff',lineHeight:width<350?36:42,letterSpacing:-1.2}}>
+            Your city.{'\n'}A lighter <Copy size={width<350?32:38} weight="700" style={{color:'#ffad65'}}>footprint.</Copy>
+          </Copy>
+          <Copy size={14} style={{color:'#ecf3ee',lineHeight:21,maxWidth:345}}>
+            Plan smarter journeys across Nagpur Metro, Aapli Bus and the walk in between.
+          </Copy>
+        </View>
+      </View>
+      <View style={{width:'100%',maxWidth:540,alignSelf:'center',backgroundColor:'#fafaf5',borderTopLeftRadius:32,borderTopRightRadius:32,paddingHorizontal:24,paddingBottom:safe.bottom+20,paddingTop:10,gap:compact?13:18,shadowColor:'#10271e',shadowOpacity:.12,shadowRadius:24,shadowOffset:{width:0,height:-6}}}>
+        <View style={{width:34,height:4,borderRadius:2,backgroundColor:'#ccd0c9',alignSelf:'center',marginBottom:8}}/>
+        <View style={{gap:6}}>
+          <Copy size={width<350?22:25} weight="700" style={{color:'#111f24',letterSpacing:-.7}}>Move through Nagpur, naturally.</Copy>
+          <Copy size={14} style={{color:'#53605b',lineHeight:20}}>Your routes, live buses and travel passes in one place.</Copy>
+        </View>
+        <View style={{gap:10}}>
+          {([{label:'Sign in',mode:'login',Icon:UserRound},{label:'Create an account',mode:'signup',Icon:UserRoundPlus}] as const).map(({label,mode,Icon},index)=><MotionPressable key={mode} accessibilityRole="button" onPress={()=>app.setAuthMode(mode)} style={({pressed})=>({minHeight:54,borderRadius:17,borderWidth:1,borderColor:'#31594b',backgroundColor:index===0?(pressed?'#143d30':'#214e3e'):(pressed?'#e8eee6':'transparent'),flexDirection:'row',gap:16,alignItems:'center',paddingHorizontal:18})}>
+            <Icon size={21} color={index===0?'#ffffff':'#214e3e'} strokeWidth={1.7}/>
+            <Copy weight="600" size={16} style={{flex:1,color:index===0?'#ffffff':'#183d30'}}>{label}</Copy>
+            <ArrowRight size={20} color={index===0?'#ffffff':'#214e3e'}/>
+          </MotionPressable>)}
+          <MotionPressable testID="demo-login" accessibilityRole="button" accessibilityState={{disabled:!app.ready || busy}} disabled={!app.ready || busy} onPress={onDemo} style={{minHeight:48,alignItems:'center',justifyContent:'center',borderRadius:16}}>
+            <Copy size={15} weight="600" style={{color:'#285b46'}}>{app.ready?'Explore demo':'Preparing your city…'}</Copy>
+          </MotionPressable>
+        </View>
+        {app.error?<Notice error>{app.error}</Notice>:null}
+        {app.runtimeError?<><Notice error>{app.runtimeError}</Notice><Action label="Retry map startup" onPress={app.retryRuntime}/></>:null}
+        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'center',gap:14}}>
+          <View style={{height:1,width:40,backgroundColor:'#d6dbd4'}}/><Copy size={11} style={{color:'#647069'}}>Built for Nagpur.</Copy><View style={{height:1,width:40,backgroundColor:'#d6dbd4'}}/>
+        </View>
+      </View>
+    </ScrollView>
+  </View>;
 }
 
 const s = StyleSheet.create({

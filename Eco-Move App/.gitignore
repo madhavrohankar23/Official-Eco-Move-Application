@@ -14,6 +14,13 @@ android/local.properties
 dist/
 web-build/
 artifacts/*.log
+artifacts/final-export/
+artifacts/migration-export/
+artifacts/test-bundles/
+artifacts/runtime-metafile.json
+artifacts/migration-*-lint.json
+artifacts/migration-lint.json
 protected/vite.config.ts
 *.jks
 *.keystore
+artifacts/ui-export/

@@ -28,3 +28,35 @@ test('ambiguous online destination requires selection; late online results canno
   const task=applyVoiceIntent({intent:'PLAN_ROUTE',message:'Go',destination:'Unnamed'},b,()=>active);
   await Promise.resolve();active=false;p.resolve([destination]);await task;assert.equal(b.calls.length,0);
 });
+
+test('spoken natural pair populates both endpoints and lets user review and confirm before finding routes', async () => {
+  const station = { name: 'Nagpur Railway Station', lat: 21.15, lon: 79.08 };
+  const a = app();
+  a.rpc = async (_, { query }) => {
+    if (query === 'Sitabuldi') return [origin];
+    if (query === 'Nagpur Railway Station') return [station];
+    return [];
+  };
+  await applyVoiceIntent({
+    intent: 'PLAN_ROUTE',
+    message: 'Route from Sitabuldi to Nagpur Railway Station',
+    origin: 'Sitabuldi',
+    destination: 'Nagpur Railway Station',
+  }, a);
+
+  assert.equal(a.calls.find(c => c[0] === 'setOrigin')[1], origin);
+  assert.equal(a.calls.find(c => c[0] === 'setDestination')[1], station);
+  assert.ok(a.calls.some(c => c[0] === 'navigate' && c[1] === 'plan'));
+  assert.equal(a.calls.some(c => c[0] === 'plan'), false);
+  const notice = a.calls.find(c => c[0] === 'setNotice')[1];
+  assert.match(notice, /Review and confirm/);
+});
+
+test('ambiguous destination asks for clarification rather than guessing', async () => {
+  const a = app();
+  a.rpc = async (method) => method === 'searchOnline' ? [origin, destination] : [];
+  await applyVoiceIntent({ intent: 'PLAN_ROUTE', message: 'Go', origin: 'Sitabuldi', destination: 'Ambiguous Place' }, a);
+  assert.equal(a.calls.some(c => c[0] === 'plan'), false);
+  const notice = a.calls.find(c => c[0] === 'setNotice')[1];
+  assert.match(notice, /could not identify destination/i);
+});
