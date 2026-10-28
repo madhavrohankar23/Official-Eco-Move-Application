@@ -2,7 +2,7 @@
 export type Point={lat:number;lon:number;name:string};
 export type Preference='balanced'|'fastest'|'cheapest'|'least_walk'|'fewest_transfers'|'low_co2';
 export type Leg={mode:'walk'|'bus'|'metro'|'drive';line?:string;busNumber?:string;from:string;to:string;timeMin:number;distanceM:number;co2g:number;fareRs?:number;stops?:string[];path:Point[];departureTimeStr?:string;arrivalTimeStr?:string;waitMin?:number;nextDepartures?:string[];frequencyMin?:number;tripsPerDay?:number};
-export type Journey={legs:Leg[];totalTimeMin:number;totalFareRs:number;totalDistanceM:number;transitDistanceM:number;walkDistanceM:number;transfers:number;co2g:number;departureTimeStr?:string;arrivalTimeStr?:string;isFallbackDrive?:boolean;score:number};
+export type Journey={isSafeMode?:boolean;safetySummary?:string;guardianAnchorsNearby?:string[];safeCorridorsUsed?:string[];legs:Leg[];totalTimeMin:number;totalFareRs:number;totalDistanceM:number;transitDistanceM:number;walkDistanceM:number;transfers:number;co2g:number;departureTimeStr?:string;arrivalTimeStr?:string;isFallbackDrive?:boolean;score:number};
 export type Tab='home'|'plan'|'nearby'|'trips'|'profile';
 export type Panel='home'|'plan'|'nearby'|'trips'|'profile'|'search'|'layers'|'live'|'timetable'|'cabs'|'chat'|'explain'|'rewards'|'impact'|'saved'|'recents'|'booking'|'ticket'|'settings'|'preview'|'commuter';
 export type SearchTarget='origin'|'destination'|'anchor'|'place'|'cab_origin'|'cab_destination';

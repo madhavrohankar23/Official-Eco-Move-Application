@@ -23,6 +23,7 @@ import { Action, Badge, Copy, Field, Glass, Notice } from '../components/Glass';
 import { chatMemory, chatGeneration, clearChatMemory } from '../chatMemory';
 import { VoiceSession, type VoicePhase } from '../voiceSession';
 import { applyVoiceIntent } from '../applyVoiceIntent';
+import {useVoiceDecision} from '../components/useVoiceDecision';
 import type { VoiceIntent } from '../voiceTypes';
 import { speechOptions, speechError, extractSpokenRoute } from '../voiceInput';
 import { VoiceLanguagePicker } from '../components/VoiceLanguagePicker';
@@ -36,6 +37,10 @@ export function ChatScreen() {
   const { c, dark } = useTheme();
   const [messages, setMessages] = useState([...chatMemory]);
   const [query, setQuery] = useState('');
+  const commandInput=useRef<{focus:()=>void}|null>(null);
+  const lastSubmitted=useRef('');
+  const tripAtRequest=useRef({origin:app.origin,destination:app.destination});
+  const review=useVoiceDecision();
   const [busy, setBusy] = useState(false);
   const { speaking, speak, stop: stopSpeaking } = useVoiceOutput(!app.collapsed && !app.appSuspended, app.setNotice);
   const [voicePhase, setVoicePhase] = useState<VoicePhase>('idle');
@@ -53,7 +58,9 @@ export function ChatScreen() {
     state: phase => { if (mounted.current) setVoicePhase(phase); },
     transcript: text => { if (mounted.current) setQuery(text); },
     request: (id, text) => {
+      lastSubmitted.current=text;
       voiceGeneration.current = chatGeneration;
+      tripAtRequest.current={origin:current.current.origin,destination:current.current.destination};
       chatMemory.push({ role: 'user', text });
       setMessages([...chatMemory]);setQuery('');
       return current.current.rpc<VoiceIntent>('voice', { id, query: text, location: current.current.origin?.name || 'Your location' });
@@ -64,9 +71,11 @@ export function ChatScreen() {
       chatMemory.push({ role: 'assistant', text: result.message });
       setMessages([...chatMemory]);
       if (result.intent === 'GENERAL_ANSWER' && current.current.assistantActive) speak(result.message, current.current.voiceLanguage);
-      await applyVoiceIntent(result, current.current, valid);
+      const tripUnchanged=()=>valid()&&current.current.origin===tripAtRequest.current.origin&&current.current.destination===tripAtRequest.current.destination;
+      if(!tripUnchanged()){current.current.setNotice('Your trip changed while the assistant was processing. Your latest locations were kept.');return;}
+      await applyVoiceIntent(result,{...current.current,...review.actions},tripUnchanged);
     },
-    error: message => { if (mounted.current) current.current.setError(message); },
+    error: message => { if (mounted.current){setQuery(value=>value||lastSubmitted.current);current.current.setError(message);} },
     finish: () => { if (mounted.current) current.current.setAssistantActive(false); },
   }));
   useSpeechRecognitionEvent('result', e => {
@@ -81,12 +90,15 @@ export function ChatScreen() {
     return () => { mounted.current = false; session.stop(); stopSpeaking(); };
   }, [session, stopSpeaking]);
   useEffect(() => {
-    if (app.assistantActive && !busy) { stopSpeaking(); void session.start(); }
+    if (app.assistantActive && !busy) {
+      if(!isSpeechRecognitionSupported){app.setAssistantActive(false);commandInput.current?.focus();return;}
+      stopSpeaking(); void session.start();
+    }
     else session.stop();
   }, [app.assistantActive, busy, session, stopSpeaking]);
   useEffect(() => {
     if (app.collapsed || app.appSuspended || !app.auth.user) {
-      session.stop();
+      review.cancel();session.stop();
       stopSpeaking();
     }
   }, [app.collapsed, app.appSuspended, app.auth.user?.id, session, stopSpeaking]);
@@ -95,7 +107,7 @@ export function ChatScreen() {
     if (!text.trim() || busy || app.assistantActive || voicePhase !== 'idle') return;
     app.setError('');
     app.setNotice('');
-    if (extractSpokenRoute(text)) {
+    if (extractSpokenRoute(text) || /\b(?:take me|directions|navigate|go to|reach|track bus)\b/i.test(text)) {
       // Typed route fallback uses the same verified intent, station resolution
       // and cancellation lifecycle as speech; general questions keep chat.
       session.submit(text);
@@ -217,7 +229,7 @@ export function ChatScreen() {
         })}
       </View>
 
-      {(busy || voicePhase === 'thinking') && (
+      {(busy || voicePhase === 'thinking') && !review.pending && (
         <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center', paddingVertical: 4 }}>
           <ActivityIndicator color={c.accent} size="small" />
           <Copy muted size={13}>
@@ -230,12 +242,16 @@ export function ChatScreen() {
       {voicePhase === 'listening' && <Notice>Listening… Speak your transit question. Tap Stop assistant to cancel.</Notice>}
       {voicePhase === 'review' && <Notice>Please check the station names in the transcript below, then tap Use transcript. You can edit them first.</Notice>}
 
+      {review.render(()=>{session.stop();app.setAssistantActive(false)})}
+      {!isSpeechRecognitionSupported && <Notice>Keyboard input mode. Type your command below, or use your phone keyboard’s dictation button if available. Expo Go does not transcribe microphone audio in this app.</Notice>}
       <VoiceLanguagePicker disabled={busy || voicePhase !== 'idle'} />
 
       <Field
-        label="Your question"
+        inputRef={commandInput}
+        label={isSpeechRecognitionSupported ? "Your question" : "Type a voice command"}
         placeholder="Ask SafarBot…"
         multiline
+        editable={!busy && voicePhase !== 'thinking'}
         value={query}
         onChangeText={setQuery}
       />
@@ -251,15 +267,16 @@ export function ChatScreen() {
           onPress={() => voicePhase === 'review' ? session.confirm(query) : send()}
         />
         <Action
-          label={app.assistantActive ? 'Stop assistant' : 'Voice'}
-          icon={Mic}
+          label={app.assistantActive ? 'Stop assistant' : isSpeechRecognitionSupported ? 'Voice' : 'Keyboard'}
+          icon={isSpeechRecognitionSupported ? Mic : Type}
           quiet
           compact
           disabled={busy || voicePhase === 'thinking'}
-          onPress={app.toggleAssistant}
+          onPress={()=>isSpeechRecognitionSupported?app.toggleAssistant():commandInput.current?.focus()}
         />
       </View>
 
+      {voicePhase === 'thinking' && !review.pending && <Action label="Cancel assistant request" quiet onPress={()=>{session.stop();app.setAssistantActive(false)}}/>}
       {messages.length > 0 && (
         <Action
           label="Start a new conversation"
@@ -267,7 +284,7 @@ export function ChatScreen() {
           quiet
           compact
           onPress={() => {
-            session.stop();app.setAssistantActive(false);
+            review.cancel();session.stop();app.setAssistantActive(false);
             stopSpeaking();
             setMessages([]);
             clearChatMemory();
@@ -283,6 +300,7 @@ export function ExplainScreen() {
   const { c } = useTheme();
   const [language, setLanguage] = useState('en');
   const [mode, setMode] = useState('explain');
+  const explanationRun = useRef(0);
   const [content, setContent] = useState('');
   const [busy, setBusy] = useState(false);
   const [size, setSize] = useState(15);
@@ -299,25 +317,26 @@ export function ExplainScreen() {
 
   const fetchExplanation = async (refresh = false) => {
     if (!app.journey) return;
-    setBusy(true);
+    const run=++explanationRun.current;setBusy(true);setContent('');
     await app.guard(async () => {
       if (refresh) await app.rpc(mode === 'compare' ? 'clearComparison' : 'clearExplanation', args);
-      setContent(await app.rpc<string>(mode, args));
+      const text=await app.rpc<string>(mode,args);if(run===explanationRun.current)setContent(text);
     });
-    setBusy(false);
+    if(run===explanationRun.current)setBusy(false);
   };
 
   useEffect(() => {
     fetchExplanation();
     return () => {
-      Speech.stop();
+      explanationRun.current++;Speech.stop();
     };
-  }, [language, mode, app.selected]);
+  }, [language, mode, app.selected, app.journey]);
 
   if (!app.journey) return <Notice>Plan a journey to get a route explanation.</Notice>;
 
   return (
     <>
+      {app.journey.isSafeMode && <Notice>Safety Mode: fares and timing are model estimates. Current lighting and personal safety are not guaranteed.</Notice>}
       {/* Language switcher */}
       <View style={{ flexDirection: 'row', gap: 7, flexWrap: 'wrap' }}>
         {[

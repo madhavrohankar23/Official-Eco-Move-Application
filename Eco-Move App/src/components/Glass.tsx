@@ -104,9 +104,9 @@ export function Glass({
   const edge = state === 'error'
     ? t.c.error
     : focused
-    ? t.c.accent
+    ? (t.dark ? t.c.accent : '#94a3b8')
     : selected
-    ? (t.dark ? 'rgba(168, 233, 194, 0.42)' : 'rgba(23, 99, 62, 0.40)')
+    ? (t.dark ? 'rgba(168, 233, 194, 0.42)' : t.c.accent)
     : material.edge;
 
   const flatRadius = StyleSheet.flatten(style)?.borderRadius ?? glassGeometry.radius.card;
@@ -125,7 +125,7 @@ export function Glass({
           shadowOpacity: !samplesBackdrop || materialStyle ? 0 : material.shadowOpacity,
           shadowRadius: !samplesBackdrop ? 0 : material.shadowRadius,
           elevation: !samplesBackdrop || level === 1 || materialStyle ? 0 : Math.min(6, level + 1),
-          opacity: state === 'disabled' ? 0.5 : 1,
+          opacity: state === 'disabled' ? 0.65 : 1,
         },
         style,
       ]}
@@ -133,7 +133,7 @@ export function Glass({
       {/* Sheet material scales independently of its content. Keep its shadow
           outside the clipping layer and attached to the same silhouette. */}
       {!t.dark && samplesBackdrop && materialStyle && <Animated.View pointerEvents="none"
-        style={[StyleSheet.absoluteFill,{borderRadius:flatRadius,boxShadow:'0px 7px 22px rgba(7, 29, 20, 0.22)'},materialStyle]}/>}
+        style={[StyleSheet.absoluteFill,{borderRadius:flatRadius,boxShadow:'0px 7px 22px rgba(15, 23, 42, 0.08)'},materialStyle]}/>}
       <View
         testID={`glass-${t.appearance}-${level}`}
         style={[
@@ -188,7 +188,7 @@ export function Glass({
             colors={
               t.dark
                 ? [`rgba(234, 255, 247, ${material.highlight})`, 'rgba(234, 255, 247, 0)', `rgba(0, 15, 8, ${material.highlight * .8})`]
-                : [`rgba(255, 255, 255, ${material.highlight * 2})`, 'rgba(255, 255, 255, 0)', `rgba(24, 62, 41, ${material.highlight * .5})`]
+                : ['rgba(255, 255, 255, 0.95)', 'rgba(255, 255, 255, 0.4)', 'rgba(241, 245, 249, 0.7)']
             }
             start={{ x: 0, y: 0 }}
             end={{ x: 0.7, y: 1 }}
@@ -200,8 +200,8 @@ export function Glass({
         )}
 
         {moving && material.flowing && <Animated.View pointerEvents="none" style={{ position: 'absolute', top: 0, bottom: 0, left: -60, right: -60, opacity: 1 - contrastRatio, transform: [{ translateX: reflection.interpolate({ inputRange: [0, 1], outputRange: [-35, 35] }) }] }}>
-          <LinearGradient colors={['transparent', `rgba(230,255,240,${material.reflection * .35})`, 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0.6 }} style={StyleSheet.absoluteFill}/>
-          <LinearGradient colors={['transparent', `rgba(230,255,240,${material.reflection * 5})`, 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1.5 }}/>
+          <LinearGradient colors={['transparent', t.dark ? `rgba(230,255,240,${material.reflection * .35})` : `rgba(255,255,255,${material.reflection * .5})`, 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0.6 }} style={StyleSheet.absoluteFill}/>
+          <LinearGradient colors={['transparent', t.dark ? `rgba(230,255,240,${material.reflection * 5})` : `rgba(255,255,255,${material.reflection * 5})`, 'transparent']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1.5 }}/>
         </Animated.View>}
         {t.dark && contrastRatio < 0.85 && <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, { opacity: illumination, backgroundColor: '#ffffff09' }]}/>}
         <View pointerEvents="none" style={[StyleSheet.absoluteFill, { borderRadius: flatRadius, borderWidth: focused ? 1.5 : 1, borderColor: edge, borderTopColor: focused || state === 'error' ? edge : material.topEdge }, transition]}/>
@@ -311,8 +311,8 @@ export function Action({
               {
                 minHeight: minH,
                 paddingVertical: compact ? 8 : 11,
-                paddingHorizontal: compact ? 8 : 16,
-                gap: compact ? 5 : 8,
+                paddingHorizontal: compact ? 10 : 16,
+                gap: compact ? 6 : 8,
                 backgroundColor: quiet ? 'transparent' : undefined,
               },
             ]}
@@ -321,19 +321,20 @@ export function Action({
               <ActivityIndicator size="small" color={c.accent} />
             ) : Icon ? (
               <Icon
-                size={compact ? 15 : 18}
+                size={compact ? 16 : 18}
                 color={danger ? c.error : selected ? c.accent : c.ink}
-                strokeWidth={selected ? 2 : 1.75}
+                strokeWidth={selected ? 2 : 1.85}
               />
             ) : null}
             <Copy
-              weight={selected ? '600' : '500'}
-              size={compact ? 12.5 : 15}
+              weight="600"
+              size={compact ? 13.5 : 15}
               numberOfLines={2}
               ellipsizeMode="tail"
               style={{
                 color: danger ? c.error : selected ? c.accent : c.ink,
                 flexShrink: 1,
+                textAlign: 'center',
               }}
             >
               {label}
@@ -458,12 +459,12 @@ export function Notice({
         paddingVertical: 12,
         borderRadius: 16,
         backgroundColor: error
-          ? (dark ? 'rgba(239, 68, 68, 0.12)' : 'rgba(184, 50, 50, 0.07)')
-          : (dark ? 'rgba(74, 222, 128, 0.10)' : 'rgba(24, 109, 78, 0.06)'),
+          ? (dark ? 'rgba(239, 68, 68, 0.12)' : 'rgba(239, 68, 68, 0.06)')
+          : (dark ? 'rgba(74, 222, 128, 0.10)' : 'rgba(15, 23, 42, 0.04)'),
         borderWidth: 1,
         borderColor: error
-          ? (dark ? 'rgba(239, 68, 68, 0.30)' : 'rgba(184, 50, 50, 0.20)')
-          : (dark ? 'rgba(74, 222, 128, 0.20)' : 'rgba(24, 109, 78, 0.14)'),
+          ? (dark ? 'rgba(239, 68, 68, 0.30)' : 'rgba(239, 68, 68, 0.18)')
+          : (dark ? 'rgba(74, 222, 128, 0.20)' : 'rgba(15, 23, 42, 0.09)'),
       }}
     >
       <Copy size={13} style={{ color: error ? c.error : c.ink, lineHeight: 18 }}>

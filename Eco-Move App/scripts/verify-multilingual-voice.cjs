@@ -18,10 +18,10 @@ async function main(){
     const started=Date.now();
     try{
       const result=await voiceCommand({id:`language-${Date.now()}-${results.length}`,query,location:'Your location'});
-      let from,to,planned=false;
-      await applyVoiceIntent(result,{origin:null,preference:'balanced',departure:'now',rpc:async(method,{query})=>method==='voicePlaces'?searchVoicePlaces(query):[],setOrigin:p=>from=p,setDestination:p=>to=p,navigate(){},setNotice(){},plan:async(o,d)=>{planned=from===o&&to===d}});
+      let from,to,planned=false,notice="";
+      await applyVoiceIntent(result,{origin:null,preference:'balanced',departure:'now',rpc:async(method,{query})=>method==='voicePlaces'?searchVoicePlaces(query):[],setOrigin:p=>from=p,setDestination:p=>to=p,navigate(){},setNotice(value){notice=value},plan:async(o,d)=>{planned=from===o&&to===d}});
       const expected=language==='Mixed Marathi'?['Dharampeth','Nagpur Railway Station (Main Junction)']:['Sitabuldi (Interchange)','Airport Metro Station'];
-      results.push({language,query,intent:result.intent,origin:result.origin,destination:result.destination,sourceResolved:from?.name||null,destinationResolved:to?.name||null,existingPlanInvoked:planned,passed:result.intent==='PLAN_ROUTE'&&planned&&from?.name===expected[0]&&to?.name===expected[1],durationMs:Date.now()-started});
+      results.push({language,query,intent:result.intent,origin:result.origin,destination:result.destination,sourceResolved:from?.name||null,destinationResolved:to?.name||null,existingPlanInvoked:planned,passed:result.intent==='PLAN_ROUTE'&&!planned&&/Review and confirm/.test(notice)&&from?.name===expected[0]&&to?.name===expected[1],durationMs:Date.now()-started});
     }catch(error){results.push({language,query,passed:false,message:String(error.message).replace(/https?:\/\/\S+/g,'[endpoint]'),durationMs:Date.now()-started})}
   }
   const report={testedAt:new Date().toISOString(),kind:'live transcript contract; not microphone recognition',results};

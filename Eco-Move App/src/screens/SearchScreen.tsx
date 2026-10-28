@@ -20,6 +20,7 @@ import { useApp } from '../AppContext';
 import { useTheme } from '../theme';
 import { Action, Badge, Copy, Field, Glass, Notice } from '../components/Glass';
 import { LoadingRows } from '../components/Loading';
+import {useVoiceDecision} from '../components/useVoiceDecision';
 import { VoiceSession, type VoicePhase } from '../voiceSession';
 import { applyVoiceIntent } from '../applyVoiceIntent';
 import { extractSpokenRoute, normalizeSpokenPlace, selectVoicePlace, speechOptions, speechError } from '../voiceInput';
@@ -52,6 +53,8 @@ export function SearchScreen() {
   const recognitionContext = useMemo(() => buildSpeechContext(app.data, [app.origin, app.destination], app.voiceLanguage), [app.data, app.origin, app.destination, app.voiceLanguage]);
   const contextRef = useRef(recognitionContext); contextRef.current = recognitionContext;
   const mounted = useRef(true);
+  const review=useVoiceDecision();
+  const tripAtRequest=useRef({origin:app.origin,destination:app.destination});
   const spokenPlace = useRef<{ query: string; places: Point[] } | null>(null);
   const [session] = useState(() => new VoiceSession({
     supported: isSpeechRecognitionSupported,
@@ -62,6 +65,7 @@ export function SearchScreen() {
     state: phase => { if (mounted.current) setVoicePhase(phase); },
     transcript: text => { if (mounted.current) setQuery(text); },
     request: async (id, text, isCurrent) => {
+      tripAtRequest.current={origin:current.current.origin,destination:current.current.destination};
       spokenPlace.current = null;
       if (!extractSpokenRoute(text)) {
         const query = normalizeSpokenPlace(text);
@@ -80,13 +84,22 @@ export function SearchScreen() {
       const place = spokenPlace.current;
       if (place) {
         setQuery(place.query);
-        const selected = selectVoicePlace(place.query, place.places);
-        if (selected) current.current.choosePlace(selected);
-        else current.current.setNotice(intent.message);
+        const selected = selectVoicePlace(place.query, place.places) || await review.actions.chooseVoicePlace(place.query,place.places);
+        if(!valid()||!selected)return;
+        const getPoint=()=>current.current.searchTarget==='origin'?current.current.origin:current.current.searchTarget==='destination'?current.current.destination:null;
+        const before=getPoint();
+        if(before&&(before.lat!==selected.lat||before.lon!==selected.lon)){
+          const accepted=await review.actions.confirmVoicePlaceReplacement(before,selected);
+          if(!valid()||!accepted||getPoint()!==before)return;
+        }
+        if(tripAtRequest.current.origin!==current.current.origin||tripAtRequest.current.destination!==current.current.destination){current.current.setNotice('Your latest locations were kept. Please repeat your voice search.');return;}
+        current.current.choosePlace(selected);
         return;
       }
       current.current.setNotice(intent.message);
-      await applyVoiceIntent(intent, current.current, valid);
+      const tripUnchanged=()=>valid()&&tripAtRequest.current.origin===current.current.origin&&tripAtRequest.current.destination===current.current.destination;
+      if(!tripUnchanged()){current.current.setNotice('Your latest locations were kept because the trip changed during voice processing.');return;}
+      await applyVoiceIntent(intent,{...current.current,...review.actions},tripUnchanged);
     },
     error: message => { if (mounted.current) current.current.setError(message); },
     finish: () => {},
@@ -108,7 +121,7 @@ export function SearchScreen() {
   useSpeechRecognitionEvent('error', e => session.error(speechError(e.error, e.message)));
 
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; session.stop(); }; }, [session]);
-  useEffect(() => { if (app.collapsed || app.appSuspended || !app.auth.user) session.stop(); }, [app.collapsed, app.appSuspended, app.auth.user?.id, session]);
+  useEffect(() => { if (app.collapsed || app.appSuspended || !app.auth.user){review.cancel();session.stop();} }, [app.collapsed, app.appSuspended, app.auth.user?.id, session]);
 
   useEffect(() => {
     const id = ++generation.current;
@@ -150,6 +163,7 @@ export function SearchScreen() {
 
   const voice = () => {
     if (voicePhase !== 'idle') { session.stop(); return; }
+    if(!isSpeechRecognitionSupported){input.current?.focus();app.setNotice('Keyboard input mode: type a place or command, or use your phone keyboard’s dictation if available.');return;}
     Keyboard.dismiss(); app.setError(''); app.setNotice('');
     void session.start();
   };
@@ -216,15 +230,17 @@ export function SearchScreen() {
         />
       </View>
 
-      <Action label={voiceOptions?'Hide voice options':'Voice options'} icon={Mic} quiet compact onPress={()=>{if(voiceOptions)session.stop();setVoiceOptions(value=>!value)}}/>
+      {review.render(()=>session.stop())}
+      <Action label={voiceOptions?'Hide voice options':'Voice options'} icon={Mic} quiet compact onPress={()=>{if(voiceOptions){review.cancel();session.stop();}setVoiceOptions(value=>!value)}}/>
       {(voiceOptions || voicePhase !== 'idle') && <>
+      {!isSpeechRecognitionSupported && <Notice>Type your command above. Microphone transcription needs an installed Eco-Move build; keyboard dictation is controlled by your phone.</Notice>}
       <VoiceLanguagePicker disabled={voicePhase !== 'idle'} />
       {listening && <Notice>{voicePhase === 'permission' ? 'Allow microphone and speech access to start.' : 'Listening… Say your Source and Destination.'}</Notice>}
       {voicePhase === 'review' && <Notice>Please check the station names in the transcript above, then tap Use transcript. You can edit them first.</Notice>}
 
       <View style={{ flexDirection: 'row', gap: 8 }}>
         <Action
-          label={voicePhase !== 'idle' ? 'Stop voice' : 'Voice search'}
+          label={voicePhase !== 'idle' ? 'Stop voice' : isSpeechRecognitionSupported ? 'Voice search' : 'Keyboard input'}
           icon={Mic}
           compact
           quiet

@@ -1,0 +1,88 @@
+{
+  "reference": "ed45b056e2d16261fcd8866f403e8241407c9c74161f6688c9eecb1646123445",
+  "comparedCases": 15,
+  "coverage": {
+    "bus": true,
+    "metro": true,
+    "multimodal": true,
+    "transfer": true,
+    "nightDrive": true
+  },
+  "timestampExceptions": [
+    {
+      "case": "safe-metro",
+      "reference": [
+        {
+          "departure": "8:30 AM",
+          "arrival": "8:42 AM",
+          "legs": [
+            {
+              "departure": "8:30 AM",
+              "arrival": "8:42 AM",
+              "scheduled": 510
+            }
+          ]
+        }
+      ],
+      "target": [
+        {
+          "departure": "8:30 AM",
+          "arrival": "8:46 AM",
+          "legs": [
+            {
+              "departure": "8:34 AM",
+              "arrival": "8:46 AM",
+              "scheduled": 514
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "safe-short-walk",
+      "reference": [
+        {
+          "departure": "11:30 PM",
+          "arrival": "11:31 PM",
+          "legs": [
+            {
+              "departure": "11:30 PM",
+              "arrival": "11:31 PM",
+              "scheduled": 1410
+            }
+          ]
+        }
+      ],
+      "target": [
+        {
+          "departure": "11:30 PM",
+          "arrival": "11:31 PM",
+          "legs": [
+            {
+              "departure": "11:30 PM",
+              "arrival": "11:31 PM"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "browser": {
+    "viewport": "390x844",
+    "from": "Sitabuldi Interchange",
+    "to": "Dr. Babasaheb Ambedkar Airport",
+    "departure": "08:30",
+    "standardOptions": 3,
+    "safetyOptions": 1,
+    "safetyMinutes": 16,
+    "safetyFareEstimate": 20,
+    "returnedStandardOptions": 3,
+    "overlays": "visible"
+  },
+  "tests": {
+    "passed": 123,
+    "failed": 0,
+    "log": "artifacts/routing-safety-tests.log"
+  },
+  "runtimeBytes": 14478491
+}

@@ -48,12 +48,12 @@ export function glassMaterial(appearance: GlassAppearance, dark: boolean, contra
   // Light appearance is a consistent matte-white surface. Saved night material
   // preferences stay intact; no glossy layers or expensive blur are needed here.
   if (!dark) {
-    const rgb = nested ? '245, 247, 245' : '253, 253, 250';
+    const rgb = nested ? '248, 250, 252' : '255, 255, 255';
     return {
       rgb, opacity: 1, tint: `rgba(${rgb}, 1)`, blur: 0, saturation: 1,
       edge: '#d3d9d5', topEdge: '#d3d9d5', highlight: 0, reflection: 0,
-      selection: 'rgba(20, 111, 71, .055)',
-      shadowOpacity: nested ? 0 : level === 1 ? .10 : level === 2 ? .18 : .22,
+      selection: 'rgba(21, 128, 61, .055)',
+      shadowOpacity: nested ? 0 : level === 1 ? .10 : level === 2 ? .16 : .20,
       shadowRadius: level === 1 ? 8 : 16, flowing: false,
     };
   }

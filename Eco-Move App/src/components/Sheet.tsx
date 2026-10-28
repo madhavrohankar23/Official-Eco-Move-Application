@@ -16,6 +16,7 @@ import { glassGeometry } from '../glassTokens';
 import { Glass, Copy } from './Glass';
 import { panelLayout } from '../layout';
 import { MotionPressable as Pressable } from './MotionPressable';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export function Sheet({
   title,
@@ -32,6 +33,7 @@ export function Sheet({
   contentKey,
   footerInset = 0,
   routeFocus = false,
+  minimised = false,
 }: {
   title: string;
   subtitle?: string;
@@ -47,6 +49,7 @@ export function Sheet({
   contentKey?: string;
   footerInset?: number;
   routeFocus?: boolean;
+  minimised?: boolean;
 }) {
   const { width, height } = useWindowDimensions();
   const safe = useSafeAreaInsets();
@@ -56,6 +59,16 @@ export function Sheet({
   const prevBaseBottom = useRef(baseBottom);
   const bottomShift = useRef(new Animated.Value(0)).current;
   const footerShift = useRef(new Animated.Value(footerInset)).current;
+  const minimisedShift = useRef(new Animated.Value(minimised ? 1 : 0)).current;
+  useEffect(() => {
+    Animated.timing(minimisedShift, {
+      toValue: minimised ? 1 : 0,
+      duration: reduceMotion ? 0 : 280,
+      easing: Easing.bezier(0.2, 0.82, 0.2, 1),
+      useNativeDriver: true,
+      isInteraction: false,
+    }).start();
+  }, [minimised, reduceMotion, minimisedShift]);
   useEffect(() => {
     const animation = Animated.timing(footerShift, { toValue: footerInset, duration: reduceMotion ? 0 : 260, easing: Easing.out(Easing.cubic), useNativeDriver: true, isInteraction: false });
     animation.start(); return () => animation.stop();
@@ -65,11 +78,11 @@ export function Sheet({
   const presence = useRef(new Animated.Value(0)).current;
   const bodyOpacity = useRef(new Animated.Value(collapsed ? 0 : 1)).current;
   const [bodyHidden, setBodyHidden] = useState(collapsed);
-  const viewport = `${width}:${height}:${keyboard}:${safe.top}:${safe.bottom}`;
-  const previousViewport = useRef(viewport);
+  const prevDims = useRef({ width, height });
   useLayoutEffect(() => {
-    const immediate = reduceMotion || previousViewport.current !== viewport;
-    previousViewport.current = viewport;
+    const dimensionChanged = prevDims.current.width !== width || prevDims.current.height !== height;
+    prevDims.current = { width, height };
+    const immediate = reduceMotion || dimensionChanged;
     if (!collapsed) setBodyHidden(false);
 
     if (baseBottom !== prevBaseBottom.current) {
@@ -95,7 +108,7 @@ export function Sheet({
     });
     body.start(({ finished }) => { if (finished && collapsed) setBodyHidden(true); });
     return () => { body.stop(); bottomShift.stopAnimation(); };
-  }, [baseBottom, viewport, collapsed, reduceMotion, routeFocus, bodyOpacity, bottomShift]);
+  }, [baseBottom, width, height, keyboard, collapsed, reduceMotion, routeFocus, bodyOpacity, bottomShift]);
   useLayoutEffect(() => {
     closeEpoch.current++; closing.current = false;
     presence.stopAnimation();
@@ -140,7 +153,7 @@ export function Sheet({
       {...(Platform.OS === 'web' ? { onKeyDown: (event: any) => {
         if (event.key === 'Escape') { event.stopPropagation(); event.preventDefault(); collapsed ? dismiss() : onCollapse(); }
       } } : {})}
-      pointerEvents="box-none"
+      pointerEvents={minimised ? 'none' : 'box-none'}
       style={[
         s.position,
         {
@@ -148,7 +161,17 @@ export function Sheet({
           right: layout.right,
           width: layout.width,
           bottom: baseBottom,
-          transform: [{ translateY: Animated.multiply(Animated.add(bottomShift, footerShift), -1) }],
+          transform: [
+            {
+              translateY: Animated.add(
+                Animated.multiply(Animated.add(bottomShift, footerShift), -1),
+                minimisedShift.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [0, layout.height + baseBottom + 30],
+                })
+              ),
+            },
+          ],
           height: layout.height,
         },
       ]}
@@ -170,13 +193,22 @@ export function Sheet({
             borderRadius: glassGeometry.radius.sheet,
           }}
         >
+        {!dark && (
+          <LinearGradient
+            pointerEvents="none"
+            colors={['rgba(255, 255, 255, 0.98)', 'rgba(248, 250, 252, 0.96)']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={StyleSheet.absoluteFill}
+          />
+        )}
         <View style={{ flex: 1, minHeight: 0 }}>
         {/* Sleek Apple-inspired grab handle */}
         <View {...pan.panHandlers} style={s.handleArea}>
           <View
             style={[
               s.handle,
-              { backgroundColor: dark ? 'rgba(255, 255, 255, 0.28)' : 'rgba(14, 36, 28, 0.22)' },
+              { backgroundColor: dark ? 'rgba(255, 255, 255, 0.28)' : 'rgba(15, 23, 42, 0.20)' },
             ]}
           />
         </View>

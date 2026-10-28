@@ -2,6 +2,33 @@ const {test}=require('node:test'),assert=require('node:assert/strict');
 const {load,deferred}=require('./helpers/load-ts.cjs');
 const {applyVoiceIntent}=load('src/applyVoiceIntent.ts',{'./voiceInput':load('src/voiceInput.ts')});
 const origin={name:'Sitabuldi',lat:21.14,lon:79.08},destination={name:'Airport',lat:21.09,lon:79.04};
+
+test('an existing manual destination is kept unless replacement is explicitly confirmed',async()=>{
+  for(const approve of [false,true]){
+    const a=app();a.destination={name:'Old trip',lat:21.2,lon:79.2};let prompted=false;
+    a.confirmVoiceReplacement=async(from,to)=>{prompted=true;assert.equal(from,origin);assert.equal(to,destination);return approve};
+    await applyVoiceIntent({intent:'PLAN_ROUTE',message:'Go',origin:'Your location',destination:'Airport'},a);
+    assert.equal(prompted,true);assert.equal(a.calls.some(c=>c[0]==='setDestination'),approve);
+  }
+});
+
+test('ambiguity uses the chosen dataset candidate and cancellation preserves manual endpoints',async()=>{
+  const other={...destination,name:'Airport South',lon:79.05};
+  for(const choose of [true,false]){
+    const a=app();a.rpc=async()=>[destination,other];a.chooseVoicePlace=async()=>choose?other:null;
+    await applyVoiceIntent({intent:'PLAN_ROUTE',message:'Go',destination:'air'},a);
+    assert.equal(a.calls.some(c=>c[0]==='setDestination'),choose);
+    if(choose)assert.equal(a.calls.find(c=>c[0]==='setDestination')[1],other);
+  }
+});
+
+test('a cancelled replacement prompt cannot apply its late approval',async()=>{
+  const a=app(),pending=deferred();a.destination={...destination,lon:79.2};let active=true;
+  a.confirmVoiceReplacement=()=>pending.promise;
+  const work=applyVoiceIntent({intent:'PLAN_ROUTE',message:'Go',destination:'Airport'},a,()=>active);
+  await Promise.resolve();await Promise.resolve();active=false;pending.resolve(true);await work;
+  assert.equal(a.calls.some(c=>c[0]==='setDestination'||c[0]==='plan'),false);
+});
 function app(){const calls=[];return {calls,origin,preference:'balanced',departure:'now',rpc:async(_,{query})=>query==='Airport'?[destination]:[],...Object.fromEntries(['setOrigin','setDestination','setAnchor','setRadius','setBusQuery','setTimetableQuery','setNotice','navigate','open','plan'].map(k=>[k,(...args)=>{calls.push([k,...args]);return Promise.resolve()}]))}}
 test('voice route uses existing source and plan function without manufacturing places or changing algorithms',async()=>{
   const a=app();await applyVoiceIntent({intent:'PLAN_ROUTE',message:'Go',origin:'Your location',destination:'Airport'},a);assert.equal(a.calls.find(c=>c[0]==='plan')[1],origin);assert.equal(a.calls.find(c=>c[0]==='plan')[2],destination);

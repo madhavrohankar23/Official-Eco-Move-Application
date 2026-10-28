@@ -1,7 +1,9 @@
 import type {Panel,Point,Preference,Rpc,Tab} from './types';
 import type {VoiceIntent} from './voiceTypes';
 import {normalizeSpokenPlace,selectVoicePlace} from './voiceInput';
-type VoiceActions={rpc:Rpc;origin:Point|null;preference:Preference;departure:string;
+type VoiceActions={rpc:Rpc;origin:Point|null;destination?:Point|null;preference:Preference;departure:string;
+  chooseVoicePlace?:(query:string,places:Point[])=>Promise<Point|null>;
+  confirmVoiceReplacement?:(from:Point|null,to:Point)=>Promise<boolean>;
   setOrigin:(p:Point)=>void;setDestination:(p:Point)=>void;setAnchor:(p:Point)=>void;setRadius:(n:number)=>void;
   setBusQuery:(s:string)=>void;setTimetableQuery:(q:{busNumber?:string|null;fromStop?:string|null})=>void;
   setNotice:(s:string)=>void;navigate:(tab:Tab)=>void;open:(panel:Panel)=>void;
@@ -13,11 +15,12 @@ export async function applyVoiceIntent(intent:VoiceIntent,app:VoiceActions,isCur
     const query=normalizeSpokenPlace(name);
     const local=await app.rpc<Point[]>('voicePlaces',{query});
     if(!isCurrent())return null;
-    if(local.length)return selectVoicePlace(query,local);
+    if(local.length){const match=selectVoicePlace(query,local);return match || (app.chooseVoicePlace ? await app.chooseVoicePlace(query,local) : null);}
     // Existing online service handles names outside the curated local aliases.
     const online=await app.rpc<Point[]>('searchOnline',{query});
     // Do not silently pick an ambiguous online address.
-    return online.length===1?online[0]:null;
+    if(!isCurrent())return null;
+    return online.length===1?online[0]:(online.length&&app.chooseVoicePlace ? await app.chooseVoicePlace(query,online) : null);
   };
   if(!isCurrent())return;
   if(intent.intent==='PLAN_ROUTE'){
@@ -32,6 +35,13 @@ export async function applyVoiceIntent(intent:VoiceIntent,app:VoiceActions,isCur
     if(!from&&intent.origin&&!/^(your|my|current) location$/i.test(intent.origin)){
       app.navigate('plan');app.setNotice(`I could not identify Source “${intent.origin}” reliably. Please select it in the route planner. Your previous trip was kept.`);return;
     }
+    const differs=(a:Point|null|undefined,b:Point|null)=>!!a&&!!b&&(a.lat!==b.lat||a.lon!==b.lon);
+    if(differs(app.origin,from)||differs(app.destination,to)){
+      const confirmed=app.confirmVoiceReplacement ? await app.confirmVoiceReplacement(from,to) : false;
+      if(!isCurrent())return;
+      if(!confirmed){app.setNotice('Your current trip was kept. Confirm replacement to use the assistant’s locations.');return;}
+    }
+    if(!isCurrent())return;
     app.setDestination(to);if(from)app.setOrigin(from);
     app.navigate('plan');
     const isSpokenPair = Boolean(intent.origin && !/^(your|my|current) location$/i.test(intent.origin));

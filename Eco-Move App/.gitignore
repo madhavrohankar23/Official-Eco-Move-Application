@@ -24,3 +24,6 @@ protected/vite.config.ts
 *.jks
 *.keystore
 artifacts/ui-export/
+artifacts/reference-20261029/
+artifacts/voice-reference-export/
+artifacts/voice-reference-expo-config.json

@@ -5,13 +5,13 @@ import { DEFAULT_GLASS_APPEARANCE, GLASS_APPEARANCE_KEY, readGlassAppearance, ty
 import { preferenceWriter } from './preferenceWriter';
 
 export const light = {
-  ink: '#101c1a',
-  muted: '#293c36',
+  ink: '#0f172a',
+  muted: '#334155',
   accent: '#124831',
-  accentMint: '#22c55e',
-  soft: '#dceee3',
-  line: '#b9d2c4',
-  paper: '#f7f8f4',
+  accentMint: '#16a34a',
+  soft: '#f1f5f9',
+  line: '#e2e8f0',
+  paper: '#f8fafc',
   surface: '#ffffff',
   error: '#b83232',
   gold: '#b07f35',
@@ -49,9 +49,9 @@ export function getThemedColors(isDark: boolean, contrastLevel: number) {
     return {
       ...base,
       ink: ratio > 0.35 ? '#000000' : base.ink,
-      muted: mixColor(base.muted, '#07170f', ratio),
-      line: mixColor(base.line, '#416452', ratio),
-      soft: ratio > 0.35 ? '#cde6d7' : base.soft,
+      muted: mixColor(base.muted, '#0f172a', ratio),
+      line: mixColor(base.line, '#475569', ratio),
+      soft: ratio > 0.35 ? '#e2e8f0' : base.soft,
       surface: ratio > 0.5 ? '#ffffff' : base.surface,
       paper: ratio > 0.5 ? '#fcfdfc' : base.paper,
     };

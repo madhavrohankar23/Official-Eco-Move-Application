@@ -51,8 +51,8 @@ export function SearchGlass({ label, onPress, style }: {
         {width > 0 && <View pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={StyleSheet.absoluteFill}>
           <Svg width={width} height={height}>
             <Rect x={1.25} y={1.25} width={width - 2.5} height={height - 2.5} rx={24.75}
-              fill="none" stroke={t.c.accent} strokeWidth={0.75 + contrastRatio * 0.75}
-              opacity={contrastRatio > 0 ? (0.22 + contrastRatio * 0.58) : t.dark ? 0.32 : 0.20}/>
+              fill="none" stroke={t.dark ? t.c.accent : t.c.line} strokeWidth={0.75 + contrastRatio * 0.75}
+              opacity={contrastRatio > 0 ? (0.22 + contrastRatio * 0.58) : t.dark ? 0.32 : 0.75}/>
           </Svg>
           {flowing && <Animated.View testID="search-border-light" style={{
             position: 'absolute', left: -17, top: -5, width: 34, height: 10,

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { Pause, Play, RotateCcw, MapPin, X, Volume2, VolumeX } from "lucide-react-native";
 import { useApp } from "../../AppContext";
 import { useTheme } from "../../theme";
@@ -8,28 +9,51 @@ import type { PreviewStatus, PreviewStep } from "./previewTypes";
 import { useVoiceOutput } from "../../voiceOutput";
 
 export function RoutePreviewScreen() {
-  const { rpc, journey, back, appSuspended, collapsed, voiceLanguage, setNotice } = useApp();
+  const { rpc, journey, back, appSuspended, collapsed, voiceLanguage, setNotice, setPlaybackImmersive, previewPlaying, setPreviewPlaying } = useApp();
   const {
     speaking,
     speak,
     stop: stopSpeaking,
   } = useVoiceOutput(!appSuspended && !collapsed, setNotice);
-  const { reduceMotion } = useTheme();
+  const { c, dark, reduceMotion } = useTheme();
   const [steps, setSteps] = useState<PreviewStep[]>([]);
   const [status, setStatus] = useState<PreviewStatus | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const active = useRef(true);
+
+  useEffect(() => {
+    setPlaybackImmersive(true);
+    setPreviewPlaying(false);
+    return () => {
+      setPlaybackImmersive(false);
+      setPreviewPlaying(false);
+    };
+  }, [setPlaybackImmersive, setPreviewPlaying]);
+
   const control = useCallback(
     async (action: string, extra: Record<string, unknown> = {}) => {
       try {
+        if (action === "play") {
+          setPlaybackImmersive(true);
+          setPreviewPlaying(true);
+        } else if (action === "pause" || action === "stop") {
+          setPreviewPlaying(false);
+        }
         await rpc("preview", { action, ...extra });
-        if (active.current) setStatus(await rpc<PreviewStatus>("previewStatus"));
+        if (active.current) {
+          const nextStatus = await rpc<PreviewStatus>("previewStatus");
+          setStatus(nextStatus);
+          if (nextStatus) setPreviewPlaying(Boolean(nextStatus.playing));
+        }
       } catch (e) {
-        if (active.current) setError(e instanceof Error ? e.message : "Preview unavailable.");
+        if (active.current) {
+          setError(e instanceof Error ? e.message : "Preview unavailable.");
+          setPreviewPlaying(false);
+        }
       }
     },
-    [rpc],
+    [rpc, setPlaybackImmersive, setPreviewPlaying],
   );
   useEffect(() => {
     let live = true;
@@ -38,7 +62,10 @@ export function RoutePreviewScreen() {
     const poll = async () => {
       try {
         const value = await rpc<PreviewStatus>("previewStatus");
-        if (live) setStatus(value);
+        if (live) {
+          setStatus(value);
+          setPreviewPlaying(Boolean(value.playing));
+        }
       } catch {
         /* A temporary bridge restart must not keep an animation running. */
       }
@@ -76,7 +103,23 @@ export function RoutePreviewScreen() {
         and actual pedestrian access.
       </Notice>
       {error ? <Notice error>{error}</Notice> : null}
-      <Glass level={2} blur={false}>
+      <Glass
+        level={2}
+        blur={false}
+        style={{
+          borderRadius: 24,
+          ...(!dark ? { boxShadow: "0px 4px 14px rgba(15, 23, 42, 0.06)", shadowOpacity: 0 } : {}),
+        }}
+      >
+        {!dark && (
+          <LinearGradient
+            pointerEvents="none"
+            colors={['rgba(255, 255, 255, 0.98)', 'rgba(248, 250, 252, 0.94)']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={StyleSheet.absoluteFill}
+          />
+        )}
         <View style={{ padding: 16, gap: 10 }}>
           <Copy weight="600">{status?.state.headline || "Explore your route"}</Copy>
           <Copy muted size={12}>
@@ -131,7 +174,24 @@ export function RoutePreviewScreen() {
         </View>
       </Glass>
       {steps.map((step, index) => (
-        <Glass key={step.id} level={1} blur={false}>
+        <Glass
+          key={step.id}
+          level={1}
+          blur={false}
+          style={{
+            borderRadius: 20,
+            ...(!dark ? { boxShadow: "0px 4px 14px rgba(15, 23, 42, 0.04)", shadowOpacity: 0 } : {}),
+          }}
+        >
+          {!dark && (
+            <LinearGradient
+              pointerEvents="none"
+              colors={['rgba(255, 255, 255, 0.98)', 'rgba(248, 250, 252, 0.94)']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              style={StyleSheet.absoluteFill}
+            />
+          )}
           <View style={{ padding: 14, gap: 7 }}>
             <Copy size={14} weight="600">
               {index + 1}. {step.instruction}

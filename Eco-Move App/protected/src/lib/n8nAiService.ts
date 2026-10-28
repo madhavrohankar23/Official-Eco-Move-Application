@@ -552,6 +552,17 @@ const routeComparisonCache = new Map<string, string>();
 /**
  * Builds a deterministic cache key for a specific journey option and language
  */
+function routeEvidence(journey: Journey): string {
+  const safety = journey as Journey & {isSafeMode?:boolean;safetySummary?:string};
+  return JSON.stringify({totalTimeMin:journey.totalTimeMin,totalFareRs:journey.totalFareRs,totalDistanceM:journey.totalDistanceM,
+    departure:journey.departureTimeStr,arrival:journey.arrivalTimeStr,transfers:journey.transfers,
+    safetyMode:!!safety.isSafeMode,safetyInformation:safety.safetySummary,
+    note:'Use these calculated values without inventing live arrivals. Leg duration includes waiting. Two-point walks are estimates. Safety-mode fares are reference estimates and safety is not guaranteed.',
+    legs:journey.legs.map(l=>({mode:l.mode,line:l.line,busNumber:l.busNumber,from:l.from,to:l.to,stops:l.stops,
+      distanceM:l.distanceM,timeMin:l.timeMin,waitMin:l.waitMin,fareRs:l.fareRs,fareSource:l.fareSource,
+      departure:l.departureTimeStr,arrival:l.arrivalTimeStr,geometry:l.path?.length<=2?'direct estimate':'supplied polyline'}))});
+}
+
 export function getRouteExplainCacheKey(
   journey: Journey,
   originName: string,
@@ -562,7 +573,7 @@ export function getRouteExplainCacheKey(
   const modes = (journey.legs || []).map((l) => `${l.mode}_${l.line || l.busNumber || ""}`).join("-");
   const time = Math.round(journey.totalTimeMin || 0);
   const dist = Math.round(journey.totalDistanceM || 0);
-  return `${originName.trim().toLowerCase()}__${destinationName.trim().toLowerCase()}__opt${routeOptionIndex}__t${time}_d${dist}__m${modes}__lang_${language}`;
+  return `${originName.trim().toLowerCase()}__${destinationName.trim().toLowerCase()}__opt${routeOptionIndex}__t${time}_d${dist}__m${modes}__lang_${language}__${routeEvidence(journey)}`;
 }
 
 /**
@@ -575,7 +586,7 @@ export function getRouteCompareCacheKey(
   language: AiLanguage = "en"
 ): string {
   const journeysSig = (journeys || [])
-    .map((j, i) => `opt${i}_${Math.round(j.totalTimeMin)}_${Math.round(j.totalDistanceM || 0)}`)
+    .map((j, i) => `opt${i}_${routeEvidence(j)}`)
     .join("__");
   return `compare__${originName.trim().toLowerCase()}__${destinationName.trim().toLowerCase()}__${journeysSig}__lang_${language}`;
 }
@@ -800,7 +811,7 @@ export async function explainRouteWithN8n(
   } = {
     action: "EXPLAIN_ROUTE",
     language: language === "hi" ? "Hindi" : language === "mr" ? "Marathi" : "English",
-    query: `Explain Route Option ${routeOptionIndex + 1} from ${originName} to ${destinationName}. ${langPrompt}`,
+    query: `Explain Route Option ${routeOptionIndex + 1} from ${originName} to ${destinationName}. ${langPrompt} Journey facts: ${routeEvidence(journey)}`,
     from: originName || "Source",
     to: destinationName || "Destination",
     routeIndex: routeOptionIndex + 1,
@@ -864,7 +875,7 @@ export async function compareRoutesWithN8n(
   const payload = {
     action: "COMPARE_ROUTES",
     language: language === "hi" ? "Hindi" : language === "mr" ? "Marathi" : "English",
-    query: `Compare all ${journeys.length} route options from ${originName} to ${destinationName}. ${langPrompt}`,
+    query: `Compare all ${journeys.length} route options from ${originName} to ${destinationName}. ${langPrompt} Journey facts: ${journeys.map(routeEvidence).join("; ")}`,
     from: originName,
     to: destinationName,
     optionsCount: journeys.length,

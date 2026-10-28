@@ -22,6 +22,7 @@ function useController(){
   const [origin,setOriginState]=useState<Point|null>(null),[destination,setDestinationState]=useState<Point|null>(null),[anchor,setAnchor]=useState<Point|null>(null);
   const endpoints=useRef<{origin:Point|null;destination:Point|null}>({origin:null,destination:null});
   const [routeResultsOpen,setRouteResultsOpen]=useState(false);
+  const [safeMode,setSafeMode]=useState(false);const safeModeRef=useRef(false);
   const selectionRevision=useRef(0);
   const [cabOrigin,setCabOrigin]=useState<Point|null>(null),[cabDestination,setCabDestination]=useState<Point|null>(null);
   const [preference,setPreference]=useState<Preference>('balanced'),[departure,setDeparture]=useState('now');
@@ -60,8 +61,9 @@ function useController(){
   const setDestination=(point:Point|null)=>{selectionRevision.current++;endpoints.current.destination=point;invalidateRoutes();setDestinationState(point);};
   const dismissRouteResults=()=>{invalidateRoutes();setError('');setPicking(null);setCollapsed(false);setExpanded(false);};
   const [satelliteState,setSatelliteState]=useState<{status:'idle'|'loading'|'ready'|'error';message?:string}>({status:'idle'});
+  const [playbackImmersive,setPlaybackImmersive]=useState(false);
+  const [previewPlaying,setPreviewPlaying]=useState(false);
   const outsideRef=useRef(()=>{});
-  outsideRef.current=()=>{if(!picking&&panel&&!collapsed){Keyboard.dismiss();setCollapsed(true)}};
   const choosePlaceRef=useRef<(p:Point)=>void>(()=>{});
   const onMapEvent=useCallback((name:string,value:any)=>{
     if(name==='backgroundTap')outsideRef.current();
@@ -73,11 +75,26 @@ function useController(){
     else if(name==='directions'){setDestination(value);setSearchedPlace(null);setTab('plan');setStack(['plan']);setCollapsed(false)}
   },[]);
   const runtime=useRuntime(onMapEvent);const {rpc,ready,auth}=runtime;
+  const pausePreview=useCallback(()=>{
+    setPreviewPlaying(false);
+    void rpc('preview',{action:'pause'}).catch(()=>{});
+  },[rpc]);
+  outsideRef.current=()=>{
+    if(panel==='preview'){
+      if(previewPlaying){
+        pausePreview();
+        return;
+      }
+      setPlaybackImmersive(prev=>!prev);
+      return;
+    }
+    if(!picking&&panel&&!collapsed){Keyboard.dismiss();setCollapsed(true)}
+  };
   const guard=useCallback(async<T,>(operation:()=>Promise<T>):Promise<T|undefined>=>{setError('');try{return await operation()}catch(e:any){setError(e?.message||'Something went wrong. Please try again.');return undefined}},[]);
-  const open=(name:Panel)=>{if(['home','plan','nearby','trips','profile'].includes(name))setTab(name as Tab);Keyboard.dismiss();setPicking(null);setError('');setStack(s=>s.at(-1)===name?s:[...s,name]);setCollapsed(false);setExpanded(['search','booking','ticket','chat','explain','settings'].includes(name));};
-  const navigate=(name:Tab)=>{Keyboard.dismiss();Speech.stop();setError('');setPicking(null);setTab(name);setStack([name]);setCollapsed(false);setExpanded(false)};
-  const back=()=>{Keyboard.dismiss();Speech.stop();setPicking(null);setError('');setCollapsed(false);setExpanded(false);setStack(s=>s.length>1?s.slice(0,-1):['home']);const previous=stack.slice(0,-1).reverse().find(p=>['home','plan','nearby','trips','profile'].includes(p));setTab((previous||'home') as Tab)};
-  const close=()=>{selectionRevision.current++;Keyboard.dismiss();Speech.stop();setPicking(null);setError('');setStack([]);setTab('home');setCollapsed(false);setExpanded(false)};
+  const open=(name:Panel)=>{if(['home','plan','nearby','trips','profile'].includes(name))setTab(name as Tab);Keyboard.dismiss();setPicking(null);setError('');setStack(s=>s.at(-1)===name?s:[...s,name]);setCollapsed(false);setExpanded(['search','booking','ticket','chat','explain','settings'].includes(name));if(name==='preview'){setPlaybackImmersive(true);setPreviewPlaying(false);}else{setPlaybackImmersive(false);setPreviewPlaying(false);}};
+  const navigate=(name:Tab)=>{Keyboard.dismiss();Speech.stop();setError('');setPicking(null);setPlaybackImmersive(false);setPreviewPlaying(false);setTab(name);setStack([name]);setCollapsed(false);setExpanded(false)};
+  const back=()=>{Keyboard.dismiss();Speech.stop();setPicking(null);setError('');setPlaybackImmersive(false);setPreviewPlaying(false);setCollapsed(false);setExpanded(false);setStack(s=>s.length>1?s.slice(0,-1):['home']);const previous=stack.slice(0,-1).reverse().find(p=>['home','plan','nearby','trips','profile'].includes(p));setTab((previous||'home') as Tab)};
+  const close=()=>{selectionRevision.current++;Keyboard.dismiss();Speech.stop();setPicking(null);setError('');setPlaybackImmersive(false);setPreviewPlaying(false);setStack([]);setTab('home');setCollapsed(false);setExpanded(false)};
   const search=(target:SearchTarget)=>{selectionRevision.current++;setSearchTarget(target);open('search')};
   const assign=(p:Point,target:SearchTarget)=>{if(target==='origin')setOrigin(p);else if(target==='destination')setDestination(p);else if(target==='anchor')setAnchor(p);else if(target==='cab_origin')setCabOrigin(p);else if(target==='cab_destination')setCabDestination(p);else setSearchedPlace(p)};
   const completeSelection=(p:Point,target:SearchTarget)=>{
@@ -98,8 +115,21 @@ function useController(){
     try{const permission=await Location.requestForegroundPermissionsAsync();if(revision!==selectionRevision.current)return;
       if(permission.status!=='granted')throw Error('Location permission is off. Search for a place or choose a point on the map.');
       const current=await Location.getCurrentPositionAsync({accuracy:Location.Accuracy.Balanced});if(revision!==selectionRevision.current)return;
-      const p={lat:current.coords.latitude,lon:current.coords.longitude,name:'Your location'};
+      let name='Your location';
+      if(Platform.OS!=='web'&&Location.reverseGeocodeAsync){
+        try{
+          const [address]=await Location.reverseGeocodeAsync({latitude:current.coords.latitude,longitude:current.coords.longitude});
+          if(address){
+            const street=[address.streetNumber,address.street].filter(Boolean).join(' ');
+            const parts=[street||address.name,address.district,address.city||address.region].filter(Boolean);
+            const readable=[...new Set(parts)].join(', ');
+            if(readable)name=readable;
+          }
+        }catch{}
+      }
+      const p={lat:current.coords.latitude,lon:current.coords.longitude,name};
       if(p.lat<20.8||p.lat>21.42||p.lon<78.75||p.lon>79.4)throw Error('Your location is outside the Nagpur network. Choose a Nagpur origin on the map.');
+      if(target==='origin')sourcePoint.current=p;
       completeSelection(p,target);
     }catch(e:unknown){if(revision===selectionRevision.current)setError(e instanceof Error?e.message:'Location could not be read. Please retry.')}
     finally{setLocating(false)}
@@ -152,7 +182,7 @@ function useController(){
   const handleAuthUrl=useCallback(async(url:string)=>{if(isSourceShortcut(url)){setPendingSourceShortcut(true);return}if(!url.startsWith('ecomove://auth/'))return;await guard(()=>rpc('callback',{url}));if(url.includes('type=recovery'))setAuthMode('update')},[rpc]);
   useEffect(()=>{if(!ready)return;Linking.getInitialURL().then(u=>{if(u)return handleAuthUrl(u)}).catch(e=>setError(e.message));const sub=Linking.addEventListener('url',e=>handleAuthUrl(e.url));return()=>sub.remove()},[ready]);
   const google=()=>guard(async()=>{if(isRunningInExpoGo())throw Error('Google sign-in needs the installed Eco-Move app to receive its return link. You can use email/password sign-in in Expo Go.');const result=await rpc('oauth');const session=await WebBrowser.openAuthSessionAsync(result.data.url,'ecomove://auth/callback');if(session.type==='success')await handleAuthUrl(session.url)});
-  const plan=async(o=origin,d=destination,pref=preference,time=departure)=>{
+  const plan=async(o=origin,d=destination,pref=preference,time=departure,safety=safeModeRef.current)=>{
     if(!o||!d){setError('Choose your starting point and destination.');return;}
     if(o.lat===d.lat&&o.lon===d.lon){invalidateRoutes();setError('Choose two different places for your journey.');return;}
     if(time!=='now'&&!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time)){setError('Enter a valid departure time, such as 08:30.');return;}
@@ -160,21 +190,23 @@ function useController(){
     const sequence=++planSequence.current;setPlanning(true);setRouteResultsOpen(true);setCollapsed(false);setError('');setNotice('');setSelected(0);
     try{
       const parts=time.split(':');const departureMin=time==='now'?undefined:Number(parts[0])*60+Number(parts[1]);
-      const result=await rpc('plan',{origin:o,destination:d,preference:pref,departureMin});if(sequence!==planSequence.current)return;
-      setJourneys(result.journeys);setPlanning(false);
+      const result=await rpc('plan',{origin:o,destination:d,preference:pref,departureMin,safeMode:safety});if(sequence!==planSequence.current)return;
+      setJourneys(result.journeys);setPlanning(false);if(result.error)setNotice(result.error);
+      if(safety&&!result.journeys.length){setNotice(result.error||'Safety routing is unavailable. Switch Safety Mode off to use standard routes.');return;}
       if(!result.journeys.length){setNotice(result.error||'No scheduled transit connection.');setPlanning(true);const fallback=await rpc<Journey>('fallback',{origin:o,destination:d,departureTime:time});if(sequence!==planSequence.current)return;setJourneys([fallback]);return;}
       setEnriching(true);
-      try{const enriched=await Promise.all(result.journeys.map((j:Journey)=>rpc<Journey>('enrich',{journey:j,origin:o,destination:d,preference:pref})));if(sequence===planSequence.current)setJourneys(enriched);}catch{}
+      try{const enriched=await Promise.all(result.journeys.map((j:Journey)=>rpc<Journey>('enrich',{journey:j,origin:o,destination:d,preference:pref,safeMode:safety})));if(sequence===planSequence.current)setJourneys(enriched);}catch{if(sequence===planSequence.current)setNotice('Street geometry could not be refined. Displayed walking distances and times are estimates; retry when connected.');}
       if(sequence!==planSequence.current)return;
       await rpc('recordRecent',{origin:o,destination:d});const recent=await rpc<any[]>('recents');if(sequence===planSequence.current)setRecents(recent);
     }catch(e:unknown){if(sequence===planSequence.current)setError(e instanceof Error?e.message:'Routes could not be loaded. Please retry.');}
     finally{if(sequence===planSequence.current){setPlanning(false);setEnriching(false);}}
   };
   const startPreset=(preset:any)=>{navigate('plan');void plan(preset.from,preset.to)};
+  const toggleSafeMode=()=>{const next=!safeModeRef.current;safeModeRef.current=next;setSafeMode(next);invalidateRoutes();setError('');if(endpoints.current.origin&&endpoints.current.destination)void plan(endpoints.current.origin,endpoints.current.destination,preference,departure,next);else setNotice(next?'Safety Mode on. Choose two places to find a corridor-aware route.':'Standard route planning restored.');};
   const selectJourney=(index:number)=>{setSelected(index);setCollapsed(false)};
   const directions=(point:Point)=>{setDestination(point);setSearchedPlace(null);navigate('plan');if(origin)void plan(origin,point)};
   const saveJourney=()=>guard(async()=>{if(!origin||!destination||!journey)return;await rpc('save',{origin,destination,preference,totalTimeMin:journey.totalTimeMin,totalFareRs:journey.totalFareRs,totalDistanceM:journey.totalDistanceM,transitDistanceM:journey.transitDistanceM,walkDistanceM:journey.walkDistanceM,transfers:journey.transfers,co2g:journey.co2g,legs:journey.legs.map(({mode,line,busNumber,timeMin,from,to})=>({mode,line,busNumber,timeMin,from,to}))});await loadAccount();setNotice('Journey saved to your trips.')});
-  useEffect(()=>{if(!ready||!auth.user)return;void rpc('map',mapPresentation(mapScene,{journey,origin,destination,isCurrentLocation:origin?.name==='Your location'||!!(origin&&sourcePoint.current&&origin.lat===sourcePoint.current.lat&&origin.lon===sourcePoint.current.lon),mapStyle,showNetwork,showBusStops,showMetroStations,picking:picking==='anchor'||picking==='place'?null:picking,nearbyMode:picking==='anchor'||panel==='nearby',nearbyAnchor:anchor,nearbyRadiusM:radius,nearbyMarkers:[...nearbyData.busStops,...nearbyData.metroStations],nearbyTab:nearbyTab==='buses'?'buses':'stops',nearbyLiveBuses:nearbyBuses,selectedNearbyBus:nearbyBus,liveRoute,liveTelemetry:telemetry,selectedLiveStop:liveStop,searchedLocation:searchedPlace,poiMarkers:pois,activePoiCategory:poiCategory,nearbyCabs:cabResults?.nearbyVehicles||[],cabPolyline:cabResults?.polyline||[],cabOrigin,cabDestination,cabOriginName:cabOrigin?.name,cabDestinationName:cabDestination?.name})).catch(e=>setError(e.message))},[ready,auth.user?.id,panel,mapScene,journey,origin,destination,mapStyle,showNetwork,showBusStops,showMetroStations,picking,anchor,radius,nearbyData,nearbyTab,nearbyBuses,nearbyBus,liveRoute,telemetry,liveStop,searchedPlace,pois,poiCategory,cabResults,cabOrigin,cabDestination]);
+  useEffect(()=>{if(!ready||!auth.user)return;void rpc('map',mapPresentation(mapScene,{journey,origin,destination,isSafeMode:safeMode,isCurrentLocation:origin?.name==='Your location'||!!(origin&&sourcePoint.current&&origin.lat===sourcePoint.current.lat&&origin.lon===sourcePoint.current.lon),mapStyle,showNetwork,showBusStops,showMetroStations,picking:picking==='anchor'||picking==='place'?null:picking,nearbyMode:picking==='anchor'||panel==='nearby',nearbyAnchor:anchor,nearbyRadiusM:radius,nearbyMarkers:[...nearbyData.busStops,...nearbyData.metroStations],nearbyTab:nearbyTab==='buses'?'buses':'stops',nearbyLiveBuses:nearbyBuses,selectedNearbyBus:nearbyBus,liveRoute,liveTelemetry:telemetry,selectedLiveStop:liveStop,searchedLocation:searchedPlace,poiMarkers:pois,activePoiCategory:poiCategory,nearbyCabs:cabResults?.nearbyVehicles||[],cabPolyline:cabResults?.polyline||[],cabOrigin,cabDestination,cabOriginName:cabOrigin?.name,cabDestinationName:cabDestination?.name})).catch(e=>setError(e.message))},[ready,auth.user?.id,panel,mapScene,journey,origin,destination,safeMode,mapStyle,showNetwork,showBusStops,showMetroStations,picking,anchor,radius,nearbyData,nearbyTab,nearbyBuses,nearbyBus,liveRoute,telemetry,liveStop,searchedPlace,pois,poiCategory,cabResults,cabOrigin,cabDestination]);
   useEffect(()=>{if(!anchor||!ready)return;let active=true;rpc('nearby',{anchor,radius}).then(result=>{if(active)setNearbyData(result)}).catch(e=>{if(active)setError(e.message)});return()=>{active=false}},[anchor,radius,ready]);
   useEffect(()=>{if(!anchor||!poiCategory||!ready){setPois([]);return;}let current=true;guard(async()=>{const result=await rpc<any[]>('pois',{anchor,category:poiCategory});if(current)setPois(result)});return()=>{current=false}},[anchor,poiCategory,ready]);
   const activeLive=useRef(liveRoute);activeLive.current=liveRoute;
@@ -185,7 +217,7 @@ function useController(){
   const book=(fromJourney=false)=>guard(async()=>{if(fromJourney&&journey){const legs=await rpc<TransitLeg[]>('transitLegs',{legs:journey.legs});setBookingLegs(legs);setLockedBooking(true)}else{setBookingLegs(null);setLockedBooking(false)}open('booking')});
   const showTicket=(t:Ticket)=>{setTicket(t);open('ticket')};
   const logout=()=>guard(async()=>{await rpc('logout');await flushStorage();navigate('home')});
-  return {...runtime,voiceLanguage,setVoiceLanguage,appSuspended,tab,panel,stack,collapsed,setCollapsed,expanded,setExpanded,keyboard,origin,setOrigin,destination,setDestination,anchor,setAnchor,cabOrigin,setCabOrigin,cabDestination,setCabDestination,preference,setPreference,departure,setDeparture,routeResultsOpen,dismissRouteResults,journeys,setJourneys,selected,selectJourney,journey,planning,enriching,searchTarget,picking,setPicking,searchedPlace,setSearchedPlace,radius,setRadius,nearbyTab,setNearbyTab,nearbyData,nearbyBuses,nearbyBus,setNearbyBus,poiCategory,setPoiCategory,pois,setPois,liveRoute,setLiveRoute,telemetry,liveStop,setLiveStop,busQuery,setBusQuery,timetableQuery,setTimetableQuery,cabResults,setCabResults,mapStyle,setMapStyle,satelliteState,showBusStops,setShowBusStops,showMetroStations,setShowMetroStations,showNetwork,setShowNetwork,tickets,ticket,setTicket,saved,recents,eco,bookingLegs,lockedBooking,notice,setNotice,error,setError,locating,assistantActive,setAssistantActive,toggleAssistant,useCurrentSource,gestureEnabled,setGestureEnabled,gestureStatus,gestureRunning,gestureAttempt,retryGesture,onGestureEvent,authMode,setAuthMode,open,navigate,back,close,search,choosePlace,pickMap,locate,plan,startPreset,directions,saveJourney,loadAccount,track,refreshLive,book,showTicket,logout,google,guard};
+  return {...runtime,safeMode,toggleSafeMode,voiceLanguage,setVoiceLanguage,appSuspended,tab,panel,stack,collapsed,setCollapsed,expanded,setExpanded,keyboard,origin,setOrigin,destination,setDestination,anchor,setAnchor,cabOrigin,setCabOrigin,cabDestination,setCabDestination,preference,setPreference,departure,setDeparture,routeResultsOpen,dismissRouteResults,journeys,setJourneys,selected,selectJourney,journey,planning,enriching,searchTarget,picking,setPicking,searchedPlace,setSearchedPlace,radius,setRadius,nearbyTab,setNearbyTab,nearbyData,nearbyBuses,nearbyBus,setNearbyBus,poiCategory,setPoiCategory,pois,setPois,liveRoute,setLiveRoute,telemetry,liveStop,setLiveStop,busQuery,setBusQuery,timetableQuery,setTimetableQuery,cabResults,setCabResults,mapStyle,setMapStyle,satelliteState,showBusStops,setShowBusStops,showMetroStations,setShowMetroStations,showNetwork,setShowNetwork,tickets,ticket,setTicket,saved,recents,eco,bookingLegs,lockedBooking,notice,setNotice,error,setError,locating,assistantActive,setAssistantActive,toggleAssistant,useCurrentSource,gestureEnabled,setGestureEnabled,gestureStatus,gestureRunning,gestureAttempt,retryGesture,onGestureEvent,authMode,setAuthMode,playbackImmersive,setPlaybackImmersive,previewPlaying,setPreviewPlaying,pausePreview,open,navigate,back,close,search,choosePlace,pickMap,locate,plan,startPreset,directions,saveJourney,loadAccount,track,refreshLive,book,showTicket,logout,google,guard};
 }
 const Context=createContext<ReturnType<typeof useController>>(null!);
 export function AppProvider({children}:{children:React.ReactNode}){const value=useController();return <Context.Provider value={value}>{children}</Context.Provider>}

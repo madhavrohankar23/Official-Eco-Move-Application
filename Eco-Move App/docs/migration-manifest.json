@@ -19,13 +19,13 @@
     },
     {
       "path": "src/lib/n8nAiService.ts",
-      "sha256": "3ce6210bb707e5b97f438fd3d03945d61ce4f565b6372183b79561491f2a2a42",
-      "decision": "Source environment-based endpoints, retaining live target requests"
+      "sha256": "3d53b1d138cd5c64da275907e357e2becd16fcead5c5cfae92ae27c60c315846",
+      "decision": "Source environment-based endpoints, retaining live target requests; reference audit adds complete journey facts to existing query and keys cache by fare/schedule/safety context, preserving transport contract."
     },
     {
       "path": "src/lib/ors.ts",
-      "sha256": "208f678080b7636509c919dc0f72f5c3ade23fdb5e3a4e255135d768cae9fbef",
-      "decision": "Server-only credential adapter; preserve pedestrian routing and geometry fallback"
+      "sha256": "d7fc2b5b94122f67c17335699256f079b28b3ee7111922e34e3d9e273f70a6e2",
+      "decision": "ZIP router priority, transfer thresholds and safety road preference; keep private ORS proxy and version cache."
     },
     {
       "path": "src/lib/turnByTurn.ts",
@@ -49,8 +49,28 @@
     },
     {
       "path": "src/components/MapView.tsx",
-      "sha256": "890416dcdda416d71a4fe2345edfcd66e4dae52412d8550a804fe5e4cc145ae6",
-      "decision": "Existing map with child extension, progressive stops and police marker"
+      "sha256": "9730b980c7edde9756bc1f619fafff4080852574dca845647b8e525adb5bc19f",
+      "decision": "Retain map lifecycle and events; reference cased path palette, transfer dashes and safety colors."
+    },
+    {
+      "path": "src/lib/routing.ts",
+      "sha256": "925bdb926ac52c57edefe8756fb45d6dd40590d034c9f2d4285072495e3c5f46",
+      "decision": "ZIP reference walking transfer/enrichment metrics; preserve timetable engine. Requested-departure fallback timestamp correction documented in ROUTING-SAFETY-AUDIT.md."
+    },
+    {
+      "path": "src/lib/safeRoutingService.ts",
+      "sha256": "4153a00050e6bcdce948ffc913d405487665fd6eaf101239acbc56fa8bbeef74",
+      "decision": "ZIP safety graph reused with shared network, estimate disclosures and corrected sequential timestamps."
+    },
+    {
+      "path": "src/data/nagpur_safe_corridors.json",
+      "sha256": "f24f25ca71c4161653ef856f65038620ed0ea631912866ebac8fd98193758d7b",
+      "decision": "Exact ZIP static corridor and anchor dataset; no live safety guarantee."
     }
-  ]
+  ],
+  "routingReference": {
+    "zipSha256": "ed45b056e2d16261fcd8866f403e8241407c9c74161f6688c9eecb1646123445",
+    "targetBaseline": "8803bbf",
+    "audit": "docs/ROUTING-SAFETY-AUDIT.md"
+  }
 }

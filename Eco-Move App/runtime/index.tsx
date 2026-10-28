@@ -5,6 +5,8 @@ import MapView from '@/components/MapView';
 import {AuthProvider,useAuth} from '@/context/AuthContext';
 import {supabase} from '@/supabaseClient';
 import * as routing from '@/lib/routing';
+import * as safety from '@/lib/safeRoutingService';
+import {SafetyCorridors} from './features/maps/SafetyCorridors';
 import * as places from '@/lib/placesSearch';
 import * as nearby from '@/lib/nearby';
 import * as poi from '@/lib/nagpurPlaces';
@@ -83,8 +85,8 @@ function Engine(){
       searchLocal:a=>places.searchLocalPlaces(a.query,20),
       voicePlaces:a=>searchVoicePlaces(a.query),
       searchOnline:a=>places.searchOnlinePlaces(a.query),
-      plan:async a=>{userId();return routing.planJourney(a.origin,a.destination,a.preference,a.departureMin)},
-      enrich:async a=>{userId();try{return await Promise.race([routing.enrichWalkLegs(a.journey,a.origin,a.destination,a.preference),new Promise<any>(r=>setTimeout(()=>r(a.journey),3500))])}catch{return a.journey}},
+      plan:async a=>{userId();return a.safeMode ? safety.planSafeJourney(a.origin,a.destination,a.departureMin) : routing.planJourney(a.origin,a.destination,a.preference,a.departureMin)},
+      enrich:async a=>{userId();return a.safeMode ? safety.enrichSafeWalkLegs(a.journey,a.origin,a.destination) : routing.enrichWalkLegs(a.journey,a.origin,a.destination,a.preference)},
       fallback:a=>routing.planFallbackDrivingJourney(a.origin,a.destination,a.departureTime||'now'),
       recordRecent:a=>recent.recordUserRecentJourney(userId(),a.origin,a.destination),
       saved:()=>saved.fetchUserSavedJourneys(userId()),
@@ -141,6 +143,6 @@ function Engine(){
   useEffect(()=>{send({type:'ready'});return()=>{}},[]);
   useEffect(()=>{void window.EcoSatellite?.select(props.mapStyle==='satellite',props.mapStyle!=='roadmap')},[props.mapStyle]);
   const events=useMemo(()=>{const event=(name:string)=>(value:any)=>send({type:'mapEvent',name,value});return {onMapClick:event('pick'),onSelectNearbyBus:event('nearbyBus'),onSelectLiveStop:event('liveStop'),onSelectBusTimetable:event('timetable'),onDirectionsToSearchedLocation:event('directions'),onDirectionsToPoi:event('directions')}},[]);
-  return <PreservedMap {...props} mapStyle={props.mapStyle==='satellite'?'carto':props.mapStyle} {...events}>{preview.node}</PreservedMap>;
+  return <PreservedMap {...props} mapStyle={props.mapStyle==='satellite'?'carto':props.mapStyle} {...events}>{props.isSafeMode && <SafetyCorridors/>}{preview.node}</PreservedMap>;
 }
 export function mount(){createRoot(document.getElementById('root')!).render(<AuthProvider><Engine/></AuthProvider>)}

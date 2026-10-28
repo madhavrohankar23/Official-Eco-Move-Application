@@ -8,6 +8,24 @@ const to = { name: 'Destination fixture', lat: 21.09, lon: 79.05 };
 const deferred = () => { let resolve, reject; const promise = new Promise((yes, no) => { resolve = yes; reject = no; }); return { promise, resolve, reject }; };
 const flush = async () => { for (let i = 0; i < 12; i++) await Promise.resolve(); };
 
+test('Safety Mode recalculates both ways and ignores a superseded mode response',async()=>{
+  const h=harness();void h.render().plan(from,to,'cheapest','08:30');
+  h.render().toggleSafeMode();assert.equal(h.render().safeMode,true);
+  let calls=h.calls.filter(c=>c.method==='plan');assert.equal(calls[1].args.safeMode,true);assert.equal(calls[1].args.departureMin,510);
+  h.render().toggleSafeMode();assert.equal(h.render().safeMode,false);
+  calls=h.calls.filter(c=>c.method==='plan');assert.equal(calls[2].args.safeMode,false);assert.equal(calls[2].args.preference,'cheapest');
+  h.requests[1].resolve({journeys:[{legs:[],isSafeMode:true}]});await flush();assert.equal(h.render().journeys.length,0);
+  h.requests[2].resolve({journeys:[{legs:[],isSafeMode:false}]});await flush();assert.equal(h.render().journeys[0].isSafeMode,false);
+  h.requests[0].resolve({journeys:[{legs:[],old:true}]});await flush();assert.equal(h.render().journeys[0].old,undefined);
+});
+
+test('unavailable safety routing does not silently display standard routes',async()=>{
+  const h=harness();h.render().setOrigin(from);h.render().setDestination(to);h.render().toggleSafeMode();
+  h.requests[0].resolve({journeys:[],error:'Safety dataset unavailable'});await flush();
+  assert.equal(h.render().safeMode,true);assert.match(h.render().notice,/unavailable/);assert.equal(h.render().planning,false);
+  assert.ok(!h.calls.some(c=>c.method==='fallback'));
+});
+
 function harness() {
   const states = [], refs = [], calls = [], requests = []; let si = 0, ri = 0;
   const react = { createContext: () => ({ Provider: 'context' }), createElement: (type, props) => ({ type, props }),

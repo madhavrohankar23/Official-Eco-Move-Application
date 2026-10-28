@@ -1,3 +1,4 @@
+import {routeStyle} from '../../../runtime/features/maps/routeStyle';
 import {useProgressiveStops} from '../../../runtime/features/maps/useProgressiveStops';
 import DevBusRouteInspector from "./DevBusRouteInspector";
 import {
@@ -12,7 +13,7 @@ import {
   useMap,
   useMapEvents,
 } from "react-leaflet";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { Journey } from "@/lib/routing";
@@ -674,8 +675,10 @@ export default function MapView({
   onRegisterZoom,
   onZoomDelta,
   children,
+  isSafeMode = false,
 }: {
   children?: import("react").ReactNode;
+  isSafeMode?: boolean;
   journey: Journey | null;
   origin?: { lat: number; lon: number; name?: string } | null;
   destination?: { lat: number; lon: number; name?: string } | null;
@@ -865,23 +868,17 @@ export default function MapView({
           );
         })}
 
-      {/* Active journey polylines — metro legs use per-line brand colour, fallback drive uses dark red */}
-      {journey?.legs.map((leg, i) => (
-        <Polyline
-          key={i}
-          positions={leg.path.map((p: { lat: number; lon: number }) => [p.lat, p.lon] as [number, number])}
-          pathOptions={{
-            color: leg.mode === "drive"
-              ? "#991b1b"
-              : leg.mode === "metro"
-                ? lineColor("metro", leg.line ?? "")
-                : (MODE_COLOR[leg.mode] ?? "#0d9488"),
-            weight: leg.mode === "walk" ? 4 : (leg.mode === "drive" ? 5.5 : 6),
-            dashArray: leg.mode === "walk" ? "2 8" : undefined,
-            opacity: 0.95,
-          }}
-        />
-      ))}
+      {/* Reference cased paths. Existing map, route geometry and interactions retained. */}
+      {journey?.legs.map((leg, i) => {
+        const style = routeStyle(leg, i, journey, isSafeMode);
+        const positions = leg.path.map(p => [p.lat, p.lon] as [number, number]);
+        return <Fragment key={i}>
+          <Polyline positions={positions} pathOptions={{color:'#ffffff',weight:style.casingWeight,opacity:.95,interactive:false,lineCap:'round',lineJoin:'round'}}/>
+          <Polyline positions={positions} pathOptions={{color:style.color,weight:style.weight,dashArray:style.dashArray,opacity:1,lineCap:'round',lineJoin:'round'}}>
+            <Tooltip sticky>{leg.line || leg.mode} · {Math.round(leg.timeMin)} min · {Math.round(leg.distanceM)} m{leg.mode==='walk'&&leg.path.length<=2?' · direct-distance estimate':''}</Tooltip>
+          </Polyline>
+        </Fragment>;
+      })}
 
       {/* Active journey boarding and alighting stop markers */}
       {journey?.legs
@@ -900,7 +897,7 @@ export default function MapView({
               center={[p.lat, p.lon]}
               radius={6}
               pathOptions={{
-                color: leg.mode === "metro" ? lineColor("metro", leg.line ?? "") : MODE_COLOR[leg.mode]!,
+                color: routeStyle(leg, journey.legs.indexOf(leg), journey, isSafeMode).color,
                 fillColor: "#ffffff",
                 fillOpacity: 1,
                 weight: 3,

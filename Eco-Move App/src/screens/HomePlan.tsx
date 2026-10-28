@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Platform, View, useWindowDimensions } from 'react-native';
+import { Platform, Switch, View, useWindowDimensions } from 'react-native';
 import { MotionPressable as Pressable } from '../components/MotionPressable';
 import {
   ArrowDownUp,
@@ -42,22 +42,56 @@ export function HomeScreen() {
 
   return (
     <>
-      <View style={{ gap: 4 }}>
-        {!compactHome && <Copy size={11} muted weight="600" style={{ letterSpacing: 1.5, textTransform: 'uppercase' }}>
-          Sustainable Transit
-        </Copy>}
-        <Copy size={compactHome ? 20 : 28} weight="600" style={{ lineHeight: compactHome ? 26 : 32, letterSpacing: -0.8 }}>
-          {compactHome ? 'A greener journey.' : 'A greener way\nto get there.'}
-        </Copy>
-      </View>
-
       {/* Primary search trigger */}
-      <Action
-        label="Where are you heading?"
-        icon={Route}
-        selected
+      <Pressable
+        accessibilityLabel="Where are you heading? Plan your route"
+        accessibilityRole="button"
         onPress={() => app.navigate('plan')}
-      />
+      >
+        {({ pressed }) => (
+          <Glass
+            level={1}
+            blur={false}
+            state={pressed ? 'pressed' : 'default'}
+            style={{
+              borderRadius: 20,
+              ...(!dark ? { boxShadow: '0px 4px 14px rgba(15, 23, 42, 0.06)', shadowOpacity: 0 } : {}),
+            }}
+          >
+            <View
+              style={{
+                paddingVertical: 14,
+                paddingHorizontal: 16,
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 14,
+              }}
+            >
+              <View
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 14,
+                  backgroundColor: dark ? 'rgba(74, 222, 128, 0.12)' : 'rgba(18, 72, 49, 0.08)',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Route size={20} color={c.accent} strokeWidth={2} />
+              </View>
+              <View style={{ flex: 1, gap: 2 }}>
+                <Copy size={16} weight="600">
+                  Where are you heading?
+                </Copy>
+                <Copy size={12} muted>
+                  Plan transit, metro, and bus routes
+                </Copy>
+              </View>
+              <ArrowRight size={18} color={c.muted} strokeWidth={2} />
+            </View>
+          </Glass>
+        )}
+      </Pressable>
 
       {/* Quick Transit Hub */}
       <View style={{ flexDirection: 'row', gap: 8 }}>
@@ -247,6 +281,11 @@ export function PlanScreen() {
 
   return (
     <>
+      <View style={{flexDirection:"row",alignItems:"center",justifyContent:"space-between",gap:12,minHeight:48}}>
+        <View style={{flex:1,gap:3}}><Copy weight="600">Safety Mode</Copy><Copy size={12} muted>{app.safeMode ? "On · corridor-aware routes" : "Off · standard routes"}</Copy></View>
+        <Switch accessibilityLabel="Safety Mode" value={app.safeMode} onValueChange={app.toggleSafeMode} trackColor={{false:c.line,true:c.accent}}/>
+      </View>
+      {app.safeMode && <Notice>Uses the supplied corridor and nearby-support dataset. Lighting, access and safety are not live-verified. Times and safety-mode fares are estimates.</Notice>}
       {!app.routeResultsOpen && <>
       <LocationField label="Starting point" value={app.origin} target="origin" />
 
@@ -272,7 +311,8 @@ export function PlanScreen() {
       {/* Progressive disclosure: preference summary & departure toggle */}
       <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
         <Action
-          label={`${currentPref?.label || 'Route options'} ▾`}
+          label={app.safeMode ? 'Safety priority' : `${currentPref?.label || 'Route options'} ▾`}
+          disabled={app.safeMode}
           icon={SlidersHorizontal}
           selected={prefsExpanded}
           compact
@@ -300,7 +340,7 @@ export function PlanScreen() {
       </View>
 
       {/* Expandable preference options */}
-      {prefsExpanded && (
+      {prefsExpanded && !app.safeMode && (
         <Glass level={1} blur={false} style={{ borderRadius: 20 }}>
           <View style={{ padding: 14, gap: 10 }}>
             <Copy size={11} muted weight="600" style={{ letterSpacing: 1.2, textTransform: 'uppercase' }}>
@@ -418,6 +458,7 @@ export function PlanScreen() {
             Your Journey, Step by Step
           </Copy>
 
+          {app.journey.isSafeMode && <Notice>{app.journey.safetySummary}{app.journey.safeCorridorsUsed?.length ? ` Corridors: ${app.journey.safeCorridorsUsed.join(", ")}.` : " No mapped corridor intersection confirmed."}{app.journey.guardianAnchorsNearby?.length ? ` Nearby support listed in dataset: ${app.journey.guardianAnchorsNearby.join(", ")}.` : ""}</Notice>}
           <Action label="Preview this route" icon={Route} quiet onPress={() => app.open('preview')} />
           {app.journey.legs.map((l, i) => (
             <LegRow leg={l} key={i} />
@@ -462,6 +503,7 @@ function JourneyCard({
           state={pressed ? 'pressed' : selected ? 'selected' : 'default'}
           style={{
             borderRadius: 24,
+            ...(!dark ? {boxShadow: "0px 4px 14px rgba(15, 23, 42, 0.06)",shadowOpacity:0} : {}),
           }}
         >
           <View style={{ padding: 18, gap: 12 }}>
@@ -469,7 +511,9 @@ function JourneyCard({
               <View style={{ gap: 2 }}>
                 <Badge
                   label={
-                    j.isFallbackDrive
+                    j.isSafeMode
+                      ? (j.isFallbackDrive ? 'SAFETY · DRIVING ESTIMATE' : 'SAFETY MODE')
+                      : j.isFallbackDrive
                       ? 'DRIVING ALTERNATIVE'
                       : index === 0
                       ? 'RECOMMENDED'
@@ -486,6 +530,8 @@ function JourneyCard({
               </Copy>
             </View>
 
+            {j.isSafeMode && <Copy size={12} muted>Estimated {j.isFallbackDrive ? "vehicle cost" : "fare"} · reference safety-routing model</Copy>}
+            {j.legs.some(l=>l.mode==="walk"&&l.path.length<=2) && <Copy size={12} muted>Includes direct-distance walking estimates; pedestrian access is unverified.</Copy>}
             {/* Mode badges */}
             <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 7 }}>
               {j.legs
@@ -519,7 +565,7 @@ function JourneyCard({
 
             <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 6 }}>
               <Copy muted size={12}>
-                {j.departureTimeStr} → {j.arrivalTimeStr} · {distance(j.walkDistanceM)} walk · {j.transfers} transfer{j.transfers === 1 ? '' : 's'}
+                {j.departureTimeStr} → {j.arrivalTimeStr} · {distance(j.totalDistanceM)} total · {distance(j.walkDistanceM)} walk · {j.transfers} transfer{j.transfers === 1 ? '' : 's'}
               </Copy>
               {j.co2g != null && j.co2g > 0 && (
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>

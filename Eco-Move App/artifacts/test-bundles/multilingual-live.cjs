@@ -1309856,9 +1309856,13 @@ async function applyVoiceIntent(intent, app, isCurrent = () => true) {
     const query = normalizeSpokenPlace(name);
     const local = await app.rpc("voicePlaces", { query });
     if (!isCurrent()) return null;
-    if (local.length) return selectVoicePlace(query, local);
+    if (local.length) {
+      const match = selectVoicePlace(query, local);
+      return match || (app.chooseVoicePlace ? await app.chooseVoicePlace(query, local) : null);
+    }
     const online = await app.rpc("searchOnline", { query });
-    return online.length === 1 ? online[0] : null;
+    if (!isCurrent()) return null;
+    return online.length === 1 ? online[0] : online.length && app.chooseVoicePlace ? await app.chooseVoicePlace(query, online) : null;
   };
   if (!isCurrent()) return;
   if (intent.intent === "PLAN_ROUTE") {
@@ -1309866,7 +1309870,7 @@ async function applyVoiceIntent(intent, app, isCurrent = () => true) {
     const to = await resolve(intent.destination);
     if (!isCurrent()) return;
     if (!to) {
-      app.setNotice("Please choose a destination in the route planner.");
+      app.setNotice(intent.destination ? `I could not identify destination \u201C${intent.destination}\u201D reliably. Please choose a destination in the route planner.` : "Please choose a destination in the route planner.");
       app.navigate("plan");
       return;
     }
@@ -1309875,11 +1309879,27 @@ async function applyVoiceIntent(intent, app, isCurrent = () => true) {
       app.setNotice(`I could not identify Source \u201C${intent.origin}\u201D reliably. Please select it in the route planner. Your previous trip was kept.`);
       return;
     }
+    const differs = (a, b) => !!a && !!b && (a.lat !== b.lat || a.lon !== b.lon);
+    if (differs(app.origin, from) || differs(app.destination, to)) {
+      const confirmed = app.confirmVoiceReplacement ? await app.confirmVoiceReplacement(from, to) : false;
+      if (!isCurrent()) return;
+      if (!confirmed) {
+        app.setNotice("Your current trip was kept. Confirm replacement to use the assistant\u2019s locations.");
+        return;
+      }
+    }
+    if (!isCurrent()) return;
     app.setDestination(to);
     if (from) app.setOrigin(from);
     app.navigate("plan");
-    if (from) await app.plan(from, to, intent.preference || app.preference, intent.departureTime || app.departure);
-    else app.setNotice("Choose a Source or use current location to complete these directions.");
+    const isSpokenPair = Boolean(intent.origin && !/^(your|my|current) location$/i.test(intent.origin));
+    if (isSpokenPair) {
+      app.setNotice(`Route set from ${from?.name || intent.origin} to ${to.name}. Review and confirm to find routes.`);
+    } else if (from) {
+      await app.plan(from, to, intent.preference || app.preference, intent.departureTime || app.departure);
+    } else {
+      app.setNotice("Choose a Source or use current location to complete these directions.");
+    }
   } else if (intent.intent === "FIND_NEARBY") {
     const place = await resolve(intent.nearbyLocation);
     if (!isCurrent()) return;

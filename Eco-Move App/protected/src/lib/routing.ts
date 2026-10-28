@@ -75,6 +75,7 @@ export interface Leg {
   nextDepartures?: string[] | undefined;
   orsResolved?: boolean | undefined;
   isFallbackDrive?: boolean | undefined;
+  isTransfer?: boolean | undefined;
 }
 
 export interface Journey {
@@ -1599,8 +1600,29 @@ export async function enrichWalkLegs(
           ? leg.path[leg.path.length - 1]!
           : { lat: destination.lat, lon: destination.lon };
 
+      const directDist = haversine(from.lat, from.lon, to.lat, to.lon);
+      if (directDist <= 120) {
+        return {
+          ...leg,
+          line: "Station Transfer Walk",
+          distanceM: Math.round(directDist),
+          timeMin: Math.max(0.5, Math.round((directDist / 1000 / PARAMS.walkSpeedKmh) * 60 * 10) / 10),
+          path: [{ lat: from.lat, lon: from.lon }, { lat: to.lat, lon: to.lon }],
+          orsResolved: true,
+          isTransfer: true,
+        };
+      }
+
       const ors = await walkRoute(from, to);
-      if (!ors || !ors.path || ors.path.length < 2) return leg;
+      if (!ors || !ors.path || ors.path.length < 2 || ors.distanceM > directDist * 1.7) {
+        return {
+          ...leg,
+          distanceM: Math.round(directDist),
+          timeMin: Math.max(0.5, Math.round((directDist / 1000 / PARAMS.walkSpeedKmh) * 60 * 10) / 10),
+          path: [{ lat: from.lat, lon: from.lon }, { lat: to.lat, lon: to.lon }],
+          orsResolved: true,
+        };
+      }
 
       const walkTime = (ors.distanceM / 1000 / PARAMS.walkSpeedKmh) * 60;
 
@@ -1682,7 +1704,9 @@ export async function planFallbackDrivingJourney(
   const estFuelCostRs = Math.round(distKm * 8.5); // ~₹8.5/km average petrol/diesel cost
 
   const now = new Date();
-  const depTimeMin = now.getHours() * 60 + now.getMinutes();
+  const depTimeMin = /^([01]\d|2[0-3]):[0-5]\d$/.test(departureTimeStr)
+    ? Number(departureTimeStr.slice(0, 2)) * 60 + Number(departureTimeStr.slice(3))
+    : now.getHours() * 60 + now.getMinutes();
 
   const driveLeg: Leg = {
     mode: "drive",

@@ -72,32 +72,78 @@ export function NearbyScreen() {
       </View>
 
       {/* Segmented category tabs */}
-      <View style={{ gap: 6 }}>
+      <View style={{ gap: 8 }}>
         <Copy size={11} muted weight="600" style={{ letterSpacing: 1, textTransform: 'uppercase' }}>
           Category
         </Copy>
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
-          {[
-            { id: 'stops', label: 'Transit', icon: TrainFront },
-            { id: 'buses', label: 'Live buses', icon: Bus },
-            { id: 'Restaurant', label: 'Food', icon: Utensils },
-            { id: 'Hospital', label: 'Hospitals', icon: Hospital },
-            { id: 'Police Station', label: 'Police', icon: Shield },
-          ].map(t => (
+        <View style={{ gap: 8 }}>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
             <Action
-              key={t.id}
-              label={t.label}
-              icon={t.icon}
+              label="Transit"
+              icon={TrainFront}
               compact
-              quiet={app.nearbyTab !== t.id}
-              selected={app.nearbyTab === t.id}
+              quiet={app.nearbyTab !== 'stops'}
+              selected={app.nearbyTab === 'stops'}
               onPress={() => {
-                app.setNearbyTab(t.id);
-                app.setPoiCategory(t.id === 'Restaurant' || t.id === 'Hospital' || t.id === 'Police Station' ? t.id : null);
+                app.setNearbyTab('stops');
+                app.setPoiCategory(null);
               }}
-              style={{ flex: 1, minWidth: '46%' }}
+              style={{ flex: 1 }}
             />
-          ))}
+            <Action
+              label="Live buses"
+              icon={Bus}
+              compact
+              quiet={app.nearbyTab !== 'buses'}
+              selected={app.nearbyTab === 'buses'}
+              onPress={() => {
+                app.setNearbyTab('buses');
+                app.setPoiCategory(null);
+              }}
+              style={{ flex: 1 }}
+            />
+          </View>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Action
+              label="Food"
+              icon={Utensils}
+              compact
+              quiet={app.nearbyTab !== 'Restaurant'}
+              selected={app.nearbyTab === 'Restaurant'}
+              onPress={() => {
+                app.setNearbyTab('Restaurant');
+                app.setPoiCategory('Restaurant');
+              }}
+              style={{ flex: 1 }}
+            />
+            <Action
+              label="Hospitals"
+              icon={Hospital}
+              compact
+              quiet={app.nearbyTab !== 'Hospital'}
+              selected={app.nearbyTab === 'Hospital'}
+              onPress={() => {
+                app.setNearbyTab('Hospital');
+                app.setPoiCategory('Hospital');
+              }}
+              style={{ flex: 1 }}
+            />
+          </View>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <Action
+              label="Police"
+              icon={Shield}
+              compact
+              quiet={app.nearbyTab !== 'Police Station'}
+              selected={app.nearbyTab === 'Police Station'}
+              onPress={() => {
+                app.setNearbyTab('Police Station');
+                app.setPoiCategory('Police Station');
+              }}
+              style={{ flex: 1 }}
+            />
+            <View style={{ flex: 1 }} />
+          </View>
         </View>
       </View>
 

@@ -94,11 +94,14 @@ export function LiquidNav({
         },
       ]}
     >
-      <Glass level={2} moving={!hidden} specular style={{ height: layout.height, borderRadius: layout.height / 2 }}>
-        {dark && <LinearGradient pointerEvents="none"
+      <Glass level={2} moving={!hidden} specular style={{ height: layout.height, borderRadius: layout.height / 2, ...(!dark ? {boxShadow:"0px 4px 16px rgba(15, 23, 42, 0.08)",shadowOpacity:0} : {}) }}>
+        {dark ? <LinearGradient pointerEvents="none"
           colors={['rgba(75,83,81,.96)', 'rgba(27,35,34,.97)', 'rgba(7,14,15,.98)']}
           locations={[0,.48,1]}
-          start={{x:0,y:0}} end={{x:1,y:.55}} style={StyleSheet.absoluteFill}/>}
+          start={{x:0,y:0}} end={{x:1,y:.55}} style={StyleSheet.absoluteFill}/> :
+          <LinearGradient pointerEvents="none"
+          colors={['rgba(255, 255, 255, 0.98)', 'rgba(248, 250, 252, 0.94)']}
+          start={{x:0,y:0}} end={{x:0.5,y:1}} style={StyleSheet.absoluteFill}/>}
         {/* Smoothly moving active liquid lens */}
         <Animated.View
           pointerEvents="none"
@@ -117,12 +120,19 @@ export function LiquidNav({
             style={{flex:1,borderRadius:26,borderWidth:1,borderColor:'#ffffffc9',opacity:pressedTab===tab?.85:1,shadowColor:'#061c14',shadowOpacity:.16,shadowRadius:5,shadowOffset:{width:0,height:2}}}
           /> : <Glass
             level={3}
-            state={pressedTab === tab ? 'pressed' : 'selected'}
+            state={pressedTab === tab ? 'pressed' : 'default'}
             specular
             blur={false}
             style={{
               flex: 1,
               borderRadius: 26,
+              backgroundColor: '#ffffff',
+              borderWidth: 1,
+              borderColor: '#e2e8f0',
+              shadowColor: '#0f172a',
+              shadowOpacity: 0.08,
+              shadowRadius: 6,
+              shadowOffset: { width: 0, height: 2 },
             }}
           />}
         </Animated.View>

@@ -1,5 +1,5 @@
 {
-  "testedAt": "2026-10-27T09:51:07.616Z",
+  "testedAt": "2026-10-28T19:36:45.303Z",
   "kind": "live transcript contract; not microphone recognition",
   "results": [
     {
@@ -10,9 +10,9 @@
       "destination": "Airport",
       "sourceResolved": "Sitabuldi (Interchange)",
       "destinationResolved": "Airport Metro Station",
-      "existingPlanInvoked": true,
+      "existingPlanInvoked": false,
       "passed": true,
-      "durationMs": 6349
+      "durationMs": 5416
     },
     {
       "language": "Hindi",
@@ -22,9 +22,9 @@
       "destination": "Airport",
       "sourceResolved": "Sitabuldi (Interchange)",
       "destinationResolved": "Airport Metro Station",
-      "existingPlanInvoked": true,
+      "existingPlanInvoked": false,
       "passed": true,
-      "durationMs": 3206
+      "durationMs": 2418
     },
     {
       "language": "Marathi",
@@ -34,9 +34,9 @@
       "destination": "Airport",
       "sourceResolved": "Sitabuldi (Interchange)",
       "destinationResolved": "Airport Metro Station",
-      "existingPlanInvoked": true,
+      "existingPlanInvoked": false,
       "passed": true,
-      "durationMs": 2935
+      "durationMs": 2490
     },
     {
       "language": "Mixed Hindi",
@@ -46,9 +46,9 @@
       "destination": "Airport",
       "sourceResolved": "Sitabuldi (Interchange)",
       "destinationResolved": "Airport Metro Station",
-      "existingPlanInvoked": true,
+      "existingPlanInvoked": false,
       "passed": true,
-      "durationMs": 2663
+      "durationMs": 2686
     },
     {
       "language": "Mixed Marathi",
@@ -58,9 +58,9 @@
       "destination": "Nagpur Railway Station",
       "sourceResolved": "Dharampeth",
       "destinationResolved": "Nagpur Railway Station (Main Junction)",
-      "existingPlanInvoked": true,
+      "existingPlanInvoked": false,
       "passed": true,
-      "durationMs": 3255
+      "durationMs": 2554
     }
   ]
 }

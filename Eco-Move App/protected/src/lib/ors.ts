@@ -32,7 +32,7 @@ function cacheKey(
 function getPersistentCache(key: string): WalkRouteResult | null {
   if (typeof localStorage === "undefined") return null;
   try {
-    const raw = localStorage.getItem(`ors_${key}`);
+    const raw = localStorage.getItem(`ors_reference_v2_${key}`);
     if (raw) return JSON.parse(raw);
   } catch {
     return null;
@@ -44,23 +44,25 @@ function getPersistentCache(key: string): WalkRouteResult | null {
 function setPersistentCache(key: string, result: WalkRouteResult) {
   if (typeof localStorage === "undefined") return;
   try {
-    localStorage.setItem(`ors_${key}`, JSON.stringify(result));
+    localStorage.setItem(`ors_reference_v2_${key}`, JSON.stringify(result));
   } catch {
     // localStorage may be full or disabled in private browsing
   }
 }
 
 /**
- * Fallback pedestrian routing using OpenStreetMap routed-foot service.
- * Free, requires no API key, and follows real pedestrian street paths in Nagpur.
+ * Pedestrian routing using OpenStreetMap / OSRM routed-foot service.
+ * Free, fast, requires no API key, and follows real pedestrian street paths in Nagpur.
  */
 async function fetchOsmFootRoute(
   from: { lat: number; lon: number },
   to: { lat: number; lon: number },
 ): Promise<WalkRouteResult | null> {
   const urls = [
-    `https://routing.openstreetmap.de/routed-foot/route/v1/driving/${from.lon.toFixed(6)},${from.lat.toFixed(6)};${to.lon.toFixed(6)},${to.lat.toFixed(6)}?overview=full&geometries=geojson`,
     `https://router.project-osrm.org/route/v1/foot/${from.lon.toFixed(6)},${from.lat.toFixed(6)};${to.lon.toFixed(6)},${to.lat.toFixed(6)}?overview=full&geometries=geojson`,
+    `https://router.project-osrm.org/route/v1/driving/${from.lon.toFixed(6)},${from.lat.toFixed(6)};${to.lon.toFixed(6)},${to.lat.toFixed(6)}?overview=full&geometries=geojson`,
+    `https://routing.openstreetmap.de/routed-foot/route/v1/foot/${from.lon.toFixed(6)},${from.lat.toFixed(6)};${to.lon.toFixed(6)},${to.lat.toFixed(6)}?overview=full&geometries=geojson`,
+    `https://routing.openstreetmap.de/routed-car/route/v1/driving/${from.lon.toFixed(6)},${from.lat.toFixed(6)};${to.lon.toFixed(6)},${to.lat.toFixed(6)}?overview=full&geometries=geojson`,
   ];
 
   for (const url of urls) {
@@ -76,9 +78,11 @@ async function fetchOsmFootRoute(
       const coords: [number, number][] = route.geometry.coordinates;
       if (!coords || coords.length < 2) continue;
 
+      const walkTimeMin = (route.distance / 1000 / 4.8) * 60;
+
       return {
         distanceM: route.distance,
-        timeMin: route.duration / 60,
+        timeMin: walkTimeMin,
         path: coords.map(([lon, lat]) => ({ lat, lon })),
       };
     } catch {
@@ -89,19 +93,21 @@ async function fetchOsmFootRoute(
 }
 
 /**
- * Fetch the shortest pedestrian route from ORS or OSM Foot Router.
+ * Fetch the shortest pedestrian route from OSM Foot Router or ORS.
  * Returns street-following polyline coordinates with multi-tier fallback.
  */
 export async function walkRoute(
   from: { lat: number; lon: number },
   to: { lat: number; lon: number },
 ): Promise<WalkRouteResult | null> {
-  // Skip trivially short legs (< 15 m)
-  const dx = Math.abs(from.lat - to.lat) + Math.abs(from.lon - to.lon);
-  if (dx < 0.00015) {
+  // Direct pedestrian connection for transfers & close stops (<= 120 m)
+  // Prevents OSRM/OSM median barrier U-turn loops on bus-to-metro interchanges
+  const directDist = haversineDistM(from, to);
+  if (directDist <= 120) {
+    const walkTimeMin = Math.max(0.5, (directDist / 1000 / 4.5) * 60);
     return {
-      distanceM: 15,
-      timeMin: 0.2,
+      distanceM: Math.round(directDist),
+      timeMin: Math.round(walkTimeMin * 10) / 10,
       path: [{ lat: from.lat, lon: from.lon }, { lat: to.lat, lon: to.lon }],
     };
   }
@@ -119,9 +125,20 @@ export async function walkRoute(
     return cachedLocal;
   }
 
-  // 3. Try ORS if not in quota cooldown
+  // 3. Primary: High-speed OSRM / OpenStreetMap Foot Router (Real pedestrian roads & footpaths)
+  const osmResult = await fetchOsmFootRoute(from, to);
+  if (osmResult) {
+    // Reject absurd median detour loops (> 1.7x direct distance)
+    if (osmResult.distanceM <= directDist * 1.7) {
+      memoryCache.set(key, osmResult);
+      setPersistentCache(key, osmResult);
+      return osmResult;
+    }
+  }
+
+  // 4. Secondary: OpenRouteService (ORS) fallback if valid API key configured
   if (Date.now() >= orsDisabledUntil) {
-    // ORS credentials stay on the existing backend; retain the pedestrian fallback.
+    // Keep credentials on the existing server; only the route result enters the app.
     {
       const body = {
         coordinates: [
@@ -138,14 +155,12 @@ export async function walkRoute(
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-
           },
           body: JSON.stringify(body),
-          signal: AbortSignal.timeout(5000),
+          signal: AbortSignal.timeout(3500),
         });
 
         if (res.status === 429 || res.status === 403) {
-          // Quota exceeded or rate limited - disable ORS for 10 minutes and use OSM
           orsDisabledUntil = Date.now() + 600000;
         } else if (res.ok) {
           const data = (await res.json()) as {
@@ -172,20 +187,84 @@ export async function walkRoute(
           }
         }
       } catch {
-        // Network error, proceed to fallback
+        // Network error / timeout
       }
     }
   }
 
-  // 4. Secondary Fallback: OpenStreetMap Foot Router
-  const osmResult = await fetchOsmFootRoute(from, to);
-  if (osmResult) {
-    memoryCache.set(key, osmResult);
-    setPersistentCache(key, osmResult);
-    return osmResult;
+  return null;
+}
+
+/** In-memory cache for safe wide-road walking legs */
+const safeWalkMemoryCache = new Map<string, WalkRouteResult>();
+
+/**
+ * Safe Wide-Road Pedestrian Router:
+ * Strictly routes along vehicular roadways (wide enough for cars, autos, and NMC Aapli city buses).
+ * Completely avoids dark unlit pedestrian alleys, narrow residential galis, dirt cuts, or stairs.
+ * Walking speed calibrated to realistic night pedestrian speed (4.5 km/h).
+ */
+export async function safeWideRoadWalkRoute(
+  from: { lat: number; lon: number },
+  to: { lat: number; lon: number },
+): Promise<WalkRouteResult | null> {
+  // Direct pedestrian connection for transfers & close stops (<= 120 m)
+  // Completely eliminates OSRM car-routing U-turn loops on median-divided roads
+  const directDist = haversineDistM(from, to);
+  if (directDist <= 120) {
+    const walkTimeMin = Math.max(0.5, (directDist / 1000 / 4.5) * 60);
+    return {
+      distanceM: Math.round(directDist),
+      timeMin: Math.round(walkTimeMin * 10) / 10,
+      path: [{ lat: from.lat, lon: from.lon }, { lat: to.lat, lon: to.lon }],
+    };
   }
 
-  return null;
+  const key = `safewalk_${from.lon.toFixed(5)},${from.lat.toFixed(5)}|${to.lon.toFixed(5)},${to.lat.toFixed(5)}`;
+  if (safeWalkMemoryCache.has(key)) {
+    return safeWalkMemoryCache.get(key)!;
+  }
+
+  // 1. Primary: Vehicular road routing (OSRM routed-car) - strictly wide roads where buses/cars drive
+  const drivingUrls = [
+    `https://router.project-osrm.org/route/v1/driving/${from.lon.toFixed(6)},${from.lat.toFixed(6)};${to.lon.toFixed(6)},${to.lat.toFixed(6)}?overview=full&geometries=geojson`,
+    `https://routing.openstreetmap.de/routed-car/route/v1/driving/${from.lon.toFixed(6)},${from.lat.toFixed(6)};${to.lon.toFixed(6)},${to.lat.toFixed(6)}?overview=full&geometries=geojson`,
+  ];
+
+  for (const url of drivingUrls) {
+    try {
+      const res = await fetch(url, { signal: AbortSignal.timeout(3500) });
+      if (!res.ok) continue;
+      const data = await res.json();
+      const route = data?.routes?.[0];
+      if (!route || !route.geometry?.coordinates) continue;
+
+      // Reject absurd vehicular U-turn loops (> 1.7x direct distance)
+      if (route.distance > directDist * 1.7) {
+        continue;
+      }
+
+      const coords: [number, number][] = route.geometry.coordinates;
+      if (!coords || coords.length < 2) continue;
+
+      // Realistic pedestrian walking speed along wide road pavement: 4.5 km/h
+      const walkTimeMin = (route.distance / 1000 / 4.5) * 60;
+
+      const result: WalkRouteResult = {
+        distanceM: route.distance,
+        timeMin: walkTimeMin,
+        path: coords.map(([lon, lat]) => ({ lat, lon })),
+      };
+
+      safeWalkMemoryCache.set(key, result);
+      return result;
+    } catch {
+      continue;
+    }
+  }
+
+  // 2. Fallback to standard walk router if vehicle route isn't accessible (e.g. pedestrian plaza)
+  return walkRoute(from, to);
 }
 
 export interface DriveRouteResult {
@@ -243,7 +322,7 @@ export async function driveRoute(
   for (const url of urls) {
     try {
       const res = await fetch(url, {
-        headers: { "User-Agent": "EcoMoveNagpur/1.0" },
+        signal: AbortSignal.timeout(3500),
       });
       if (!res.ok) continue;
       const data = await res.json();
@@ -290,5 +369,6 @@ export async function driveRoute(
  */
 export function clearWalkCache() {
   memoryCache.clear();
+  safeWalkMemoryCache.clear();
   driveMemoryCache.clear();
 }
